@@ -1,4 +1,4 @@
 public class APIGit{
-    public static void aPIGit(String[] args) {
+    public static void API_Git(String[] args) {
     }
 }
