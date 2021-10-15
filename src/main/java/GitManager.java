@@ -1,5 +1,5 @@
 public class GitManager{
 
-    public static void GitManager(String[] args) {
+    public static void main(String[] args) {
     }
 }
