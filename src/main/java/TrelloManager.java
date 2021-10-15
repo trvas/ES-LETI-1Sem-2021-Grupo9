@@ -29,7 +29,7 @@ public class TrelloManager{
         }
 
         // testing the call
-        System.out.println(getSprintBacklog(1));
+        System.out.println(getFinishedSprintBacklog(1));
 
     }
 
@@ -41,12 +41,12 @@ public class TrelloManager{
      * @param SprintNumber Sprint the user wants the cards from.
      * @return List<Card> list of cards from the desired Sprint.
      */
-    public static List<Card> getSprintBacklog(int SprintNumber) {
+    public static List<Card> getFinishedSprintBacklog(int SprintNumber) {
         // Initialize auxiliary variables
         List<Card> sprintCards = new ArrayList<>();
 
         // Get the list of cards from the board
-        List<Card> cards = trello.getCardsByList(getBoardListIdByName("Sprint Backlog (Doing)"));
+        List<Card> cards = trello.getCardsByList(getBoardListIdByName("Increment (Done)"));
 
         // Get the cards with the Sprint label we want
         for(Card card: cards) {
@@ -71,10 +71,5 @@ public class TrelloManager{
         }
         return listId;
     }
-
-    public static void getMeetingsText(){
-
-    }
-
 
 }
