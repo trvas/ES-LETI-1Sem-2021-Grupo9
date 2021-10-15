@@ -8,11 +8,26 @@
     <artifactId>ES-LETI-1Sem-2021-Grupo9_2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>joelso-mvn-repo</id>
+            <name>joelso github mvn repo</name>
+            <url>https://raw.github.com/joelso/joelso-mvn-repo/master/snapshots/</url>
+        </repository>
+    </repositories>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.trello4j</groupId>
+            <artifactId>trello4j</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
