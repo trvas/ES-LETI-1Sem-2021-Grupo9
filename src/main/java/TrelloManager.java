@@ -11,13 +11,12 @@ public class TrelloManager{
 
     private static final String BOARD_ID = "614de300aa6df33863299b6c";
 
-    private static Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",config.MY_TOKEN);
-    private static Board board = trello.getBoard("614de300aa6df33863299b6c");
-    private static List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
+    private static final Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",config.MY_TOKEN);
+    private static final Board board = trello.getBoard("614de300aa6df33863299b6c");
+    private static final List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
 
 
     public static void main(String[] args) {
-
 
         // get each member full name
         for(Member m: members){
@@ -34,7 +33,6 @@ public class TrelloManager{
 
     }
 
-
     /**
      * Gets the cards from the Backlog pertaining to a specific Sprint. Each card has a label
      * that specifies which Sprint it's from. This method iterates over the board lists, then
@@ -44,24 +42,11 @@ public class TrelloManager{
      * @return List<Card> list of cards from the desired Sprint.
      */
     public static List<Card> getSprintBacklog(int SprintNumber) {
-
-        // Get board lists
-        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
-
         // Initialize auxiliary variables
-        String listId = "";
         List<Card> sprintCards = new ArrayList<>();
 
-        // Get the Sprint board
-        // change to Increment board, since they'll all be done
-        for(org.trello4j.model.List boardList: boardLists) {
-            if (boardList.getName().equals("Sprint Backlog (Doing)")) {
-                listId = boardList.getId();
-            }
-        }
-
         // Get the list of cards from the board
-        List<Card> cards = trello.getCardsByList(listId);
+        List<Card> cards = trello.getCardsByList(getBoardListIdByName("Sprint Backlog (Doing)"));
 
         // Get the cards with the Sprint label we want
         for(Card card: cards) {
@@ -75,5 +60,21 @@ public class TrelloManager{
         return sprintCards;
 
     }
+
+    public static String getBoardListIdByName(String boardName){
+        String listId = "";
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
+        for(org.trello4j.model.List boardList: boardLists) {
+            if (boardList.getName().equals(boardName)) {
+                listId = boardList.getId();
+            }
+        }
+        return listId;
+    }
+
+    public static void getMeetingsText(){
+
+    }
+
 
 }
