@@ -13,10 +13,11 @@ public class TrelloManager{
 
     private static Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",config.MY_TOKEN);
     private static Board board = trello.getBoard("614de300aa6df33863299b6c");
+    private static List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
+
 
     public static void main(String[] args) {
 
-        List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
 
         // get each member full name
         for(Member m: members){
@@ -51,12 +52,11 @@ public class TrelloManager{
         String listId = "";
         List<Card> sprintCards = new ArrayList<>();
 
-
         // Get the Sprint board
         // change to Increment board, since they'll all be done
-        for(org.trello4j.model.List bl: boardLists) {
-            if (bl.getName().equals("Sprint Backlog (Doing)")) {
-                listId = bl.getId();
+        for(org.trello4j.model.List boardList: boardLists) {
+            if (boardList.getName().equals("Sprint Backlog (Doing)")) {
+                listId = boardList.getId();
             }
         }
 
@@ -64,10 +64,10 @@ public class TrelloManager{
         List<Card> cards = trello.getCardsByList(listId);
 
         // Get the cards with the Sprint label we want
-        for(Card c: cards) {
-            for (Card.Label l : c.getLabels()) {
-                if (l.getName().contains(Integer.toString(SprintNumber))) {
-                    sprintCards.add(c);
+        for(Card card: cards) {
+            for (Card.Label label : card.getLabels()) {
+                if (label.getName().contains(Integer.toString(SprintNumber))) {
+                    sprintCards.add(card);
                 }
             }
         }
