@@ -4,45 +4,76 @@ import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrelloManager{
 
-    public static final String BOARD_ID = "614de300aa6df33863299b6c";
-    public static Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af","");
-    public static Board board = trello.getBoard("614de300aa6df33863299b6c");
+    private static final String BOARD_ID = "614de300aa6df33863299b6c";
+
+    private static Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",config.MY_TOKEN);
+    private static Board board = trello.getBoard("614de300aa6df33863299b6c");
 
     public static void main(String[] args) {
-        System.out.println(trello.getBoard("614de300aa6df33863299b6c").getName());
 
-        List<Member> test = trello.getMembersByBoard(BOARD_ID,null);
+        List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
 
-
-
-        System.out.println(test);
-        System.out.println("");
-
-
-        for(Member m: test){
+        // get each member full name
+        for(Member m: members){
             String name = m.getFullName();
-            System.out.println(name);
-            System.out.println("");
-
         }
 
-        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
-
-        for(org.trello4j.model.List bl: boardLists){
-            String listName = bl.getName();
-            List<Card> cards = trello.getCardsByList(bl.getId());
-            System.out.println(listName);
-            for(Card c: cards)
-                System.out.println(c.getName());
-            System.out.println("");
+        // get each member id
+        for(Member m: members){
+            String name = m.getId();
         }
+
+        // testing the call
+        System.out.println(getSprintBacklog(1));
 
     }
 
 
+    /**
+     * Gets the cards from the Backlog pertaining to a specific Sprint. Each card has a label
+     * that specifies which Sprint it's from. This method iterates over the board lists, then
+     * card lists of the board wanted to get the ones with the label of the Sprint desired.
+     *
+     * @param SprintNumber Sprint the user wants the cards from.
+     * @return List<Card> list of cards from the desired Sprint.
+     */
+    public static List<Card> getSprintBacklog(int SprintNumber) {
+
+        // Get board lists
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
+
+        // Initialize auxiliary variables
+        String listId = "";
+        List<Card> sprintCards = new ArrayList<>();
+
+
+        // Get the Sprint board
+        // change to Increment board, since they'll all be done
+        for(org.trello4j.model.List bl: boardLists) {
+            if (bl.getName().equals("Sprint Backlog (Doing)")) {
+                listId = bl.getId();
+            }
+        }
+
+        // Get the list of cards from the board
+        List<Card> cards = trello.getCardsByList(listId);
+
+        // Get the cards with the Sprint label we want
+        for(Card c: cards) {
+            for (Card.Label l : c.getLabels()) {
+                if (l.getName().contains(Integer.toString(SprintNumber))) {
+                    sprintCards.add(c);
+                }
+            }
+        }
+
+        return sprintCards;
+
+    }
 
 }
