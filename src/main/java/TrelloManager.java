@@ -11,7 +11,10 @@ public class TrelloManager{
 
     private static final String BOARD_ID = "614de300aa6df33863299b6c";
 
-    private static final Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",config.MY_TOKEN);
+    private static final String MY_TOKEN = "8279cc618928ba12f81688c9181d9961411010d466989205c1e78da34823bf54";
+    private static final String apiKEY = "f0757a32c960061eb33c4d83089f4c87";
+
+    private static final Trello trello = new TrelloImpl(apiKEY, MY_TOKEN);
     private static final Board board = trello.getBoard("614de300aa6df33863299b6c");
     private static final List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
 
