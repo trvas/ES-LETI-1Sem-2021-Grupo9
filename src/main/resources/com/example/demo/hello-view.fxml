@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox prefHeight="574.0" prefWidth="205.0" style="-fx-background-color: #AED6F1;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Pane prefHeight="92.0" prefWidth="206.0">
+                    <children>
+                        <Label layoutX="15.0" layoutY="27.0" prefHeight="46.0" prefWidth="179.0" text="App XPTO" textAlignment="CENTER" textFill="#8a8686">
+                            <font>
+                                <Font size="26.0" />
+                            </font>
+                     <graphic>
+                        <ImageView fitHeight="53.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/icons8_GPS_Antenna_64px_1.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
+                    </children></Pane>
+                <Button fx:id="test" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="User's" textFill="#827f7f">
+                    <padding>
+                        <Insets left="50.0" />
+                    </padding>
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/icons8_Person_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+                </Button>
+            <Button alignment="BASELINE_LEFT" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/icons8_Open_Envelope_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/icons8_Box_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/icons8_Xbox_Menu_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            </children></VBox>
+    </children>
+</AnchorPane>
