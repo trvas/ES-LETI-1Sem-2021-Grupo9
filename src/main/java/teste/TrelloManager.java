@@ -1,3 +1,5 @@
+package teste;
+
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
 import org.trello4j.model.Board;
@@ -11,7 +13,7 @@ public class TrelloManager{
 
     private static final String BOARD_ID = "614de300aa6df33863299b6c";
 
-    private static final Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",config.MY_TOKEN);
+    private static final Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",null);
     private static final Board board = trello.getBoard("614de300aa6df33863299b6c");
     private static final List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
 
