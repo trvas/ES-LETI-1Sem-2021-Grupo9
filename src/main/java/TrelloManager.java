@@ -30,7 +30,6 @@ public class TrelloManager{
 
         // testing the call
         System.out.println(getFinishedSprintBacklog(1));
-
     }
 
     /**
