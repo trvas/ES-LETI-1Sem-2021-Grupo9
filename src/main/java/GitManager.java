@@ -9,8 +9,10 @@ import static org.kohsuke.github.GitHub.connect;
 public class GitManager extends GHAppInstallation{
 
     private static String toDelete = "henriquevsousa@hotmail.com";
-    private static String GITHUB_OAUTH = "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";//"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"; //uses github's token
-    private static String username = "trvas"; // "Henrique-DeSousa"; //uses the user's username
+    private static String GITHUB_OAUTH; // github's token
+    //"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" Tati // "trvas"
+    //"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"; Henrique // "Henrique-DeSousa"
+    private static String username;  //uses the user's username
     private static GHUser user = new GHUser();
     private static GHRepository rep = new GHRepository();
     private static GitHub githubLogin;
@@ -20,6 +22,15 @@ public class GitManager extends GHAppInstallation{
     private static Map<String,GHRepository> repositories = new HashMap<String, GHRepository>();
 
     public static void main(String[] args) throws IOException {
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter username: ");
+
+        username = myObj.nextLine();  // Read user input
+        System.out.println("Enter Token: ");
+        GITHUB_OAUTH = myObj.nextLine(); // read token
+        System.out.println("Username is: " + username + "\nToken is: " + GITHUB_OAUTH);  // Output user input
+
+
         connect();
         userInfo();
         repInfo();
