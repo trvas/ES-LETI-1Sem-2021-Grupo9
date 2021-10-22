@@ -9,11 +9,20 @@ import java.util.List;
 
 public class TrelloManager{
 
-    private static final String BOARD_ID = "614de300aa6df33863299b6c";
+    private static Trello trello;
+    private static Board board;
 
-    private static final Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",config.MY_TOKEN);
-    private static final Board board = trello.getBoard("614de300aa6df33863299b6c");
-    private static final List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
+    private static String BOARD_ID;
+
+    public TrelloManager(String API_KEY, String TOKEN, String BOARD_ID) {
+
+        this.BOARD_ID = BOARD_ID;
+
+        trello = new TrelloImpl(API_KEY, TOKEN);
+        Board board = trello.getBoard(BOARD_ID);
+
+
+    }
 
 
     public static void main(String[] args) {
@@ -31,6 +40,8 @@ public class TrelloManager{
         // testing the call
         System.out.println(getFinishedSprintBacklog(1));
     }
+
+
 
     /**
      * Gets the cards from the Backlog pertaining to a specific Sprint. Each card has a label
