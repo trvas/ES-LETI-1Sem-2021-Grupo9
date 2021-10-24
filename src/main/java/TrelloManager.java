@@ -20,8 +20,6 @@ public class TrelloManager{
 
         trello = new TrelloImpl(API_KEY, TOKEN);
         Board board = trello.getBoard(BOARD_ID);
-
-
     }
 
 
@@ -43,7 +41,7 @@ public class TrelloManager{
         List<Card> sprintCards = new ArrayList<>();
 
         // Get the list of cards from the board
-        List<Card> cards = trello.getCardsByList(getBoardListIdByName("Increment (Done)"));
+        List<Card> cards = trello.getCardsByList(getBoardListIdByName("Done"));
 
         // Get the cards with the Sprint label we want
         for(Card card: cards) {
@@ -70,7 +68,7 @@ public class TrelloManager{
         String listId = "";
         List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
         for(org.trello4j.model.List boardList: boardLists) {
-            if (boardList.getName().equals(boardName)) {
+            if (boardList.getName().contains(boardName)) {
                 listId = boardList.getId();
             }
         }
