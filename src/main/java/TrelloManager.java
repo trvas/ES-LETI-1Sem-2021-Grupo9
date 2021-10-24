@@ -40,7 +40,7 @@ public class TrelloManager{
         String listId = "";
         List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
         for(org.trello4j.model.List boardList: boardLists) {
-            if (boardList.getName().equals(boardName)) {
+            if (boardList.getName().contains(boardName)) {
                 listId = boardList.getId();
             }
         }
