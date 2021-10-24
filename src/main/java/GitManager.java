@@ -2,8 +2,6 @@ import org.kohsuke.github.*;
 import java.io.IOException;
 import java.util.*;
 
-import static org.kohsuke.github.GitHub.connect;
-
 
 public class GitManager extends GHAppInstallation{
 
