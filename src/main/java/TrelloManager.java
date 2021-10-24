@@ -1,16 +1,12 @@
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
 import org.trello4j.model.Board;
-import org.trello4j.model.Card;
-import org.trello4j.model.Member;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrelloManager{
 
     private static Trello trello;
-    private static Board board;
+//    private static Board board;
 
     private static String BOARD_ID;
 
