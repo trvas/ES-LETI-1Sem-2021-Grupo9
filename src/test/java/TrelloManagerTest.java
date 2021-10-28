@@ -10,7 +10,7 @@ class TrelloManagerTest {
 
     @BeforeEach
     void setUp() {
-        TrelloManager trelloManager = new TrelloManager("e3ee0d6a1686b4b43ba5d046bbce20af", config.MY_TOKEN, "614de300aa6df33863299b6c");
+        //TrelloManager trelloManager = new TrelloManager("e3ee0d6a1686b4b43ba5d046bbce20af", MY_TOKEN, "614de300aa6df33863299b6c");
 
     }
 
