@@ -24,21 +24,11 @@ public class TrelloManager{
 
 
     public static void main(String[] args) {
+        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
 
-        // get each member full name
-        for(Member m: members){
-            String name = m.getFullName();
-        }
-
-        // get each member id
-        for(Member m: members){
-            String name = m.getId();
-        }
-
-        // testing the call
+        System.out.println(getBoardListIdByName("Done"));
         System.out.println(getFinishedSprintBacklog(1));
     }
-
 
 
     /**
