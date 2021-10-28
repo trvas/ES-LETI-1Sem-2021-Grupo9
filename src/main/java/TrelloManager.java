@@ -24,7 +24,10 @@ public class TrelloManager{
 
 
     public static void main(String[] args) {
+        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
 
+        System.out.println(getBoardListIdByName("Done"));
+        System.out.println(getFinishedSprintBacklog(1));
     }
 
 
@@ -55,8 +58,6 @@ public class TrelloManager{
         return sprintCards;
 
     }
-
-
 
 
     /**
