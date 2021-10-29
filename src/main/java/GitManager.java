@@ -7,12 +7,19 @@ import java.io.IOException;
 public class GitManager{
 
     private static String GITHUB_REPO_NAME;
-    private static String GITHUB_OAUTH; // gitHub's token
-    private static String GITHUB_LOGIN;  //uses the user's username
-    private static boolean valid = false;
+    private static String GITHUB_OAUTH;
+    private static String GITHUB_LOGIN;
+    public static boolean valid = false;
     private static GitHub githubLogin;
     private static GHUser user = new GHUser();
 
+    /**
+     *
+     * @param ID gitHub's token
+     * @param USERNAME uses the user's username
+     * @param REPO_NAME
+     * @throws IOException
+     */
     public GitManager(String ID, String USERNAME, String REPO_NAME) throws IOException {
         this.GITHUB_LOGIN = USERNAME;
         this.GITHUB_OAUTH = ID;
