@@ -11,8 +11,7 @@ public class GitManager extends GHAppInstallation{
     private static String toDelete = "henriquevsousa@hotmail.com";
     private static String GITHUB_OAUTH; // gitHub's token
     private static String GITHUB_LOGIN;  //uses the user's username
-    //"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" Tatiana // "trvas"
-    //"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"; Henrique // "Henrique-DeSousa"
+
 
     private static GHUser user = new GHUser();
     private static GitHub githubLogin;
