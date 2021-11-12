@@ -19,7 +19,13 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getFinishedSprintBacklog() {
+    void getBoardListIdByName() {
+        // ID Lista "Sprints" da Board = 61606295191d043999a57bcb
+        Assertions.assertEquals("61606295191d043999a57bcb", TrelloManager.getBoardListIdByName("Sprints"));
+    }
+
+    @Test
+  void getFinishedSprintBacklog() {
         Assertions.assertNotEquals(null,trelloManager.getFinishedSprintBacklog(1));
     }
 }
