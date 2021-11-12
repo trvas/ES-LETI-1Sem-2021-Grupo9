@@ -2,18 +2,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.trello4j.Trello;
-import org.trello4j.TrelloImpl;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TrelloManagerTest {
 
     TrelloManager trelloManager;
+    final String BOARD_ID = "614de300aa6df33863299b6c"; // ID of the board we are currently using
 
     @BeforeEach
     void setUp() {
-        trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.TESTBOARD_ID);
+        trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, BOARD_ID);
 
     }
 
@@ -24,8 +21,8 @@ class TrelloManagerTest {
     // add tests
     @Test
     void getBoardListIdByName() {
-        // Lista 1 da Board teste ID = 614deced0f4b33256c0c6a78
-        Assertions.assertEquals("614deced0f4b33256c0c6a78",trelloManager.getBoardListIdByName("Lista 1"));
+        // ID Lista "Sprints" da Board = 61606295191d043999a57bcb
+        Assertions.assertEquals("61606295191d043999a57bcb", TrelloManager.getBoardListIdByName("Sprints"));
     }
 
     @Test
