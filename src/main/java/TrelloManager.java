@@ -25,22 +25,19 @@ public class TrelloManager{
 
     }
 
-
-
     /**
      * Returns the ID of a Board List provided its name.
-     * @param boardName name of the Board the user wants the ID from.
+     * @param listName name of the Board the user wants the ID from.
      * @return String ID of the Board List.
      */
-    public static String getBoardListIdByName(String boardName){
+    public static String getBoardListIdByName(String listName){
         String listId = "";
         List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
         for(org.trello4j.model.List boardList: boardLists) {
-            if (boardList.getName().contains(boardName)) {
+            if (boardList.getName().contains(listName)) {
                 listId = boardList.getId();
             }
         }
         return listId;
     }
-
 }

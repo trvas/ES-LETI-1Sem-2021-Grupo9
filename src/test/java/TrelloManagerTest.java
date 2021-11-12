@@ -1,16 +1,16 @@
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.trello4j.Trello;
-import org.trello4j.TrelloImpl;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TrelloManagerTest {
 
+    TrelloManager trelloManager;
+    final String BOARD_ID = "614de300aa6df33863299b6c"; // ID of the board we are currently using
+
     @BeforeEach
     void setUp() {
-        TrelloManager trelloManager = new TrelloManager("e3ee0d6a1686b4b43ba5d046bbce20af", config.MY_TOKEN, "614de300aa6df33863299b6c");
+        trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, BOARD_ID);
 
     }
 
@@ -18,11 +18,8 @@ class TrelloManagerTest {
     void tearDown() {
     }
 
-    // add tests
     @Test
-    void getBoardListIdByName() {
-
-
-
+    void getFinishedSprintBacklog() {
+        Assertions.assertNotEquals(null,trelloManager.getFinishedSprintBacklog(1));
     }
 }
