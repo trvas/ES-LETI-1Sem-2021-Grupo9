@@ -25,7 +25,7 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getFinishedSprintBacklog() {
+  void getFinishedSprintBacklog() {
         Assertions.assertNotEquals(null,trelloManager.getFinishedSprintBacklog(1));
     }
 }
