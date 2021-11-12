@@ -18,7 +18,6 @@ class TrelloManagerTest {
     void tearDown() {
     }
 
-    // add tests
     @Test
     void getBoardListIdByName() {
         // ID Lista "Sprints" da Board = 61606295191d043999a57bcb
