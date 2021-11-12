@@ -1,13 +1,14 @@
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
 import org.trello4j.model.Board;
+import org.trello4j.model.Card;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrelloManager{
 
     private static Trello trello;
-//    private static Board board;
-
     private static String BOARD_ID;
 
     public TrelloManager(String API_KEY, String TOKEN, String BOARD_ID) {
@@ -16,11 +17,16 @@ public class TrelloManager{
 
         trello = new TrelloImpl(API_KEY, TOKEN);
         Board board = trello.getBoard(BOARD_ID);
+
+        //  method for constructing:
+        //  TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+
+
     }
 
 
     public static void main(String[] args) {
-        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+
     }
 
 
