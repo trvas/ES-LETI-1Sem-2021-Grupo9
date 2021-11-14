@@ -26,7 +26,7 @@ public class TrelloManager{
 
 
     public static void main(String[] args) {
-
+        getMeetingsText();
     }
 
 
@@ -66,5 +66,17 @@ public class TrelloManager{
     }
 
     public static void getMeetingsText(){
+
+        List<Card> cards = new ArrayList<Card>();
+
+        // Get all the Meetings cards
+        for(int sprintNumber = 1; sprintNumber < 4; sprintNumber++){
+            cards = trello.getCardsByList(getBoardListIdByName("#SPRINT" +  sprintNumber + " - Meetings"));
+        }
+
+        System.out.println(cards.get(1).getName());
+        System.out.println(cards.get(1).getDesc());
+
+
     }
 }
