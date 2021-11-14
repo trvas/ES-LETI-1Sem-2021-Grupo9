@@ -28,7 +28,7 @@ public class TrelloManager{
 
     public static void main(String[] args) {
         TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
-        getMeetings();
+        System.out.print(getSprintCount());
     }
 
 
@@ -58,7 +58,7 @@ public class TrelloManager{
      */
     public static String getBoardListIdByName(String listName){
         String listId = "";
-        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID, (String) null);
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID, null);
         for(org.trello4j.model.List boardList: boardLists) {
             if (boardList.getName().contains(listName)) {
                 listId = boardList.getId();
@@ -81,6 +81,12 @@ public class TrelloManager{
         }
 
         return meetings;
+    }
+
+    public static void getMeetingsText(){
+        HashMap<Integer, List<Card>> meetings = getMeetings();
+
+        System.out.println(meetings.get(1).get(0).getDesc());
     }
 
     /**
