@@ -64,4 +64,7 @@ public class TrelloManager{
         }
         return listId;
     }
+
+    public static void getMeetingsText(){
+    }
 }
