@@ -24,12 +24,6 @@ public class TrelloManager{
 
     }
 
-
-    public static void main(String[] args) {
-
-    }
-
-
     /**
      * Gets the ID of cards from the Backlog pertaining to a specific Sprint. Each Increment list has
      * a #SPRINT(NUMBER) on its label. This method iterates over the board lists until it finds one
@@ -39,14 +33,11 @@ public class TrelloManager{
      * @return List<Card> list of cards from the desired Sprint.
      */
     public static List<Card> getFinishedSprintBacklog(int sprintNumber) {
-        // Initialize auxiliary variables
-
         // Get the list of cards from the board
         List<Card> cards = trello.getCardsByList(getBoardListIdByName("#SPRINT" +  sprintNumber + " - Increment"));
 
         // Returns the cards from the Done list of the sprint asked
         return new ArrayList<>(cards);
-
     }
 
     /**
