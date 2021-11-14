@@ -2,6 +2,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.trello4j.Trello;
 
 class TrelloManagerTest {
 
@@ -25,7 +26,13 @@ class TrelloManagerTest {
     }
 
     @Test
-  void getFinishedSprintBacklog() {
-        Assertions.assertNotEquals(null,trelloManager.getFinishedSprintBacklog(1));
+    void getFinishedSprintBacklog() {
+        Assertions.assertNotEquals(null, TrelloManager.getFinishedSprintBacklog(1));
+    }
+
+    @Test
+    void getSprintCount() {
+        // Update with the final number of sprints
+        Assertions.assertEquals(TrelloManager.getSprintCount(),2);
     }
 }

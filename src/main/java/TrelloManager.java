@@ -55,4 +55,16 @@ public class TrelloManager{
         }
         return listId;
     }
+
+    /**
+     * Gets the number of current Sprints.
+     * @return int number of Sprints so far.
+     */
+    public static int getSprintCount(){
+
+        // Get "Sprints" cards
+        List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("Sprints")));
+
+        return cards.size();
+    }
 }
