@@ -4,6 +4,7 @@ import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TrelloManager{
@@ -26,7 +27,8 @@ public class TrelloManager{
 
 
     public static void main(String[] args) {
-        getMeetingsText();
+        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+        getMeetings();
     }
 
 
@@ -56,7 +58,7 @@ public class TrelloManager{
      */
     public static String getBoardListIdByName(String listName){
         String listId = "";
-        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID, (String) null);
         for(org.trello4j.model.List boardList: boardLists) {
             if (boardList.getName().contains(listName)) {
                 listId = boardList.getId();
@@ -65,18 +67,31 @@ public class TrelloManager{
         return listId;
     }
 
-    public static void getMeetingsText(){
 
-        List<Card> cards = new ArrayList<Card>();
+    /**
+     * Returns a HashMap with all the cards of the meetings in each Sprint.
+     * @return HashMap<Integer, List<Card>> HashMap with the Sprint Number and list of cards (meetings) from that sprint.
+     */
+    public static HashMap<Integer, List<Card>> getMeetings(){
+        HashMap<Integer, List<Card>> meetings = new HashMap<>();
 
         // Get all the Meetings cards
-        for(int sprintNumber = 1; sprintNumber < 4; sprintNumber++){
-            cards = trello.getCardsByList(getBoardListIdByName("#SPRINT" +  sprintNumber + " - Meetings"));
+        for(int sprintNumber = 1; sprintNumber < getSprintCount() + 1; sprintNumber++){
+           meetings.put(sprintNumber, trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Meetings")));
         }
 
-        System.out.println(cards.get(1).getName());
-        System.out.println(cards.get(1).getDesc());
+        return meetings;
+    }
 
+    /**
+     * Gets the number of current Sprints.
+     * @return int number of Sprints so far.
+     */
+    public static int getSprintCount(){
 
+        // Get "Sprints" cards
+        List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("Sprints")));
+
+        return cards.size();
     }
 }
