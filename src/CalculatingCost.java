@@ -1,9 +1,23 @@
-import java.util.Scanner;
+
+/**Date : November  15-2021
+* @author Paulo.Palma
+* @version 1.0
+*/
+
+/**
+ * Classe do calculo do custo das horas
+ *
+ */
 
 public class CalculatingCost {
 
 	private int horas;
 	private int custo;
+
+	/**
+	 * Construtor da classe
+	 *
+	 */
 
 	public CalculatingCost(int horas, int custo) {
 		super();
@@ -11,20 +25,24 @@ public class CalculatingCost {
 		this.custo = custo;
 	}
 
+	/**
+	 * Segundo Contrutor 
+	 *
+	 */
 	public CalculatingCost() {
 
 		this.custo = 20;
 
 	}
 
-	public int getHoras() {
+	/**
+	 * Este metodo recebe como parametro as horas e devolve o valor do trabalho
+	 * 
+	 * @param horas
+	 * @return devolve o valor das horas 
+	 */
 
-		Scanner ler = new Scanner(System.in);
-
-		System.out.printf("Informa o número de horas que trabalhas-te:\n");
-		horas = ler.nextInt();
-
-		ler.close();
+	public int getHoras(int horas) {
 
 		return horas * getCusto();
 
@@ -33,6 +51,11 @@ public class CalculatingCost {
 	public void setHoras(int horas) {
 		this.horas = horas;
 	}
+
+	/**
+	 * metodo do obter o custo
+	 *
+	 */
 
 	public int getCusto() {
 		return custo;
@@ -50,7 +73,7 @@ public class CalculatingCost {
 	public static void main(String[] args) {
 
 		CalculatingCost c1 = new CalculatingCost();
-		System.out.println(" O custo total será de " + c1.getHoras());
+		System.out.println(" O custo total será de " + c1.getHoras(20));
 
 	}
 
