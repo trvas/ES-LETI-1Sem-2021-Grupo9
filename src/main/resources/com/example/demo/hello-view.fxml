@@ -39,7 +39,7 @@
                   </ImageView>
                </graphic>
                 </Button>
-            <Button  fx:id="id2" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+            <Button  fx:id="id2" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-1" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -54,7 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-2" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -69,7 +69,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-3" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>

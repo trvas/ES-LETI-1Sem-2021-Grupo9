@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
     <children>
         <VBox prefHeight="574.0" prefWidth="205.0" style="-fx-background-color: #AED6F1;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -24,7 +24,7 @@
                         </ImageView>
                      </graphic></Label>
                     </children></Pane>
-                <Button fx:id="test" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="User's" textFill="#827f7f">
+                <Button fx:id="id1" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="User's" textFill="#827f7f">
                     <padding>
                         <Insets left="50.0" />
                     </padding>
@@ -39,7 +39,7 @@
                   </ImageView>
                </graphic>
                 </Button>
-            <Button alignment="BASELINE_LEFT" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+            <Button  fx:id="id2" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-1" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -54,7 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-2" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -69,7 +69,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="number1" textFill="#827f7f">
+            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-3" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>

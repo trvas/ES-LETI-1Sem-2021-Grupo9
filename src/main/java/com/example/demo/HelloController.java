@@ -10,16 +10,13 @@ import java.util.ResourceBundle;
 
 
 //hover css?
-public class HelloController implements Initializable{
+public class HelloController{
     @FXML
     Button id1;
     @FXML
     Button id2;
     @FXML
     Button id3;
-    @FXML
-    Button id4;
-
 
     @FXML
     public void actionPerformed(ActionEvent e){
@@ -29,9 +26,5 @@ public class HelloController implements Initializable{
     }
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 }
 
