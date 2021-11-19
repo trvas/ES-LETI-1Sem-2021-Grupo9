@@ -27,8 +27,7 @@ public class TrelloManager{
 
 
     public static void main(String[] args) {
-        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
-        System.out.print(getSprintCount());
+
     }
 
 
@@ -41,14 +40,11 @@ public class TrelloManager{
      * @return List<Card> list of cards from the desired Sprint.
      */
     public static List<Card> getFinishedSprintBacklog(int sprintNumber) {
-        // Initialize auxiliary variables
-
         // Get the list of cards from the board
         List<Card> cards = trello.getCardsByList(getBoardListIdByName("#SPRINT" +  sprintNumber + " - Increment"));
 
         // Returns the cards from the Done list of the sprint asked
         return new ArrayList<>(cards);
-
     }
 
     /**
@@ -83,11 +79,20 @@ public class TrelloManager{
         return meetings;
     }
 
+    /* Example of how to get the meetings text. To be deleted.
+
     public static void getMeetingsText(){
         HashMap<Integer, List<Card>> meetings = getMeetings();
 
-        System.out.println(meetings.get(1).get(0).getDesc());
+        for(int i = 1; i != meetings.size() + 1; i++){
+            System.out.println("--- Sprint " + i + " ---");
+            for(Card card : meetings.get(i)){
+                System.out.println(card.getName());
+            }
+        }
     }
+
+     */
 
     /**
      * Gets the number of current Sprints.

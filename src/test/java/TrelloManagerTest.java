@@ -35,4 +35,10 @@ class TrelloManagerTest {
         // Update with the final number of sprints
         Assertions.assertEquals(TrelloManager.getSprintCount(),2);
     }
+
+    @Test
+    void getMeetings() {
+        // ID to primeiro cartão da lista Meetings = 616485eb23537a5ed11aec71
+        Assertions.assertEquals(TrelloManager.getMeetings().get(1).get(0).getId(),"616485eb23537a5ed11aec71");
+    }
 }
