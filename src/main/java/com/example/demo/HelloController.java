@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -7,20 +8,30 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
-    Button test;
-    private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #AED6F1;";
-    private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #FF0000;";
+
+//hover css?
+public class HelloController implements Initializable{
+    @FXML
+    Button id1;
+    @FXML
+    Button id2;
+    @FXML
+    Button id3;
+    @FXML
+    Button id4;
+
 
     @FXML
-    public void handleButtonPress() {
-        System.out.println("1234");
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == this.id1){
+            System.out.println("teste");
+        }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        test.setOnMouseEntered(e -> test.setStyle(HOVERED_BUTTON_STYLE));
-        test.setOnMouseExited(e -> test.setStyle(IDLE_BUTTON_STYLE));
+
     }
 }
 
