@@ -1,5 +1,6 @@
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
+import org.trello4j.model.Action;
 import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 
@@ -9,20 +10,19 @@ import java.util.List;
 public class TrelloManager{
 
     private static Trello trello;
-    private static String BOARD_ID;
+    private static String boardID;
 
     public TrelloManager(String API_KEY, String TOKEN, String BOARD_ID) {
 
-        this.BOARD_ID = BOARD_ID;
-
+        boardID = BOARD_ID;
         trello = new TrelloImpl(API_KEY, TOKEN);
         Board board = trello.getBoard(BOARD_ID);
 
         //  method for constructing:
         //  TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
-
-
     }
+
+
 
     /**
      * Gets the ID of cards from the Backlog pertaining to a specific Sprint. Each Increment list has
@@ -47,7 +47,7 @@ public class TrelloManager{
      */
     public static String getBoardListIdByName(String listName){
         String listId = "";
-        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(boardID,null);
         for(org.trello4j.model.List boardList: boardLists) {
             if (boardList.getName().contains(listName)) {
                 listId = boardList.getId();
@@ -61,10 +61,51 @@ public class TrelloManager{
      * @return int number of Sprints so far.
      */
     public static int getSprintCount(){
-
         // Get "Sprints" cards
         List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("Sprints")));
 
         return cards.size();
     }
+
+    public static void main(String[] args) {
+        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+        getSprintCost(1);
+
+    }
+
+
+    public static Double getCardHours(String cardID){
+        List<Action> comments = trello.getActionsByCard(cardID);
+        comments.removeIf(action -> action.getData().getText() == null); // removing null comments
+
+        Double[] hours = new Double[comments.size()];
+
+        int aux = 0;
+        Double sum = 0.0;
+
+        while(aux != comments.size()) {
+            for (Action action : comments) {
+                if (action.getData().getText().contains("plus!")) {
+                    String[] firstSplit = action.getData().getText().split("/");
+                    String[] secondSplit = firstSplit[0].split(" ");
+                    hours[aux] = Double.valueOf(secondSplit[secondSplit.length - 1]);
+                }
+                aux++;
+            }
+        }
+
+        for(Double dbl : hours) sum += dbl;
+
+        return sum;
+    }
+
+
+    public static void getSprintCost(int sprintNumber) {
+        List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
+        Double totalHours = 0.0;
+
+        for (Card card : sprintList) totalHours += getCardHours(card.getId());
+
+    }
+
 }
