@@ -3,6 +3,7 @@ package es.grupo9;
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
 // import org.trello4j.model.Board;
+import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 
 import java.util.ArrayList;
@@ -46,6 +47,53 @@ public class TrelloManager{
         // Returns the cards from the Done list of the sprint asked
         return new ArrayList<>(cards);
     }
+
+    /**
+     * Gets the amount of hours worked on a card, provided its ID.
+     * @param cardID ID of the Card.
+     * @return Double hours worked on a given card.
+     */
+    public static Double getCardHours(String cardID){
+        List<Action> comments = trello.getActionsByCard(cardID);
+        comments.removeIf(action -> action.getData().getText() == null); // removing null comments
+
+        Double[] hours = new Double[comments.size()];
+
+        int aux = 0;
+        Double sum = 0.0;
+
+        while(aux != comments.size()) {
+            for (Action action : comments) {
+                if (action.getData().getText().contains("plus!")) {
+                    String[] firstSplit = action.getData().getText().split("/");
+                    String[] secondSplit = firstSplit[0].split(" ");
+                    hours[aux] = Double.valueOf(secondSplit[secondSplit.length - 1]);
+                }
+                aux++;
+            }
+        }
+
+        for(Double dbl : hours) sum += dbl;
+
+        return sum;
+    }
+
+    /**
+     *
+     * @param sprintNumber number of the Sprint the cost will be calculated for.
+     */
+    public static Double getSprintCost(int sprintNumber) {
+        List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
+        Double totalHours = 0.0;
+        Double cost = 0.0;
+
+        // Sum up hours worked on each card
+        for (Card card : sprintList) totalHours += getCardHours(card.getId());
+
+        return cost;
+
+    }
+
 
     /**
      * Returns the ID of a Board List provided its name.
