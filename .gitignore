@@ -1,2 +1,4 @@
 /bin/
-/src/main/java/config.java
+/src/main/java/com/example/demo/config.java
+/target/
+/src/test/java/config.java
