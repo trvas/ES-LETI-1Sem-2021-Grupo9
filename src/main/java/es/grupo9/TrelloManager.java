@@ -2,7 +2,7 @@ package es.grupo9;
 
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
-import org.trello4j.model.Board;
+// import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 
 import java.util.ArrayList;
@@ -12,16 +12,15 @@ import java.util.HashMap;
 public class TrelloManager{
 
     private static Trello trello;
-//    private static Board board;
+//  private static Board board;
 
-    private static String BOARD_ID;
+    private static String boardId;
 
     public TrelloManager(String API_KEY, String TOKEN, String BOARD_ID) {
 
-        this.BOARD_ID = BOARD_ID;
-
+        boardId = BOARD_ID;
         trello = new TrelloImpl(API_KEY, TOKEN);
-        Board board = trello.getBoard(BOARD_ID);
+  //    Board board = trello.getBoard(boardId);
     }
 
 
@@ -55,7 +54,7 @@ public class TrelloManager{
      */
     public static String getBoardListIdByName(String listName){
         String listId = "";
-        List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(boardId, (String) null);
         for(org.trello4j.model.List boardList: boardLists) {
             if (boardList.getName().contains(listName)) {
                 listId = boardList.getId();
