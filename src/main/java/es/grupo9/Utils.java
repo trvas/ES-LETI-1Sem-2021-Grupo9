@@ -9,13 +9,10 @@ public class Utils{
 
     // custo default = 20
     public static int getCusto(int horas) {
-        getCusto(horas, 20);
+
+        return getCusto(horas, 20);
     }
 
-    @Override
-    public String toString() {
-        return "CalculatingCost [horas=" + horas + ", custo=" + custo + "]";
-    }
 
 
 
