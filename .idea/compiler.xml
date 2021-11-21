@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ES_LETI_1Sem_2021_Grupo9" />
         <module name="ES-LETI-1Sem-2021-Grupo9" />
         <module name="ES-LETI-1Sem-2021-Grupo9_2" />
       </profile>

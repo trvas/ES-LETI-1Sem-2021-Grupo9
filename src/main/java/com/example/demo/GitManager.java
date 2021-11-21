@@ -1,3 +1,5 @@
+package com.example.demo;
+
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;

@@ -1,4 +1,4 @@
-package teste;
+package com.example.demo;
 
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
