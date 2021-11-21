@@ -1,4 +1,4 @@
-package com.example.demo;
+package ES_Grupo9;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +11,8 @@ public class HelloController{
     Button id2;
     @FXML
     Button id3;
+    @FXML
+    Button id4;
 
     /**
      * Handler for when the button is clicked

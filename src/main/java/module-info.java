@@ -11,6 +11,6 @@ module com.example.demo {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    opens com.example.demo to javafx.fxml;
-    exports com.example.demo;
+    opens ES_Grupo9 to javafx.fxml;
+    exports ES_Grupo9;
 }

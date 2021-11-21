@@ -1,4 +1,4 @@
-package com.example.demo;
+package ES_Grupo9;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
