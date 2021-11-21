@@ -4,38 +4,52 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-
-
 public class GitManager extends GHAppInstallation{
 
-    private static String GITHUB_REPO_NAME;
-    private static String toDelete = "henriquevsousa@hotmail.com";
-    private static String GITHUB_OAUTH; // gitHub's token
-    private static String GITHUB_LOGIN;  //uses the user's username
-    // "roguezilla"
-    //"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"
-    private static GHUser user = new GHUser();
+    private static String GITHUB_OAUTH; // gitHub's token //"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"
+    private static String GITHUB_LOGIN;  //uses the user's username // "roguezilla"
+    private static String GITHUB_REPO_NAME = "test_repo";  /*starboard  ES-LETI-1Sem-2021-Grupo9 */
+    private static String GITHUB_FILE_TO_READ = "calc2.0.py"; //File we want to read
+    private static String commitRef = "57f8f3f938071e99da9b6323d07209805ad9813f"; // Reference to get the file from.
+
+    private static GHUser user;
     private static GitHub githubLogin;
-    private static ArrayList<String> finali = new ArrayList<String>();
-    private static boolean valid = false;
+
+    private static boolean valid = false; //if the flag is set to true, then it moves
     private static boolean getUserInfo = false; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
-    private static GHContent content;
-    private static String q = "starboard";  /*ES-LETI-1Sem-2021-Grupo9*/
-    private static List<ComsData> coms = new ArrayList<>();
 
-    private static Map<String,GHRepository> repositories = new HashMap<String, GHRepository>();
-    private static Map<GHUser, GHCommit> info = new HashMap<>();
+    private static Set<String> collaboratorNames = new HashSet<>();
+    private static List<String> repositoriesUserData = new ArrayList<>();
+    private static List<CommitsData> commitsList = new ArrayList<>();
+    private static List<String> info = new ArrayList<>();
+    private static Map<String,GHRepository> repositoriesMap = new HashMap<>();
 
-    public static void main(String[] args) throws IOException {
+
+
+    public static void main(String[] args) throws Exception {
         login();
         if(getUserInfo != false) {
             userInfo();
         }
-        repInfo();
-        getContent(q, "main.py");
-        getCommitData(q, user);
+        repositoriesUnderUser();
+        getFileContentInMain(GITHUB_REPO_NAME, GITHUB_FILE_TO_READ, commitRef );
+        getReadMe(GITHUB_REPO_NAME);
+        getCommitData(GITHUB_REPO_NAME, "glrss-iscte");
+        getBranches(GITHUB_REPO_NAME);
     }
 
+
+    public GitManager(String ID, String USERNAME, String REPO_NAME) throws IOException {
+        this.GITHUB_LOGIN = USERNAME;
+        this.GITHUB_OAUTH = ID;
+        this.GITHUB_REPO_NAME = REPO_NAME;
+        connect();
+    }
+
+    /**
+     * This function's purpose is to log in the user into the GITHUB database. If the login is appropriate it connects
+     * @throws IOException throws when the GitManager is null
+     */
         public static void login() throws IOException { // login for the user // TEMP INTERFACE
             Scanner scan = new Scanner(System.in);  // Create a Scanner object
 
@@ -45,20 +59,15 @@ public class GitManager extends GHAppInstallation{
 
                 System.out.println("Enter Token: ");
                 String authTemp = scan.nextLine(); // read user's token
-                new GitManager(authTemp, useTemp, q);
-
+                new GitManager(authTemp, useTemp, GITHUB_REPO_NAME);
             }
-            //System.out.println("Username is: " + GITHUB_LOGIN + "\nToken is: " + GITHUB_OAUTH);  // Output user input
         }
 
-        public GitManager(String ID, String USERNAME, String REPO_NAME) throws IOException {
-            this.GITHUB_LOGIN = USERNAME;
-            this.GITHUB_OAUTH = ID;
-            this.GITHUB_REPO_NAME = REPO_NAME;
-            connect();
-        }
-
-        public static void connect() throws IOException {
+    /**
+     * This function is to complement the previous function by verifying that the information provided is correct
+     * @throws IOException throws when GitHub or GHuser is null.
+     */
+    public static void connect() throws IOException{
             githubLogin = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
                 if(githubLogin.isCredentialValid()) {
                     valid = true;
@@ -67,7 +76,12 @@ public class GitManager extends GHAppInstallation{
                 }
         }
 
-        public static String userInfo() throws IOException {
+    /**
+     * This function's purpose is to gather all the user information, the user in question being the person that logged in.
+     * @return info which contains the data to be presented.
+     * @throws IOException thrown when the GHuser is null
+     */
+    public static String userInfo() throws IOException{
 
             String name = user.getName();
             long userID = user.getId();
@@ -76,12 +90,11 @@ public class GitManager extends GHAppInstallation{
             System.out.println(token);
 
             String login = user.getLogin();
-            String email = user.getEmail(); if(email == null) email = "Your email isn't public";
-            String bio = user.getBio(); if(bio == null)bio   = "No bio available";
-            String location = user.getLocation(); if(location == null)location   = "Unknown location";
-            String twtUser = user.getTwitterUsername(); if(twtUser == null)twtUser = "Not available";
-            String company = user.getCompany(); if(company == null) company = "You don't have a company!";
-
+            String email = getUserInformation(user.getEmail(), "Your email isn't public");
+            String bio = getUserInformation(user.getBio(), "No bio available");
+            String location = getUserInformation(user.getLocation(), "Unknown location");
+            String twtUser = getUserInformation(user.getTwitterUsername(), "Not available");
+            String company = getUserInformation(user.getCompany(), "You don't have a company!");
 
             String info = "\n" + email + ";\n" + name + ";\n" + login +";\n" + bio  + ";\n" + location +";\n"+ twtUser + ";\n"+ company + ".\n";
             System.out.println(info);
@@ -89,101 +102,145 @@ public class GitManager extends GHAppInstallation{
             return info;
         }
 
-        public static void repInfo() throws IOException{
-                int repoCount = user.getPublicRepoCount(); if(repoCount == 0){ String noRepo = "You have no Public Repositories"; }
-                Optional<Integer> privRepoCount = user.getTotalPrivateRepoCount(); // needs proper token to find the private
+    /**
+     *  This function is simply to ease the previous one in the aspect that if any information is missing, it's simply replaced.
+     * @param userInformation this gets the user information from git
+     * @param backup this is set so if the previous param is null it returns it
+     * @return information which corresponds to the querry.
+     */
+    private static String getUserInformation(String userInformation, String backup) {
+        String information = userInformation;
+        if (information == null) information = backup;
+        return information;
+    }
 
-                //System.out.println("Number of Private Repositories: " + privRepoCount.get());
+    /**
+     * Gathers all the repositories that the user has or participated in, although only shows the public ones it does also count the privates
+     * @throws IOException thrown when the GHuser is null
+     */
+    public static void repositoriesUnderUser() throws IOException{
+        int repoCount = user.getPublicRepoCount();if(repoCount == 0){ String noRepo = "You have no Public Repositories"; }
+        Optional<Integer> privateRepositoryCount = user.getTotalPrivateRepoCount(); // needs proper token to find the private
+        System.out.println("Number of Private Repositories: " + privateRepositoryCount.get());
 
-                repositories = user.getRepositories();
-                System.out.println(repoCount);
+        repositoriesMap = user.getRepositories();
+        System.out.println("Total of public repositories: " + repoCount);
 
-                for(Map.Entry<String, GHRepository> t : repositories.entrySet()){
-                    //get every collaborator info; add-on later on
-                    // give the user the option to see the collaborators and their projects
-
-                    finali.add(t.getKey()); //adding Keys to the String [name]
-
-                    String owner = t.getValue().getOwnerName();
-                   // Set<String> collabs = t.getValue().getCollaboratorNames();
-
-                  
-                 
-                    long id = t.getValue().getId();
-                   //System.out.println("Rep Key: " + a + ". Owner: " + owner + ". ID: " + id);
-                   // System.out.println(collabs);
-                }
-
-                String k = finali.toString();
-                //String[] p = k.split(", "); no point in using this, better to give the user the full String/List of Repositories and just ask them to select one to view further info
-               System.out.println(k);
-               // System.out.println(p[1]);
-
-
+            for(Map.Entry<String, GHRepository> t : repositoriesMap.entrySet()){
+                repositoriesUserData.add(t.getKey());
+                collaboratorNames = t.getValue().getCollaboratorNames();
             }
 
-            public static void getContent(String repositoryName, String fileToRead) throws IOException {
-                String defaultBranch = user.getRepository(repositoryName).getDefaultBranch();
-                if(user.getRepository(repositoryName).getReadme() != null) {
-                    GHContent readMeContents = user.getRepository(repositoryName).getReadme();
-                    InputStream readMe = readMeContents.read();
-                    String cnt = new String(readMe.readAllBytes(), StandardCharsets.UTF_8);
-                }
+            String stringUserData = repositoriesUserData.toString();
+            System.out.println(stringUserData);
+            System.out.println("The collaborators in this repository are: " + collaboratorNames);
+    }
 
-                InputStream fileContent = user.getRepository(repositoryName).getFileContent(fileToRead).read();
-                String fileContents = new String(fileContent.readAllBytes(), StandardCharsets.UTF_8);
+    /**
+     * Gets the README from any repository that was given and reads the data in it.
+     * @param repositoryName the repository to look for
+     * @return contentReadMe returns the content of the README file
+     * @throws IOException thrown when the GHuser is null
+     */
+    public static String getReadMe(String repositoryName) throws IOException {
+        GHContent readMeContents = user.getRepository(repositoryName).getReadme();
+        InputStream readMe = readMeContents.read();
+        String contentReadMe = new String(readMe.readAllBytes(), StandardCharsets.UTF_8);
 
+        System.out.println("ReadME contents: \n" + contentReadMe);
+        return contentReadMe;
+    }
 
-                System.out.println(fileContents);
-               // System.out.println(content.read());
+    /**
+     *  Retrieves and reads the content of the file in question
+     * @param repositoryName The repository in which to look for the file
+     * @param fileName The name of the file
+     * @param ref The commit reference of the file.
+     * @return returns the conents of the file, be it in python, java, or any other language.
+     * @throws IOException thrown when the GHuser is null
+     */
+    public static String getFileContentInMain(String repositoryName, String fileName ,String ref) throws IOException {
+        InputStream fileReading = user.getRepository(repositoryName).getFileContent(fileName, ref).read();
+        String fileContents = new String(fileReading.readAllBytes(), StandardCharsets.UTF_8);
+        System.out.println("File contents:\n" + fileContents);
+        return fileContents;
+    }
+
+    /**
+     * Returns all the branches in the repository in question
+     * @param repositoryName the name of the repository
+     * @throws Exception thrown when the GHuser is null
+     * @return returns a list with the names of the branches.
+     */
+    public static List<String> getBranches(String repositoryName) throws Exception {
+        Map<String, GHBranch> getRepo = githubLogin.getRepository(user.getLogin() + "/" + repositoryName).getBranches();
+        List<String> nams = new ArrayList<>();
+        List<String> nums = new ArrayList<>();
+
+        getRepo.forEach((r, s) -> {
+            nams.add(r);
+            nums.add(s.getSHA1());
+        });
+        System.out.println("\nThe branches in the following Repository: " + repositoryName + " are: " + nams);
+        System.out.println("Branch: " + nams + " SHA1: " + nums);
+
+        return nams;
+    }
+
+    /**
+     * Gets the commit's data from the repository by user
+     * @param repositoryName name of the repository to look
+     * @param user_Login name of the user to retrieve the commits.
+     * @throws IOException throws when GitHub is null.
+     */
+    public static void getCommitData(String repositoryName, String user_Login) throws IOException {
+        GHUser temp = githubLogin.getUser(user_Login);
+        GHRepository getRepo = githubLogin.getRepository(user.getLogin() + "/" + repositoryName);
+
+        List<GHCommit> commits = getRepo.listCommits().toList();
+        commits.forEach((s) -> {
+            try {
+                CommitsData commitData = new CommitsData(s.getCommitShortInfo(), s.getCommitDate(), s.getAuthor());
+                commitsList.add(commitData);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        });
 
-            public static void getCommitData(String repositoryName, GHUser name_User) throws IOException {
-                GHRepository getRepo = githubLogin.getRepository(name_User.getLogin() + "/" + repositoryName);
-                List<GHCommit> commits = getRepo.listCommits().toList();
-                 commits.forEach((s) ->  {
-                     try {
-                         ComsData commitData = new ComsData(s.getCommitShortInfo() , s.getCommitDate(), s.getCommitter());
-                         coms.add(commitData);
-                     } catch (IOException e) {
-                         e.printStackTrace();
-                     }
-                 });
-                System.out.println();
-                System.out.println("Lastest commit: " + coms.get(0).getDescription() +  "\nDate: " + coms.get(0).getDate() + "\nUser: " + coms.get(0).getUserName());
-                System.out.println("First commit: " + coms.get(coms.size()-1).getDescription() + "\nDate: " + coms.get(coms.size()-1).getDate());
-
-                //get ~Total number of commits
-                //System.out.println(getRepo.getCompare(commits.get(0), commits.get(1)).getTotalCommits());
+        for(int i = 0; i < commitsList.size()-1; i++){
+            if (commitsList.get(i).getUserName().equals(temp.getLogin())){
+                info.add(commitsList.get(i).getDescription());
             }
+        }
 
+        System.out.println("The user: " + temp.getLogin() + " Has these commits: " +  info.toString());
+        System.out.println("Total number of commits in: " + getRepo.getName() + " is: " + commitsList.size());
+        System.out.println("\nLatest commit: " + commitsList.get(0).getDescription() + "\nDate: " + commitsList.get(0).getDate() + "\nUser: " + commitsList.get(0).getUserName() + "\n");
+        System.out.println("Initial commit: " + commitsList.get(commitsList.size() - 1).getDescription() + "\nDate: " + commitsList.get(commitsList.size() - 1).getDate() + "\nUser: " + commitsList.get(commits.size()-1).getUserName() + "\n");
+    }
 
+    /**
+     * Simply a neste class for the Commits, where the data is separated in 3 components, Date, Username and Description.
+     */
+    public static class CommitsData {
+        private GHCommit.ShortInfo description;
+        private Date date;
+        private String userName;
 
+        CommitsData(GHCommit.ShortInfo description, Date date, GHUser userName) throws IOException {
+            this.date = date;
+            this.description = description;
+            this.userName = userName.getLogin();
+        }
 
-            public static class ComsData{
-                private GHCommit.ShortInfo description;
-                private Date date;
-                private String userName;
-
-                ComsData(GHCommit.ShortInfo description, Date date, GHUser userName) throws IOException {
-                    this.date = date;
-                    this.description = description;
-                    this.userName = userName.getLogin();
-                }
-
-                public Date getDate() {
+        public Date getDate() {
                     return date;
                 }
-
                 public String getDescription() {
-                    return description.getMessage();
-                }
-
-                public String getUserName() {
+            return description.getMessage();
+        }
+        public String getUserName() {
                     return userName;
                 }
             }
-
-
-
 }
