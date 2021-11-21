@@ -1,31 +1,26 @@
+package teste;
+
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
 import org.trello4j.model.Board;
+import org.trello4j.model.Card;
+import org.trello4j.model.Member;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrelloManager{
 
-    private static Trello trello;
-//    private static Board board;
+    private static final String BOARD_ID = "614de300aa6df33863299b6c";
 
-    private static String BOARD_ID;
-
-    public TrelloManager(String API_KEY, String TOKEN, String BOARD_ID) {
-
-        this.BOARD_ID = BOARD_ID;
-
-        trello = new TrelloImpl(API_KEY, TOKEN);
-        Board board = trello.getBoard(BOARD_ID);
-
-
-    }
+    private static final Trello trello = new TrelloImpl("e3ee0d6a1686b4b43ba5d046bbce20af",null);
+    private static final Board board = trello.getBoard("614de300aa6df33863299b6c");
+    private static final List<Member> members = trello.getMembersByBoard(BOARD_ID,null);
 
 
     public static void main(String[] args) {
 
     }
-
-
 
     /**
      * Returns the ID of a Board List provided its name.
@@ -36,7 +31,7 @@ public class TrelloManager{
         String listId = "";
         List<org.trello4j.model.List> boardLists = trello.getListByBoard(BOARD_ID,null);
         for(org.trello4j.model.List boardList: boardLists) {
-            if (boardList.getName().contains(boardName)) {
+            if (boardList.getName().equals(boardName)) {
                 listId = boardList.getId();
             }
         }
