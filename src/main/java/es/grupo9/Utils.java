@@ -2,25 +2,23 @@ package es.grupo9;
 
 public class Utils{
 
-
-    public static int getCusto(int horas, int custo) {
-        return horas * custo;
+    /**
+     * Returns the cost based on the hours worked and the cost per hour.
+     * @param hours hours worked.
+     * @param cost cost per hour.
+     * @return int cost of the hours worked.
+     */
+    public static int getCost(int hours, int cost) {
+        return hours * cost;
     }
 
-    // custo default = 20
-    public static int getCusto(int horas) {
-
-        return getCusto(horas, 20);
+    /**
+     * Returns the cost based on the hours worked with a default cost of 20.
+     * @param hours hours worked.
+     * @return  int cost of the hours worked.
+     */
+    public static int getCost(int hours) {
+        return getCost(hours, 20);
     }
 
-
-
-
-
-
-
-
-
-    public static void utils(String[] args) {
-    }
 }
