@@ -12,6 +12,6 @@ module com.example.demo {
     requires eu.hansolo.tilesfx;
     requires github.api;
 
-    opens com.example.demo to javafx.fxml;
-    exports com.example.demo;
+    opens es.grupo9 to javafx.fxml;
+    exports es.grupo9;
 }

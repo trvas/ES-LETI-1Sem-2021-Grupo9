@@ -1,4 +1,4 @@
-package com.example.demo;
+package es.grupo9;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

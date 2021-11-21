@@ -1,4 +1,4 @@
-package com.example.demo;
+package es.grupo9;
 
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
