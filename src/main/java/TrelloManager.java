@@ -73,7 +73,11 @@ public class TrelloManager{
 
     }
 
-
+    /**
+     * Gets the amount of hours worked on a card, provided its ID.
+     * @param cardID ID of the Card.
+     * @return Double hours worked on a given card.
+     */
     public static Double getCardHours(String cardID){
         List<Action> comments = trello.getActionsByCard(cardID);
         comments.removeIf(action -> action.getData().getText() == null); // removing null comments
@@ -99,12 +103,19 @@ public class TrelloManager{
         return sum;
     }
 
-
-    public static void getSprintCost(int sprintNumber) {
+    /**
+     *
+     * @param sprintNumber number of the Sprint the cost will be calculated for.
+     */
+    public static Double getSprintCost(int sprintNumber) {
         List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
         Double totalHours = 0.0;
+        Double cost = 0.0;
 
+        // Sum up hours worked on each card
         for (Card card : sprintList) totalHours += getCardHours(card.getId());
+
+        return cost;
 
     }
 
