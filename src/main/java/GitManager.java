@@ -1,12 +1,14 @@
 import org.kohsuke.github.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class GitManager extends GHAppInstallation {
+/**
+ * GitManager class, allowing for the search in GIT using an API to get specific information
+ */
+public class GitManager{
 
     private static String GITHUB_OAUTH; // gitHub's token //"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"
     private static String GITHUB_LOGIN;  //uses the user's username // "roguezilla"
@@ -26,7 +28,11 @@ public class GitManager extends GHAppInstallation {
     private static List<String> info = new ArrayList<>();
     private static Map<String, GHRepository> repositoriesMap = new HashMap<>();
 
-
+    /**
+     *  The main function of this class
+     * @param args normal thing in a main
+     * @throws Exception due to the functions it's calling, GitHub or GHUser being null
+     */
     public static void main(String[] args) throws Exception {
         login();
         if (getUserInfo != false) {
@@ -39,7 +45,13 @@ public class GitManager extends GHAppInstallation {
         getBranches(GITHUB_REPO_NAME);
     }
 
-
+    /**
+     * Class constructor
+     * @param AUTH receives the user TOKEN
+     * @param USERNAME receives the user's LOGIN
+     * @param REPO_NAME receives the user desired repository
+     * @throws IOException throws exception when GitHub is null or GHUser is null
+     */
     public GitManager(String AUTH, String USERNAME, String REPO_NAME) throws IOException {
         this.GITHUB_LOGIN = USERNAME;
         this.GITHUB_OAUTH = AUTH;
@@ -126,6 +138,7 @@ public class GitManager extends GHAppInstallation {
      * Gathers all the repositories that the user has or participated in, although only shows the public ones it does also count the privates
      *
      * @throws IOException thrown when the GHuser is null
+     * @return returns a String with the user's repositories.
      */
     public static String repositoriesUnderUser() throws IOException {
         int repoCount = user.getPublicRepoCount();
@@ -217,6 +230,7 @@ public class GitManager extends GHAppInstallation {
      * @param repositoryName name of the repository to look
      * @param user_Login     name of the user to retrieve the commits.
      * @throws IOException throws when GitHub is null.
+     * @return returns a String which contains the initial and final commit from the repository main branch
      */
     public static String getCommitData(String repositoryName, String user_Login) throws IOException {
         GHUser temp = githubLogin.getUser(user_Login);
@@ -245,7 +259,6 @@ public class GitManager extends GHAppInstallation {
         String both = initial + latest;
         System.out.println(both);
         return both;
-
     }
 
     /**
@@ -256,20 +269,39 @@ public class GitManager extends GHAppInstallation {
         private Date date;
         private String userName;
 
+        /**
+         * constructor of the nested class CommitsData
+         * @param description receives the description of a commit
+         * @param date receives the date of publishing of the commit
+         * @param userName receives the name of the person who created the commit
+         * @throws IOException thrown due to the GHUser possibility of being null
+         */
         CommitsData(GHCommit.ShortInfo description, Date date, GHUser userName) throws IOException {
             this.date = date;
             this.description = description;
             this.userName = userName.getLogin();
         }
 
+        /**
+         * A getfunction for the date
+         * @return returns the date of the commits
+         */
         public Date getDate() {
             return date;
         }
 
+        /**
+         * a getfunction for the description
+         * @return returns the description of the commits
+         */
         public String getDescription() {
             return description.getMessage();
         }
 
+        /**
+         * a getfucntion for the user's login
+         * @return returns the username of the commit creator
+         */
         public String getUserName() {
             return userName;
         }

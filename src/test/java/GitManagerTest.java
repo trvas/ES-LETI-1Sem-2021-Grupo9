@@ -21,22 +21,22 @@ class GitManagerTest {
     void tearDown() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testMain() {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void login() throws IOException {
         GitManager.login();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testConnect() throws IOException {
         GitManager.connect();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testUserInfo() throws IOException {
         String info =
 """
@@ -52,27 +52,27 @@ ISCTE.
        Assert.assertEquals(info , GitManager.userInfo());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void repositoriesUnderUser() throws IOException {
         Assertions.assertNotEquals(null, GitManager.repositoriesUnderUser());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getReadMe() throws IOException {
         Assertions.assertNotEquals(null, GitManager.getReadMe("test_repo"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getFileContentInMain() throws IOException {
         Assertions.assertNotEquals(null, GitManager.getFileContentInMain("test_repo", "calc2.0.py", "57f8f3f938071e99da9b6323d07209805ad9813f"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getBranches() throws Exception {
         Assertions.assertNotEquals(null, GitManager.getBranches("test_repo"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getCommitData() throws IOException {
         Assertions.assertNotEquals(null, GitManager.getCommitData("test_repo" , "Henrique-DeSousa"));
     }
