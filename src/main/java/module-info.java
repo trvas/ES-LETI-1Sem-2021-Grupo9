@@ -4,6 +4,7 @@ module com.example.demo {
     requires javafx.web;
 
     requires trello4j;
+    requires java.sql;
 
     requires com.dlsc.formsfx;
     requires validatorfx;

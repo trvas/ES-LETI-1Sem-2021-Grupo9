@@ -26,7 +26,8 @@ public class TrelloManager{
 
 
     public static void main(String[] args) {
-    //    TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+        System.out.println(getSprintCost(1));
     }
 
 
@@ -65,8 +66,14 @@ public class TrelloManager{
         while(aux != comments.size()) {
             for (Action action : comments) {
                 if (action.getData().getText().contains("plus!")) {
+                    // Normal structure of a comment with plus! = "plus! @NAME #/#"
+                    // First split = [plus! @NAME #, #]
                     String[] firstSplit = action.getData().getText().split("/");
+
+                    // Second split = [plus!, @NAME, #]
                     String[] secondSplit = firstSplit[0].split(" ");
+
+                    // Get the last element of the array (hours)
                     hours[aux] = Double.valueOf(secondSplit[secondSplit.length - 1]);
                 }
                 aux++;
@@ -85,13 +92,11 @@ public class TrelloManager{
     public static Double getSprintCost(int sprintNumber) {
         List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
         Double totalHours = 0.0;
-        Double cost = 0.0;
 
         // Sum up hours worked on each card
         for (Card card : sprintList) totalHours += getCardHours(card.getId());
 
-        return cost;
-
+        return Utils.getCost(totalHours);
     }
 
 
@@ -102,7 +107,7 @@ public class TrelloManager{
      */
     public static String getBoardListIdByName(String listName){
         String listId = "";
-        List<org.trello4j.model.List> boardLists = trello.getListByBoard(boardId, (String) null);
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(boardId);
         for(org.trello4j.model.List boardList: boardLists) {
             if (boardList.getName().contains(listName)) {
                 listId = boardList.getId();

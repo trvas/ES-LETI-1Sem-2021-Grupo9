@@ -8,7 +8,7 @@ public class Utils{
      * @param cost cost per hour.
      * @return int cost of the hours worked.
      */
-    public static int getCost(int hours, int cost) {
+    public static Double getCost(Double hours, int cost) {
         return hours * cost;
     }
 
@@ -17,7 +17,7 @@ public class Utils{
      * @param hours hours worked.
      * @return  int cost of the hours worked.
      */
-    public static int getCost(int hours) {
+    public static Double getCost(Double hours) {
         return getCost(hours, 20);
     }
 
