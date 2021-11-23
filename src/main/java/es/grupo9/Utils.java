@@ -8,7 +8,7 @@ public class Utils{
      * @param cost cost per hour.
      * @return int cost of the hours worked.
      */
-    public static int getCost(int hours, int cost) {
+    public static Double getCost(Double hours, int cost) {
         return hours * cost;
     }
 
@@ -17,8 +17,20 @@ public class Utils{
      * @param hours hours worked.
      * @return  int cost of the hours worked.
      */
-    public static int getCost(int hours) {
+    public static Double getCost(Double hours) {
         return getCost(hours, 20);
     }
 
+    /**
+     * Calculates the sum of all elements of an array.
+     * @param array array of doubles.
+     * @return Double sum of all the hours.
+     */
+    public static Double getSum(Double[] array) {
+        double sum = 0.0;
+
+        for(Double dbl : array) if( dbl != null ) sum += dbl;
+
+        return sum;
+    }
 }
