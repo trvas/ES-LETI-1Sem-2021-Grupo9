@@ -1,10 +1,11 @@
 package es.grupo9;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 class TrelloManagerTest {
 
@@ -18,24 +19,25 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getBoardListIdByName() {
+    void getBoardListIdByName() throws IOException {
         // ID Lista "Sprints" da Board = 61606295191d043999a57bcb
         Assertions.assertEquals("61606295191d043999a57bcb", TrelloManager.getBoardListIdByName("Sprints"));
     }
 
+
     @Test
-    void getFinishedSprintBacklog() {
+    void getFinishedSprintBacklog() throws IOException {
         Assertions.assertNotEquals(null,TrelloManager.getFinishedSprintBacklog(1));
     }
 
     @Test
-    void getMeetings() {
+    void getMeetings() throws IOException {
         // ID to primeiro cartão da lista Meetings = 616485eb23537a5ed11aec71
         Assertions.assertEquals(TrelloManager.getMeetings().get(1).get(0).getId(),"616485eb23537a5ed11aec71");
     }
 
     @Test
-    void getSprintCount() {
+    void getSprintCount() throws IOException {
         // Número de SPRINTS = 3
         Assertions.assertEquals(TrelloManager.getSprintCount(),3);
     }
@@ -47,9 +49,23 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getSprintCost() {
+    void getSprintCost() throws IOException {
         // Sprint 1 total hours = 35
         // Sprint 1 cost = 35 * 20 = 700
         Assertions.assertEquals(700.0,TrelloManager.getSprintCost(1));
     }
+
+    @Test
+    void getMemberIdByName() throws IOException {
+        // Tatiana Member ID = 614dd7696ae49f2cea41608b
+        Assertions.assertEquals("614dd7696ae49f2cea41608b", TrelloManager.getMemberIdByName("Tatiana"));
+    }
+
+    @Test
+    void getSprintCostByMember() throws IOException {
+        // Tatiana Sprint 1 total hours = 10.0
+        // Tatiana Sprint 1 cost = 200.0
+        Assertions.assertEquals(200.0, TrelloManager.getSprintCostByMember("Tatiana",1));
+    }
+
 }
