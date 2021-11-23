@@ -21,4 +21,16 @@ public class Utils{
         return getCost(hours, 20);
     }
 
+    /**
+     * Calculates the sum of all elements of an array.
+     * @param array array of doubles.
+     * @return Double sum of all the hours.
+     */
+    public static Double getSum(Double[] array) {
+        double sum = 0.0;
+
+        for(Double dbl : array) if( dbl != null ) sum += dbl;
+
+        return sum;
+    }
 }

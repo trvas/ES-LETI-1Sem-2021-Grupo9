@@ -1,5 +1,6 @@
 package es.grupo9;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ class TrelloManagerTest {
 
     @BeforeEach
     void setUp() {
+        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
     }
 
     @AfterEach
@@ -36,5 +38,18 @@ class TrelloManagerTest {
     void getSprintCount() {
         // Número de SPRINTS = 3
         Assertions.assertEquals(TrelloManager.getSprintCount(),3);
+    }
+
+    @Test
+    void getCardHours() {
+        // Card ID = 6160610ad426ed7225e880eb ("Criação da interface gráfica") , hours = 14.87
+        Assertions.assertEquals(TrelloManager.getCardHours("6160610ad426ed7225e880eb"),14.87);
+    }
+
+    @Test
+    void getSprintCost() {
+        // Sprint 1 total hours = 35
+        // Sprint 1 cost = 35 * 20 = 700
+        Assertions.assertEquals(700.0,TrelloManager.getSprintCost(1));
     }
 }

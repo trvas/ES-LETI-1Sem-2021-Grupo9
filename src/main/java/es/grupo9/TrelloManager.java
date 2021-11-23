@@ -6,6 +6,7 @@ import org.trello4j.TrelloImpl;
 import org.trello4j.model.Action;
 import org.trello4j.model.Card;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -23,13 +24,6 @@ public class TrelloManager{
         trello = new TrelloImpl(API_KEY, TOKEN);
   //    Board board = trello.getBoard(boardId);
     }
-
-
-    public static void main(String[] args) {
-        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
-        System.out.println(getSprintCost(1));
-    }
-
 
     /**
      * Gets the ID of cards from the Backlog pertaining to a specific Sprint. Each Increment list has
@@ -58,10 +52,12 @@ public class TrelloManager{
         List<Action> comments = trello.getActionsByCard(cardID);
         comments.removeIf(action -> action.getData().getText() == null); // removing null comments
 
+        // Format to only have 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+
         Double[] hours = new Double[comments.size()];
 
         int aux = 0;
-        Double sum = 0.0;
 
         while(aux != comments.size()) {
             for (Action action : comments) {
@@ -80,9 +76,9 @@ public class TrelloManager{
             }
         }
 
-        for(Double dbl : hours) sum += dbl;
+        Double sum = Utils.getSum(hours);
 
-        return sum;
+        return Double.valueOf(df.format(sum));
     }
 
     /**
@@ -91,12 +87,29 @@ public class TrelloManager{
      */
     public static Double getSprintCost(int sprintNumber) {
         List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
-        Double totalHours = 0.0;
+
+        // Format to only have 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
 
         // Sum up hours worked on each card
+        Double hours = getTotalHours(sprintList);
+
+        Double cost = Utils.getCost(hours);
+
+        return Double.valueOf(df.format(cost));
+    }
+
+    /**
+     * Gets the total amount of hours (sum of hours on each card) of a given list of cards.
+     * @param sprintList list of all the cards in that Sprint.
+     * @return Double sum of all the hours.
+     */
+    private static Double getTotalHours(List<Card> sprintList) {
+        double totalHours = 0.0;
+
         for (Card card : sprintList) totalHours += getCardHours(card.getId());
 
-        return Utils.getCost(totalHours);
+        return totalHours;
     }
 
 
