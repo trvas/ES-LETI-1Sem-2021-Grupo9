@@ -11,6 +11,8 @@ public class HelloController{
     Button id2;
     @FXML
     Button id3;
+    @FXML
+    Button id4;
 
     /**
      * Handler for when the button is clicked

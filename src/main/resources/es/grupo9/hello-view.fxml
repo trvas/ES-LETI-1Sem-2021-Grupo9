@@ -19,7 +19,7 @@
                      <graphic>
                         <ImageView fitHeight="53.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../images/icons8_GPS_Antenna_64px_1.png" />
+                              <Image url="@../../images/icons8_GPS_Antenna_64px_1.png" />
                            </image>
                         </ImageView>
                      </graphic></Label>
@@ -34,7 +34,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/icons8_Person_32px.png" />
+                        <Image url="@../../images/icons8_Person_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -49,7 +49,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/icons8_Open_Envelope_32px.png" />
+                        <Image url="@../../images/icons8_Box_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -64,12 +64,12 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/icons8_Box_32px.png" />
+                        <Image url="@../../images/icons8_Box_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-3" textFill="#827f7f">
+            <Button fx:id="id4" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-3" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -79,7 +79,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/icons8_Xbox_Menu_32px.png" />
+                        <Image url="@../../images/icons8_Box_32px.png" />
                      </image>
                   </ImageView>
                </graphic>
