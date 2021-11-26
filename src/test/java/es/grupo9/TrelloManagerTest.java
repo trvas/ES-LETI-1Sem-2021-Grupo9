@@ -20,7 +20,8 @@ class TrelloManagerTest {
 
     @Test
     void getFinishedSprintBacklog() throws IOException {
-        Assertions.assertNotEquals(null,TrelloManager.getFinishedSprintBacklog(1));
+        // Primerio cartão do Sprint Backlog = 6197c87a5866b715bad2059e
+        Assertions.assertEquals("6197c87a5866b715bad2059e",TrelloManager.getFinishedSprintBacklog(1).get(0).getId());
     }
 
     @Test
