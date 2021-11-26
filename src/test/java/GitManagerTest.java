@@ -6,8 +6,6 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class GitManagerTest {
 
     GitManager gitManager;
@@ -64,7 +62,7 @@ ISCTE.
 
     @Test
     void getFileContentInMain() throws IOException {
-        Assertions.assertNotEquals(null, GitManager.getFileContentInMain("test_repo", "calc2.0.py", "57f8f3f938071e99da9b6323d07209805ad9813f"));
+        Assertions.assertNotEquals(null, GitManager.getFileContent("test_repo", "calc2.0.py", "57f8f3f938071e99da9b6323d07209805ad9813f"));
     }
 
     @Test
