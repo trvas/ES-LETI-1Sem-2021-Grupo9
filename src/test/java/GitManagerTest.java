@@ -72,6 +72,6 @@ ISCTE.
 
     @Test
     void getCommitData() throws IOException {
-        Assertions.assertNotEquals(null, GitManager.getCommitData("test_repo" , "Henrique-DeSousa"));
+        Assertions.assertNotEquals(null, GitManager.getCommitData("test_repo"));
     }
 }

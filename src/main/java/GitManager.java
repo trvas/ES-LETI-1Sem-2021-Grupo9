@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,9 +44,10 @@ public class GitManager {
         repositoriesUnderUser();
         numberOfRepositoriesOwned();
         numberOfCommits(GITHUB_REPO_NAME, "Henrique-DeSousa");
+        getFiles(GITHUB_REPO_NAME);
         getFileContent(GITHUB_REPO_NAME, "calc2.0.py", commitRef);
         getReadMe(GITHUB_REPO_NAME);
-        getCommitData(GITHUB_REPO_NAME, "glrss-iscte");
+        getCommitData(GITHUB_REPO_NAME);
         getBranches(GITHUB_REPO_NAME);
         getTag(GITHUB_REPO_NAME);
     }
@@ -177,7 +179,6 @@ public class GitManager {
 
     /**
      * Function to use to get the Total number of Public and Private( user's token only) repositories of each collaborator
-     *
      * @return String containing the information mentioned above
      * @throws IOException thrown due to GHUser
      */
@@ -211,6 +212,40 @@ public class GitManager {
             out.add("\n" + user.getLogin() + "\n" + publicRepositories + repoCount + "\n" + privateRepositories + privateRepoCount);
         }
         return out;
+    }
+
+    /**
+     * Function to get Branches and their Files from a RepositoryName
+     * @param repositoryName The name of the Repository to inspect
+     * @return returns a map containing a Map containing the name of the Branch and the Files inside it
+     * @throws IOException thrown due to the GitHub
+     */
+    public static Map<GHTree, List<String>> getFiles(String repositoryName) throws IOException {
+        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+        Map<String, GHBranch> getRepos = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
+        List<String> branchesSha = new ArrayList<>();
+
+        Map<GHTree, List<String>> files = new HashMap<>();
+        List<String> filesInBranch = new ArrayList<>();
+        GHTree tree;
+        //GHTreeEntry treeEntry;
+        //html request for the names of the branches / tree
+
+        getRepos.forEach((r, s) -> branchesSha.add(s.getSHA1()));
+
+        for (String s : branchesSha){
+            tree = getRepo.getTree(s);
+
+            for (int j = 0; j < tree.getTree().size(); j++) {
+                filesInBranch.add(tree.getTree().get(j).getPath());
+            }
+            files.put(tree, filesInBranch);
+            filesInBranch = new ArrayList<>();
+        }
+        System.out.println(files);
+        System.out.println(branchesSha);
+        return files;
+
     }
 
     /**
@@ -256,28 +291,14 @@ public class GitManager {
         return branchesName;
     }
 
-    public static void getFiles(String repositoryName) throws IOException {
-        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
-        Map<String, GHBranch> getRepos = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
-        List<String> branchesSha = new ArrayList<>();
-
-        getRepos.forEach((r, s) -> branchesSha.add(s.getSHA1()));
-
-        System.out.println(branchesSha);
-        GHTree t = getRepo.getTree(branchesSha.get(1)); // gets the REPOSITORY AS A TREE
-        System.out.println("branch: " + t.getTree().get(2).getPath()); // literally gets the files in the T ( branch )
-    }
-
     /**
      * Gets the commits' data from the repository by user
      *
      * @param repositoryName name of the repository to look
-     * @param user_Login     name of the user to retrieve the commits.
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
      */
-    public static String getCommitData(String repositoryName, String user_Login) throws IOException {
-        GHUser temp = githubLogin.getUser(user_Login);
+    public static String getCommitData(String repositoryName) throws IOException {
         GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
 
         List<GHCommit> commits = getRepo.listCommits().toList();
@@ -362,7 +383,6 @@ public class GitManager {
 
     public static void getTree(String repositoryName) throws IOException {
         GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
-        //githubLogin.getRepository(user.getLogin() + "/" + repositoryName).getBranches()
 
     }
 
