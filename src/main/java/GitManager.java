@@ -47,6 +47,7 @@ public class GitManager {
         getReadMe(GITHUB_REPO_NAME);
         getCommitData(GITHUB_REPO_NAME, "glrss-iscte");
         getBranches(GITHUB_REPO_NAME);
+        getTag(GITHUB_REPO_NAME);
     }
 
     /**
@@ -247,15 +248,24 @@ public class GitManager {
      * @throws Exception thrown when the GHuser is null
      */
     public static List<String> getBranches(String repositoryName) throws Exception {
+        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
         Map<String, GHBranch> getRepos = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
         List<String> branchesName = new ArrayList<>();
+
+        getRepos.forEach((r, s) -> branchesName.add(r));
+        return branchesName;
+    }
+
+    public static void getFiles(String repositoryName) throws IOException {
+        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+        Map<String, GHBranch> getRepos = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
         List<String> branchesSha = new ArrayList<>();
 
-        getRepos.forEach((r, s) -> {
-            branchesName.add(r);
-            branchesSha.add(s.getSHA1());
-        });
-        return branchesName;
+        getRepos.forEach((r, s) -> branchesSha.add(s.getSHA1()));
+
+        System.out.println(branchesSha);
+        GHTree t = getRepo.getTree(branchesSha.get(1)); // gets the REPOSITORY AS A TREE
+        System.out.println("branch: " + t.getTree().get(2).getPath()); // literally gets the files in the T ( branch )
     }
 
     /**
@@ -313,6 +323,47 @@ public class GitManager {
             }
         }
         return "The user: " + temp.getLogin() + "\nHas these commits: " + info.toString() + "\nWith a total of: " + info.size();
+
+    }
+
+    /**
+     * Function to return the Tags that were made in a Repository.
+     *
+     * @param repositoryName Name of the repository to fetch Tags
+     * @return Returns a Map with the Name of the Tag, and it's Date of publish
+     * @throws IOException Thrown due to GitHub
+     */
+    public static Map<String, Date> getTag(String repositoryName) throws IOException {
+        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+        List<GHTag> tags = getRepo.listTags().toList();
+        List<String> tagNames = new ArrayList<>();
+        List<GHCommit> tagCommits = new ArrayList<>();
+        List<Date> tagDate = new ArrayList<>();
+        Map<String, Date> out = new HashMap<>();
+
+        tags.forEach(s -> {
+            tagNames.add(s.getName());
+            tagCommits.add(s.getCommit());
+        });
+
+        tagCommits.forEach((s) -> {
+            try {
+                tagDate.add(s.getCommitDate());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        for (int i = 0; i < tagNames.size(); i++) {
+            out.put(tagNames.get(i), tagDate.get(i));
+        }
+        System.out.println(out);
+        return out;
+    }
+
+    public static void getTree(String repositoryName) throws IOException {
+        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+        //githubLogin.getRepository(user.getLogin() + "/" + repositoryName).getBranches()
+
     }
 
     /**
