@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 class TrelloManagerTest {
 
@@ -97,4 +99,53 @@ class TrelloManagerTest {
         Assertions.assertEquals("614dd7696ae49f2cea41608b", TrelloManager.getMemberIdByName("Tatiana"));
     }
 
+    @Test
+    void getCommittedActivities() throws IOException {
+        // To update with new values
+        // Current values = [13, 85.64, 1712.8]
+        List<Object> expected = new ArrayList<>();
+        expected.add(0, 13);
+        expected.add(1, 85.64);
+        expected.add(2, 1712.8);
+
+        Assertions.assertEquals(expected, TrelloManager.getCommittedActivities());
+    }
+
+    @Test
+    void getNotCommittedActivities() throws IOException {
+        // To update with new
+        // Current values = [11, 18.43, 368.6]
+        List<Object> expected = new ArrayList<>();
+        expected.add(0, 11);
+        expected.add(1, 18.43);
+        expected.add(2, 368.6);
+
+        Assertions.assertEquals(expected, TrelloManager.getNotCommittedActivities());
+    }
+
+    @Test
+    void getCommittedActivitiesByMember() throws IOException {
+        // To update with new values
+        // Current values Tatiana = [7, 22.14, 442.8]
+        List<Object> expected = new ArrayList<>();
+        expected.add(0, 7);
+        expected.add(1, 22.14);
+        expected.add(2, 442.8);
+
+        Assertions.assertEquals(expected, TrelloManager.getCommittedActivitiesByMember("Tatiana"));
+
+    }
+
+    @Test
+    void getNotCommittedActivitiesByMember() throws IOException {
+        // To update with new values
+        // Current values Tatiana = [10, 16.43, 328.6]
+        List<Object> expected = new ArrayList<>();
+        expected.add(0, 10);
+        expected.add(1, 16.43);
+        expected.add(2, 328.6);
+
+        Assertions.assertEquals(expected, TrelloManager.getNotCommittedActivitiesByMember("Tatiana"));
+
+    }
 }

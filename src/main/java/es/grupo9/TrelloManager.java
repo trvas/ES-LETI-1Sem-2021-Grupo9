@@ -203,8 +203,6 @@ public class TrelloManager{
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
     public static Double getSprintCost(int sprintNumber) throws IOException {
-        List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
-
         // Format to only have 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
 
@@ -275,6 +273,132 @@ public class TrelloManager{
         for (Card card : sprintList) totalHours += getEstimateCardHours(card.getId());
 
         return totalHours;
+    }
+
+    public static void main(String[] args) throws IOException {
+        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+
+        System.out.println(getCommittedActivitiesByMember("Tatiana"));
+        System.out.println(getNotCommittedActivitiesByMember("Tatiana"));
+    }
+
+    /**
+     * Returns a List with the amount of activities, hours worked and total cost of all the committed activities. This
+     * method works by going over every "Done" list from each SPRINT.
+     * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
+     * @throws IOException refer to {@link #getSprintCount()}
+     */
+    public static List<Object> getCommittedActivities() throws IOException {
+        List<Object> activities = new ArrayList<>();
+        List<Card> activitiesCount = new ArrayList<>();
+        double totalHours = 0.0;
+        // Format to only have 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        for(int i = 1; i != getSprintCount() + 1; i++){
+            activitiesCount.addAll(trello.getCardsByList(getBoardListIdByName("#SPRINT" + i + " - Increment")));
+            totalHours += getSprintHours(i);
+        }
+
+        activities.add(0, activitiesCount.size());
+        activities.add(1, Double.valueOf(df.format(totalHours)));
+        activities.add(2, Utils.getCost(totalHours));
+
+        return activities;
+    }
+
+
+    /**
+     * Returns a List with the amount of activities, hours worked and total cost of all the not committed activities.
+     * This method works by going over every "Meetings" list from each SPRINT.
+     * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
+     * @throws IOException refer to {@link #getSprintCount()}
+     */
+    public static List<Object> getNotCommittedActivities() throws IOException {
+        List<Object> activities = new ArrayList<>();
+        List<Card> activitiesCount = new ArrayList<>();
+        double totalHours = 0.0;
+        // Format to only have 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+
+
+        for(int i = 1; i != getSprintCount() + 1; i++){
+            List<Card> meetings = trello.getCardsByList(getBoardListIdByName("#SPRINT" + i + " - Meetings"));
+            activitiesCount.addAll(meetings);
+            totalHours += getTotalListHours(meetings);
+        }
+
+        activities.add(0, activitiesCount.size());
+        activities.add(1, Double.valueOf(df.format(totalHours)));
+        activities.add(2, Utils.getCost(totalHours));
+
+        return activities;
+    }
+
+    /**
+     * Returns a List with the amount of activities, hours worked and total cost of all the committed activities by member.
+     * This method works by going over every "Done" list from each SPRINT and getting the cards with the member on them.
+     * @param memberName name of the member.
+     * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
+     * @throws IOException refer to {@link #getSprintCount()}
+     */
+    public static List<Object> getCommittedActivitiesByMember(String memberName) throws IOException {
+        List<Object> activities = new ArrayList<>();
+        List<Card> activitiesCount = new ArrayList<>();
+        double totalHours = 0.0;
+        // Format to only have 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+
+
+        for(int i = 1; i != getSprintCount() + 1; i++){
+            List<Card> memberSprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + i + " - Increment"));
+
+            // Removing cards without the member
+            String memberId = getMemberIdByName(memberName);
+            memberSprintList.removeIf(card -> !(card.getIdMembers().contains(memberId)));
+
+            activitiesCount.addAll(memberSprintList);
+            totalHours += getSprintHoursByMember(memberName, i);
+        }
+
+        activities.add(0, activitiesCount.size());
+        activities.add(1, Double.valueOf(df.format(totalHours)));
+        activities.add(2, Utils.getCost(totalHours));
+
+        return activities;
+    }
+
+    /**
+     * Returns a List with the amount of activities, hours worked and total cost of all the not committed activities by member.
+     * This method works by going over every "Meetings" list from each SPRINT and getting the cards with the member on them.
+     * @param memberName name of the member.
+     * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
+     * @throws IOException refer to {@link #getSprintCount()}
+     */
+    public static List<Object> getNotCommittedActivitiesByMember(String memberName) throws IOException {
+        List<Object> activities = new ArrayList<>();
+        List<Card> activitiesCount = new ArrayList<>();
+        double totalHours = 0.0;
+        // Format to only have 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+
+
+        for(int i = 1; i != getSprintCount() + 1; i++){
+            List<Card> memberMeetingList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + i + " - Meetings"));
+
+            // Removing cards without the member
+            String memberId = getMemberIdByName(memberName);
+            memberMeetingList.removeIf(card -> !(card.getIdMembers().contains(memberId)));
+
+            activitiesCount.addAll(memberMeetingList);
+            totalHours += getTotalListHours(memberMeetingList);
+        }
+
+        activities.add(0, activitiesCount.size());
+        activities.add(1, Double.valueOf(df.format(totalHours)));
+        activities.add(2, Utils.getCost(totalHours));
+
+        return activities;
     }
 
     /**
