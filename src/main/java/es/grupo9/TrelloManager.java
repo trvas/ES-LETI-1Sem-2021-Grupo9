@@ -24,7 +24,7 @@ public class TrelloManager{
 
         boardId = BOARD_ID;
         trello = new TrelloImpl(API_KEY, TOKEN);
-  //    Board board = trello.getBoard(boardId);
+        //    Board board = trello.getBoard(boardId);
     }
 
     /**
@@ -275,13 +275,6 @@ public class TrelloManager{
         return totalHours;
     }
 
-    public static void main(String[] args) throws IOException {
-        TrelloManager trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
-
-        System.out.println(getCommittedActivitiesByMember("Tatiana"));
-        System.out.println(getNotCommittedActivitiesByMember("Tatiana"));
-    }
-
     /**
      * Returns a List with the amount of activities, hours worked and total cost of all the committed activities. This
      * method works by going over every "Done" list from each SPRINT.
@@ -444,5 +437,4 @@ public class TrelloManager{
 
         return cards.size();
     }
-
 }

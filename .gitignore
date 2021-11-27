@@ -1,4 +1,3 @@
 /bin/
-/src/main/java/es/grupo9/es.grupo9.config.java
 /target/
-/src/test/java/es.grupo9.config.java
+/src/test/java/es/grupo9/config.java
