@@ -39,7 +39,7 @@
                   </ImageView>
                </graphic>
                 </Button>
-            <Button fx:id="id2" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-1" textFill="#827f7f">
+            <Button fx:id="id2" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-1" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -54,7 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-2" textFill="#827f7f">
+            <Button fx:id="id3" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-2" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -69,7 +69,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="id4" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-3" textFill="#827f7f">
+            <Button fx:id="id4" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="45.0" prefWidth="206.0" stylesheets="@style.css" text="Sprint-3" textFill="#827f7f">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -85,5 +85,87 @@
                </graphic>
             </Button>
             </children></VBox>
+      <TabPane fx:id="TabPane1" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #4d79ff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Sprint1">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <TabPane fx:id="TabPane2" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #809fff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Sprint2">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab text="Untitled Tab 2">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <TabPane fx:id="TabPane3" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #4db8ff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Untitled Tab 1">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab text="Untitled Tab 2">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Pane fx:id="Pane" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #99ccff;" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="Input1" layoutX="87.0" layoutY="44.0" prefHeight="25.0" prefWidth="223.0" />
+            <TextField fx:id="Input2" layoutX="87.0" layoutY="101.0" prefHeight="25.0" prefWidth="223.0" />
+            <TextField fx:id="Input3" layoutX="87.0" layoutY="156.0" prefHeight="25.0" prefWidth="223.0" />
+            <TextField fx:id="Input4" layoutX="87.0" layoutY="342.0" prefHeight="25.0" prefWidth="223.0" />
+            <TextField fx:id="Input5" layoutX="87.0" layoutY="397.0" prefHeight="25.0" prefWidth="223.0" />
+            <TextField fx:id="Input6" layoutX="87.0" layoutY="452.0" prefHeight="25.0" prefWidth="223.0" />
+            <TextField editable="false" layoutX="87.0" layoutY="14.0" style="-fx-background-color: #99ccff;" text="Trello API Key">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField editable="false" layoutX="87.0" layoutY="71.0" prefHeight="30.0" prefWidth="192.0" style="-fx-background-color: #99ccff;" text="Trello Authentication Token">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField editable="false" layoutX="87.0" layoutY="422.0" style="-fx-background-color: #99ccff;" text="GitHub id?? ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField editable="false" layoutX="87.0" layoutY="126.0" style="-fx-background-color: #99ccff;" text="Trello Board ID">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField editable="false" layoutX="87.0" layoutY="312.0" style="-fx-background-color: #99ccff;" text="GitHub id?? ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField editable="false" layoutX="87.0" layoutY="367.0" style="-fx-background-color: #99ccff;" text="GitHub id?? ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Button fx:id="Search" layoutX="469.0" layoutY="442.0" mnemonicParsing="false" onAction="#searching" prefHeight="46.0" prefWidth="192.0" text="Search" />
+         </children></Pane>
     </children>
 </AnchorPane>

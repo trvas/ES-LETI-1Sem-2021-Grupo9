@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class TrelloManager{
 
-    private static Trello trello;
+    public static Trello trello;
 //  private static Board board;
 
     private static String boardId;
@@ -71,10 +71,11 @@ public class TrelloManager{
         HashMap<Integer, List<Card>> meetings = new HashMap<>();
 
         // Get all the Meetings cards
+         /*
         for(int sprintNumber = 1; sprintNumber < getSprintCount() + 1; sprintNumber++){
             meetings.put(sprintNumber, trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Meetings")));
         }
-
+        */
         return meetings;
     }
 
@@ -82,7 +83,7 @@ public class TrelloManager{
      * Gets the number of current Sprints.
      * @return int number of Sprints so far.
      */
-    public static int getSprintCount(){
+    public int getSprintCount(){
         // Get "Sprints" list cards
         List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("Sprints")));
 
