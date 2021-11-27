@@ -36,7 +36,7 @@ public class TrelloManager{
      * @return List<Card> list of cards from the desired Sprint.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static List<Card> getFinishedSprintBacklog(int sprintNumber) throws IOException {
+    public List<Card> getFinishedSprintBacklog(int sprintNumber) throws IOException {
         // Initialize auxiliary variables
 
         // Get the list of cards from the board
@@ -51,7 +51,7 @@ public class TrelloManager{
      * @param cardID ID of the Card.
      * @return Double hours worked on a given card.
      */
-    public static Double getCardHours(String cardID){
+    public Double getCardHours(String cardID){
         List<Action> comments = trello.getActionsByCard(cardID);
         comments.removeIf(action -> action.getData().getText() == null); // removing null comments
 
@@ -89,7 +89,7 @@ public class TrelloManager{
      * @param cardID ID of the Card.
      * @return Double estimated hours of work on a given card.
      */
-    public static Double getEstimateCardHours(String cardID){
+    public Double getEstimateCardHours(String cardID){
         List<Action> comments = trello.getActionsByCard(cardID);
         comments.removeIf(action -> action.getData().getText() == null); // removing null comments
 
@@ -126,7 +126,7 @@ public class TrelloManager{
      * @return Double hours worked on a given SPRINT.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static Double getSprintHours(int sprintNumber) throws IOException {
+    public Double getSprintHours(int sprintNumber) throws IOException {
         List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
 
         // Format to only have 2 decimal places
@@ -145,7 +145,7 @@ public class TrelloManager{
      * @return Double amount of hours a given member worked on the given SPRINT.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static Double getSprintHoursByMember(String memberName, int sprintNumber) throws IOException {
+    public Double getSprintHoursByMember(String memberName, int sprintNumber) throws IOException {
         List<Card> memberSprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
 
         // Removing cards without the member
@@ -164,7 +164,7 @@ public class TrelloManager{
      * @return Double estimate hours of work on a given SPRINT.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static Double getEstimateSprintHours(int sprintNumber) throws IOException {
+    public Double getEstimateSprintHours(int sprintNumber) throws IOException {
         List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
 
         // Format to only have 2 decimal places
@@ -183,7 +183,7 @@ public class TrelloManager{
      * @return Double estimate amount of hours a given member worked on the given SPRINT.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static Double getEstimateSprintHoursByMember(String memberName, int sprintNumber) throws IOException {
+    public Double getEstimateSprintHoursByMember(String memberName, int sprintNumber) throws IOException {
         List<Card> memberSprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
 
         // Removing cards without the member
@@ -202,7 +202,7 @@ public class TrelloManager{
      * @return Double cost of the work done in the SPRINT.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static Double getSprintCost(int sprintNumber) throws IOException {
+    public Double getSprintCost(int sprintNumber) throws IOException {
         // Format to only have 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
 
@@ -218,7 +218,7 @@ public class TrelloManager{
      * @return Double cost of the work of the member on the given SPRINT.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static Double getSprintCostByMember(String memberName, int sprintNumber) throws IOException {
+    public Double getSprintCostByMember(String memberName, int sprintNumber) throws IOException {
         List<Card> memberSprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
 
         // Removing cards without the member
@@ -238,7 +238,7 @@ public class TrelloManager{
      * @return HashMap<Integer, List<Card>> HashMap with the Sprint Number and list of cards (meetings) from that sprint.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static HashMap<Integer, List<Card>> getMeetings() throws IOException {
+    public HashMap<Integer, List<Card>> getMeetings() throws IOException {
         HashMap<Integer, List<Card>> meetings = new HashMap<>();
 
         // Get all the Meetings cards
@@ -254,7 +254,7 @@ public class TrelloManager{
      * @param sprintList list of all the cards.
      * @return Double sum of all the hours.
      */
-    private static Double getTotalListHours(List<Card> sprintList) {
+    private Double getTotalListHours(List<Card> sprintList) {
         double totalHours = 0.0;
 
         for (Card card : sprintList) totalHours += getCardHours(card.getId());
@@ -267,7 +267,7 @@ public class TrelloManager{
      * @param sprintList list of all the cards.
      * @return Double sum of all the estimate hours.
      */
-    private static Double getEstimateListHours(List<Card> sprintList) {
+    private Double getEstimateListHours(List<Card> sprintList) {
         double totalHours = 0.0;
 
         for (Card card : sprintList) totalHours += getEstimateCardHours(card.getId());
@@ -281,7 +281,7 @@ public class TrelloManager{
      * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
      * @throws IOException refer to {@link #getSprintCount()}
      */
-    public static List<Object> getCommittedActivities() throws IOException {
+    public List<Object> getCommittedActivities() throws IOException {
         List<Object> activities = new ArrayList<>();
         List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
@@ -307,7 +307,7 @@ public class TrelloManager{
      * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
      * @throws IOException refer to {@link #getSprintCount()}
      */
-    public static List<Object> getNotCommittedActivities() throws IOException {
+    public List<Object> getNotCommittedActivities() throws IOException {
         List<Object> activities = new ArrayList<>();
         List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
@@ -335,7 +335,7 @@ public class TrelloManager{
      * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
      * @throws IOException refer to {@link #getSprintCount()}
      */
-    public static List<Object> getCommittedActivitiesByMember(String memberName) throws IOException {
+    public List<Object> getCommittedActivitiesByMember(String memberName) throws IOException {
         List<Object> activities = new ArrayList<>();
         List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
@@ -368,7 +368,7 @@ public class TrelloManager{
      * @return List<Object> with the following structure [AMOUNT OF ACTIVITIES, HOURS WORKED, COST].
      * @throws IOException refer to {@link #getSprintCount()}
      */
-    public static List<Object> getNotCommittedActivitiesByMember(String memberName) throws IOException {
+    public List<Object> getNotCommittedActivitiesByMember(String memberName) throws IOException {
         List<Object> activities = new ArrayList<>();
         List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
@@ -400,7 +400,7 @@ public class TrelloManager{
      * @return String ID of the Board List.
      * @throws IOException if list isn't part of the board.
      */
-    public static String getBoardListIdByName(String listName) throws IOException {
+    public String getBoardListIdByName(String listName) throws IOException {
         List<org.trello4j.model.List> boardLists = trello.getListByBoard(boardId);
         for(org.trello4j.model.List boardList : boardLists) {
             if (boardList.getName().contains(listName)) {
@@ -416,7 +416,7 @@ public class TrelloManager{
      * @return String ID of the Member.
      * @throws IOException if member isn't part of the board.
      */
-    public static String getMemberIdByName(String memberName) throws IOException {
+    public String getMemberIdByName(String memberName) throws IOException {
         List<Member> memberList = trello.getMembersByBoard(boardId);
         for(Member member : memberList) {
             if (member.getFullName().contains(memberName)) {
@@ -431,7 +431,7 @@ public class TrelloManager{
      * @return int number of Sprints so far.
      * @throws IOException refer to {@link #getBoardListIdByName(String)};
      */
-    public static int getSprintCount() throws IOException {
+    public int getSprintCount() throws IOException {
         // Get "Sprints" list cards
         List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("Sprints")));
 
