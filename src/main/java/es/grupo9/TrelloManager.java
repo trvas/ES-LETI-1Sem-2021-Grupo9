@@ -99,7 +99,7 @@ public class TrelloManager{
 
         String str = "xpto@for@xp";
         String[] arrOfStr = str.split("@", 5);
-        List<Card> cards = trello.getCardsByList(getBoardListIdByName("#SPRINT"));
+        List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("#SPRINT")));
         for (Card card : cards) {
 
             if (card.getName().contains("#Sprints")) {
