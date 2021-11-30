@@ -93,23 +93,25 @@ public class TrelloManager{
 
 
 
-    public static String getCardDate(String listDate) {
+    public static List<Card> getCardDate(String listDate) {
 
-        String c = "abc".substring(2, 3);
+        //String c = "abc".substring(2, 3);
 
-        String str = "xpto@for@xp";
-        String[] arrOfStr = str.split("@", 5);
-        List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("#SPRINT")));
-        for (Card card : cards) {
+        //String str = "xpto@for@xp";
+        //String[] arrOfStr = str.split("@", 5);
+        //List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("#SPRINT")));
+        List<Card> cards2 = new ArrayList<>();
+        for (Card card2 : cards2) {
 
-            if (card.getName().contains("#Sprints")) {
-                card.getDesc();
-
+            if (card2.getName().contains("#SPRINT")) {
+               card2.getDesc().toString();
+             System.out.println(card2.getDesc());
 
             }
 
         }
-        return str;
+
+        return cards2;
     }
 
 
