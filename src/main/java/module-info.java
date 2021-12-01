@@ -12,6 +12,7 @@ module com.example.demo {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires github.api;
+    requires markdown4j;
 
     opens es.grupo9 to javafx.fxml;
     exports es.grupo9;
