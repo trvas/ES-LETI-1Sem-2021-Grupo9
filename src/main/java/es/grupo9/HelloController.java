@@ -111,13 +111,7 @@ public class HelloController{
         }
 
         Double[] globalStats = trelloManager.getSprintHours(sprintNumber);
-        addData(data, globalStats);
-
-        reviewTable.setItems(data);
-        rMember.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
-        rEstimated.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
-        rHours.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
-        rCost.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+        setTableItems(data, globalStats, reviewTable, rMember, rEstimated, rHours, rCost);
     }
 
     public void setMeetingsTable(int sprintNumber) throws IOException {
@@ -128,13 +122,7 @@ public class HelloController{
         }
 
         Double[] globalActivities = trelloManager.getNotCommittedActivities(sprintNumber);
-        addData(data, globalActivities);
-
-        meetingsTable.setItems(data);
-        mMember.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
-        mActivities.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
-        mHours.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
-        mCost.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+        setTableItems(data, globalActivities, meetingsTable, mMember, mActivities, mHours, mCost);
     }
 
 
@@ -146,13 +134,22 @@ public class HelloController{
         }
 
         Double[] globalActivities = trelloManager.getCommittedActivities(sprintNumber);
-        addData(data, globalActivities);
 
-        doneTable.setItems(data);
-        dMember.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
-        dActivities.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
-        dHours.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
-        dCost.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+        setTableItems(data, globalActivities, doneTable, dMember, dActivities, dHours, dCost);
+    }
+
+    public void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView,
+                         TableColumn<Object, Object> cell1, TableColumn<Object, Object> cell2,
+                         TableColumn<Object, Object> cell3, TableColumn<Object, Object> cell4){
+
+        addData(data, dataArray);
+
+        tableView.setItems(data);
+
+        cell1.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+        cell2.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
+        cell3.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
+        cell4.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
     }
 
     private void addData(ObservableList<Object> data, Double[] globalValues){
