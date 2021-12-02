@@ -48,7 +48,7 @@
                   <Font size="18.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/icons8_Box_32px.png" />
                      </image>
@@ -180,12 +180,12 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="reviewTable" layoutX="16.0" layoutY="224.0" prefHeight="307.0" prefWidth="745.0">
+                        <TableView fx:id="reviewTable" layoutX="26.0" layoutY="255.0" prefHeight="163.0" prefWidth="459.0">
                           <columns>
-                            <TableColumn fx:id="rMember" prefWidth="90.39996337890625" text="ID" />
-                            <TableColumn fx:id="rEstimated" prefWidth="116.0" text="ESTIMATED HOURS" />
-                              <TableColumn fx:id="rHours" prefWidth="105.39999389648438" text="HOURS WORKED" />
-                              <TableColumn fx:id="rCost" prefWidth="110.4000244140625" text="COST" />
+                            <TableColumn fx:id="rMember" prefWidth="125.39996337890625" text="ID" />
+                            <TableColumn fx:id="rEstimated" prefWidth="138.79998779296875" text="ESTIMATED HOURS" />
+                              <TableColumn fx:id="rHours" prefWidth="106.19998168945312" text="HOURS WORKED" />
+                              <TableColumn fx:id="rCost" prefWidth="81.60000000000002" text="COST" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -195,12 +195,12 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="meetingsTable" layoutX="16.0" layoutY="319.0" prefHeight="200.0" prefWidth="524.0">
+                        <TableView fx:id="meetingsTable" layoutX="16.0" layoutY="312.0" prefHeight="147.0" prefWidth="485.0">
                           <columns>
                             <TableColumn fx:id="mMember" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="mActivities" prefWidth="213.0" text="Nº ACTIVITIES (NOT COMMITTED)" />
-                              <TableColumn fx:id="mHours" minWidth="0.0" prefWidth="79.60003662109375" text="HOURS" />
-                              <TableColumn fx:id="mCost" prefWidth="81.4000244140625" text="COST" />
+                              <TableColumn fx:id="mHours" minWidth="0.0" prefWidth="87.39999389648438" text="HOURS" />
+                              <TableColumn fx:id="mCost" prefWidth="106.4000244140625" text="COST" />
                           </columns>
                         </TableView>
                         <WebView fx:id="MeetingsText" layoutX="16.0" layoutY="69.0" prefHeight="226.0" prefWidth="627.0" />
@@ -212,12 +212,12 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="doneTable" layoutX="14.0" layoutY="267.0" prefHeight="237.0" prefWidth="658.0">
+                        <TableView fx:id="doneTable" layoutX="14.0" layoutY="188.0" prefHeight="167.0" prefWidth="543.0">
                           <columns>
                             <TableColumn fx:id="dMember" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="dActivities" prefWidth="230.19992065429688" text="Nº ACTIVITIES (COMMITTED)" />
                               <TableColumn fx:id="dHours" minWidth="3.20001220703125" prefWidth="81.800048828125" text="HOURS" />
-                              <TableColumn fx:id="dCost" prefWidth="142.0" text="COST" />
+                              <TableColumn fx:id="dCost" prefWidth="149.60001220703123" text="COST" />
                           </columns>
                         </TableView>
                         <WebView fx:id="DoneText" layoutX="14.0" layoutY="58.0" prefHeight="116.0" prefWidth="658.0" />

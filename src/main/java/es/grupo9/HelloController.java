@@ -145,6 +145,8 @@ public class HelloController{
         tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
         tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
         tableColumns[3].setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+
+        tableView.setItems(data);
     }
 
 }
