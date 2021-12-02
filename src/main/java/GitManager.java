@@ -14,7 +14,6 @@ import org.kohsuke.github.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,7 +38,6 @@ public class GitManager {
     private List<CommitsDataGit> commitsRoot = new ArrayList<>();
     private List<String> info = new ArrayList<>();
     private Map<String, List<String>> repositoriesUserData = new HashMap<>();
-    private Map<String, Object> commitsPerBranch = new HashMap<>();
 
     private OkHttpClient client = new OkHttpClient();
     private String url;
@@ -73,7 +71,7 @@ public class GitManager {
 
         var a = GM.getCommitBranches("Henrique-DeSousa", "main");
         for (var commit : a.commits) {
-            System.out.println(commit.commitMessage + " " + commit.getCommitDate() + " " + a.personName);
+            System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
         }
     }
 
@@ -324,7 +322,7 @@ public class GitManager {
     /*--------------------COMMIT RELATED--------------------*/
 
     /**
-     * Gets the commits' data from the repository by user
+     * Gets the commits' data from the root of the Repository and by user
      *
      * @param repositoryName name of the repository to look
      * @return returns a String which contains the initial and final commit from the repository main branch
@@ -347,10 +345,12 @@ public class GitManager {
     }
 
     /**
-     * @param userLogin
-     * @param branchName
-     * @return
-     * @throws IOException
+     * Function to get Commits from the Branches, since the API does not allow for that.
+     *
+     * @param userLogin  User's login to look for their commits in the project
+     * @param branchName The branch in which to look for, for the commits
+     * @return returns a Map into a nested class for it to be able to be processed and used.
+     * @throws IOException throws Exception due to .execute and .string
      */
     public CommitUnpack getCommitBranches(String userLogin, String branchName) throws IOException {
         List<CommitHttpRequest> commits = new ArrayList<>();
@@ -488,7 +488,7 @@ public class GitManager {
     }
 
     /**
-     *
+     *Class to allow the HttpRequest data from the commits to be processed and analysed
      */
     public static class CommitHttpRequest {
         private String commitDate;
@@ -512,7 +512,8 @@ public class GitManager {
     }
 
     /**
-     *
+     *Nested class used in the function to get the commits from the branches, accepts a Map and breaks it down
+     * into the several components.
      */
     public static class CommitUnpack {
         String personName;
