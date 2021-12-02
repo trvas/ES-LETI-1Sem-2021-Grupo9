@@ -111,7 +111,7 @@ public class HelloController{
         }
 
         Double[] globalStats = trelloManager.getSprintHours(sprintNumber);
-        setTableItems(data, globalStats, reviewTable, rMember, rEstimated, rHours, rCost);
+        setTableItems(data, globalStats, reviewTable, new TableColumn[]{rMember, rEstimated, rHours, rCost});
     }
 
     public void setMeetingsTable(int sprintNumber) throws IOException {
@@ -122,7 +122,7 @@ public class HelloController{
         }
 
         Double[] globalActivities = trelloManager.getNotCommittedActivities(sprintNumber);
-        setTableItems(data, globalActivities, meetingsTable, mMember, mActivities, mHours, mCost);
+        setTableItems(data, globalActivities, meetingsTable, new TableColumn[]{mMember, mActivities, mHours, mCost});
     }
 
 
@@ -135,21 +135,18 @@ public class HelloController{
 
         Double[] globalActivities = trelloManager.getCommittedActivities(sprintNumber);
 
-        setTableItems(data, globalActivities, doneTable, dMember, dActivities, dHours, dCost);
+        setTableItems(data, globalActivities, doneTable, new TableColumn[]{dMember, dActivities, dHours, dCost});
     }
 
-    public void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView,
-                         TableColumn<Object, Object> cell1, TableColumn<Object, Object> cell2,
-                         TableColumn<Object, Object> cell3, TableColumn<Object, Object> cell4){
-
+    public void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
         addData(data, dataArray);
 
         tableView.setItems(data);
 
-        cell1.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
-        cell2.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
-        cell3.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
-        cell4.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
+        tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
+        tableColumns[3].setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
     }
 
     private void addData(ObservableList<Object> data, Double[] globalValues){
@@ -157,6 +154,5 @@ public class HelloController{
     }
 
 }
-
 
 
