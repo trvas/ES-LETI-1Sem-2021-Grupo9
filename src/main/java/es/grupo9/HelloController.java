@@ -138,7 +138,7 @@ public class HelloController{
         setTableItems(data, globalActivities, doneTable, new TableColumn[]{dMember, dActivities, dHours, dCost});
     }
 
-    public void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
+    private void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
         addData(data, dataArray);
 
         tableView.setItems(data);
