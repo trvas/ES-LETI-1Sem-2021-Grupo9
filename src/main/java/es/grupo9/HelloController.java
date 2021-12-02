@@ -139,9 +139,7 @@ public class HelloController{
     }
 
     private void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
-        addData(data, dataArray);
-
-        tableView.setItems(data);
+        data.add(new TableData("global", dataArray[0], dataArray[1], dataArray[2]));
 
         tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
         tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
@@ -149,10 +147,7 @@ public class HelloController{
         tableColumns[3].setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
     }
 
-    private void addData(ObservableList<Object> data, Double[] globalValues){
-        data.add(new TableData("global", globalValues[0], globalValues[1], globalValues[2]));
-    }
-
 }
+
 
 
