@@ -108,11 +108,7 @@ public class TrelloManager{
             estimate += aux[1];
         }
 
-        sprint[0] = Double.valueOf(df.format(real));
-        sprint[1] = Double.valueOf(df.format(estimate));
-        sprint[2] = Double.valueOf(df.format(Utils.getCost(real)));
-
-        return sprint;
+        return new Double[] {Double.valueOf(df.format(real)), Double.valueOf(df.format(estimate)), Double.valueOf(df.format(Utils.getCost(real)))};
     }
 
     /**
@@ -125,7 +121,6 @@ public class TrelloManager{
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
     public Double[] getSprintHoursByMember(String memberName, int sprintNumber) throws IOException {
-        Double[] sprint = new Double[3];
         List<Card> memberSprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
 
         // Removing cards without the member
@@ -145,11 +140,7 @@ public class TrelloManager{
             estimate += aux[1];
         }
 
-        sprint[0] = Double.valueOf(df.format(real));
-        sprint[1] = Double.valueOf(df.format(estimate));
-        sprint[2] = Double.valueOf(df.format(Utils.getCost(real)));
-
-        return sprint;
+        return new Double[] {Double.valueOf(df.format(real)), Double.valueOf(df.format(estimate)), Double.valueOf(df.format(Utils.getCost(real)))};
     }
 
     /**
@@ -160,22 +151,15 @@ public class TrelloManager{
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
     public Double[] getCommittedActivities(int sprintNumber) throws IOException {
-        Double[] activities = new Double[3];
-        List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
 
         // Format to only have 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
 
-        activitiesCount.addAll(trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment")));
+        List<Card> activitiesCount = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment")));
         totalHours += getSprintHours(sprintNumber)[0];
 
-
-        activities[0] = (double) activitiesCount.size();
-        activities[1] = Double.valueOf(df.format(totalHours));
-        activities[2] = Utils.getCost(totalHours);
-
-        return activities;
+        return new Double[] {(double) activitiesCount.size(), Double.valueOf(df.format(totalHours)), Utils.getCost(totalHours)};
     }
 
     /**
@@ -186,7 +170,6 @@ public class TrelloManager{
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
     public Double[] getNotCommittedActivities(int sprintNumber) throws IOException {
-        Double[] activities = new Double[3];
         List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
 
@@ -200,11 +183,7 @@ public class TrelloManager{
            totalHours += getCardHours(card.getId())[0];
         }
 
-        activities[0] = (double) activitiesCount.size();
-        activities[1] = Double.valueOf(df.format(totalHours));
-        activities[2] = Utils.getCost(totalHours);
-
-        return activities;
+        return new Double[] {(double) activitiesCount.size(), Double.valueOf(df.format(totalHours)), Utils.getCost(totalHours)};
     }
 
     /**
