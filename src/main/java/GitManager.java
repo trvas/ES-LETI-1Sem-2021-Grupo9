@@ -23,26 +23,22 @@ import java.util.stream.Collectors;
  */
 public class GitManager {
 
-    private static String GITHUB_OAUTH; // gitHub's token //"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"
-    private static String GITHUB_LOGIN;  //uses the user's username // "roguezilla"
-    private static String GITHUB_REPO_NAME = "test_repo";  /*starboard  ES-LETI-1Sem-2021-Grupo9 */
-    private static String commitRef = "57f8f3f938071e99da9b6323d07209805ad9813f"; // Reference to get the file from.
-
+    private static String GITHUB_OAUTH = "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"; // gitHub's token
+    private static String GITHUB_LOGIN = "Henrique-DeSousa"; //User's login
+    private static String GITHUB_REPO_NAME = "test_repo"; //Name of the repository
+    private static String GITHUB_BRANCH_NAME; //Name of the branch
+    private static String COMMIT_REFERENCE; // Reference to get the file from.
+    private static String GITHUB_FILE_NAME; // Name of the file to look
     private GHUser userOfLogin;
-    private GitHub githubLogin;
-
-    private boolean valid = false; //if the flag is set to true, then it moves
+    private GitHub gitHub;
+    private boolean valid = false; // if the flag is set to true, then it moves
     private static boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
-
     private Set<String> collaboratorNames = new HashSet<>();
-    private List<CommitsDataGit> commitsRoot = new ArrayList<>();
-    private List<String> info = new ArrayList<>();
-    private Map<String, List<String>> repositoriesUserData = new HashMap<>();
-
+    private List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
+    private List<String> branchesName = new ArrayList<>();
     private OkHttpClient client = new OkHttpClient();
     private String url;
-
-    private final ObjectMapper mapper;
+    private ObjectMapper mapper;
 
     /**
      * The main function of this class
@@ -51,7 +47,7 @@ public class GitManager {
      * @throws Exception due to the functions it's calling, GitHub or GHUser being null
      */
     public static void main(String[] args) throws Exception {
-        GitManager GM = new GitManager("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", "Henrique-DeSousa", GITHUB_REPO_NAME);
+        GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
         GM.connect();
 
 
@@ -59,20 +55,22 @@ public class GitManager {
         if (getUserInfo) {
             GM.userInfo();
         }
-        GM.repositoriesUnderUser();
+
+        GM.userRepositories();
         GM.numberOfRepositoriesOwned();
-        GM.numberOfCommitsInRoot(GITHUB_REPO_NAME, "Henrique-DeSousa");
+        GM.numberOfCommitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
+
         GM.getFiles(GITHUB_REPO_NAME);
-        GM.readFileContent(GITHUB_REPO_NAME, "calc2.0.py", commitRef);
         GM.getReadMe(GITHUB_REPO_NAME);
+
         GM.getBranchesInRepository(GITHUB_REPO_NAME);
-        GM.getTag(GITHUB_REPO_NAME);
+        GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
-
-        var a = GM.getCommitBranches("Henrique-DeSousa", "main");
+        var a = GM.getCommitBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
         for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
         }
+        GM.getTag(GITHUB_REPO_NAME);
     }
 
     /**
@@ -87,12 +85,24 @@ public class GitManager {
         this.GITHUB_LOGIN = USERNAME;
         this.GITHUB_OAUTH = AUTH;
         this.GITHUB_REPO_NAME = repoName;
-        githubLogin = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
-        userOfLogin = githubLogin.getUser(GITHUB_LOGIN);
+        gitHub = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
+        userOfLogin = gitHub.getUser(GITHUB_LOGIN);
         this.url = "https://api.github.com/repos/" + GITHUB_LOGIN + "/" + GITHUB_REPO_NAME; // trvas + ES-LETI-1Sem-2021-Grupo9
         this.mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+    }
+
+    public void setGithubBranchName(String githubBranchName) {
+        this.GITHUB_BRANCH_NAME = githubBranchName;
+    }
+
+    public void setCommitReference(String commitReference) {
+        this.COMMIT_REFERENCE = commitReference;
+    }
+
+    public void setGithubFileName(String githubFileName) {
+        this.GITHUB_FILE_NAME = githubFileName;
     }
 
 
@@ -102,7 +112,7 @@ public class GitManager {
      * @throws IOException throws when GitHub or GHuser is null.
      */
     public void connect() throws IOException {
-        if (githubLogin.isCredentialValid()) {
+        if (gitHub.isCredentialValid()) {
             valid = true;
             GitHub.connect(GITHUB_LOGIN, GITHUB_OAUTH);
         }
@@ -152,7 +162,7 @@ public class GitManager {
         List<String> collaboratorsInfo = new ArrayList<>();
 
         for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = githubLogin.getUser(collaboratorsList().get(i));
+            user = gitHub.getUser(collaboratorsList().get(i));
 
             String name = user.getName();
             URL url = user.getHtmlUrl();
@@ -170,7 +180,6 @@ public class GitManager {
         }
         return collaboratorsInfo;
     }
-
 
     /**
      * This function is simply to ease the previous one in the aspect that if any information is missing, it's simply replaced.
@@ -193,11 +202,12 @@ public class GitManager {
      * @return returns a String with the user's repositories.
      * @throws IOException thrown when the GHuser is null
      */
-    public Map<String, List<String>> repositoriesUnderUser() throws IOException {
+    public Map<String, List<String>> userRepositories() throws IOException {
+        Map<String, List<String>> repositoriesUserData = new HashMap<>();
         GHUser user;
 
         for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = githubLogin.getUser(collaboratorsList().get(i));
+            user = gitHub.getUser(collaboratorsList().get(i));
 
             Map<String, GHRepository> temp = user.getRepositories();
             repositoriesUserData.put(user.getLogin(), temp.values().stream().map(GHRepository::getName).collect(Collectors.toList()));
@@ -221,7 +231,7 @@ public class GitManager {
         Optional<Integer> privateRepositoryCount;
 
         for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = githubLogin.getUser(collaboratorsList().get(i));
+            user = gitHub.getUser(collaboratorsList().get(i));
 
             publicRepositories = "Number of Public Repositories: ";
             privateRepositories = "Number of Private Repositories: ";
@@ -266,8 +276,8 @@ public class GitManager {
      * @throws IOException thrown due to the GitHub
      */
     public @NotNull Map<String, List<String>> getFiles(String repositoryName) throws Exception {
-        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
-        Map<String, GHBranch> getRepos = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
+        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+        Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
         List<String> branchesSha = new ArrayList<>();
 
         Map<String, List<String>> files = new HashMap<>();
@@ -276,12 +286,12 @@ public class GitManager {
 
         getRepos.forEach((r, s) -> branchesSha.add(s.getSHA1()));
 
-        for (int i = 0; i < getBranchesInRepository(repositoryName).size(); i++) {
+        for (int i = 0; i < branchesName.size(); i++) {
             tree = getRepo.getTree(branchesSha.get(i));
             for (int j = 0; j < tree.getTree().size(); j++) {
                 filesInBranch.add(tree.getTree().get(j).getPath());
             }
-            files.put(getBranchesInRepository(repositoryName).get(i), filesInBranch);
+            files.put(branchesName.get(i), filesInBranch);
             filesInBranch = new ArrayList<>(); // to clean the List before the new entries
         }
         return files;
@@ -312,11 +322,10 @@ public class GitManager {
      * @throws Exception thrown when the GHuser is null
      */
     public @NotNull List<String> getBranchesInRepository(String repositoryName) throws Exception {
-        Map<String, GHBranch> getRepos = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
-        List<String> branchesName = new ArrayList<>();
-
-        getRepos.forEach((r, s) -> branchesName.add(r));
-        return branchesName;
+        Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
+        getRepos.forEach((r, s) -> this.branchesName.add(r));
+        System.out.println(branchesName);
+        return this.branchesName;
     }
 
     /*--------------------COMMIT RELATED--------------------*/
@@ -329,37 +338,37 @@ public class GitManager {
      * @throws IOException throws when GitHub is null.
      */
     public @NotNull List<CommitsDataGit> getCommitDataFromRoot(String repositoryName) throws IOException {
-        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
 
 
         List<GHCommit> commits = getRepo.listCommits().toList();
         commits.forEach((s) -> {
             try {
                 CommitsDataGit commitData = new CommitsDataGit(s.getCommitShortInfo(), s.getCommitDate(), s.getAuthor());
-                commitsRoot.add(commitData);
+                commitsDataRoot.add(commitData);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-        return commitsRoot;
+        return commitsDataRoot;
     }
 
     /**
      * Function to get Commits from the Branches, since the API does not allow for that.
      *
-     * @param userLogin  User's login to look for their commits in the project
+     * @param user       User's login to look for their commits in the project
      * @param branchName The branch in which to look for, for the commits
      * @return returns a Map into a nested class for it to be able to be processed and used.
      * @throws IOException throws Exception due to .execute and .string
      */
-    public CommitUnpack getCommitBranches(String userLogin, String branchName) throws IOException {
+    public CommitUnpack getCommitBranches(String user, String branchName) throws IOException {
         List<CommitHttpRequest> commits = new ArrayList<>();
 
         int page = 1;
         while (true) {
             Request request = new Request.Builder()
-                    .addHeader("Authorization", "Bearer " + this.GITHUB_OAUTH)
-                    .url(String.format(this.url + "/commits?" + "&author=" + userLogin + "&sha=" + branchName + "&page=%d", page++)).build();
+                    .addHeader("Authorization", "Bearer " + GITHUB_OAUTH)
+                    .url(String.format(this.url + "/commits?" + "&author=" + user + "&sha=" + branchName + "&page=%d", page++)).build();
 
             try (Response response = client.newCall(request).execute()) {
                 try {
@@ -375,7 +384,7 @@ public class GitManager {
                 }
             }
         }
-        return new CommitUnpack(userLogin, commits);
+        return new CommitUnpack(user, commits);
     }
 
     /**
@@ -387,17 +396,21 @@ public class GitManager {
      * @throws IOException throws when GitHub is null.
      */
     public @NotNull String numberOfCommitsInRoot(String repositoryName, String userLogin) throws IOException {
-        GHUser temp = githubLogin.getUser(userLogin);
+        GHUser temp = gitHub.getUser(userLogin);
         getCommitDataFromRoot(repositoryName);
-        for (CommitsDataGit commitsData : commitsRoot) {
+        List<String> info = new ArrayList<>();
+
+        for (CommitsDataGit commitsData : commitsDataRoot) {
             if (commitsData.getUserName().equals(temp.getLogin())) {
                 info.add(commitsData.getDescription());
             }
         }
-        String latest = ("\nLatest commit: " + commitsRoot.get(0).getDescription() + "\nDate: " + commitsRoot.get(0).getDate() + "\nUser: " + commitsRoot.get(0).getUserName() + "\n");
-        String initial = ("\nInitial commit: " + commitsRoot.get(commitsRoot.size() - 1).getDescription() + "\nDate: " + commitsRoot.get(commitsRoot.size() - 1).getDate() + "\nUser: " + commitsRoot.get(getCommitDataFromRoot(repositoryName).size() - 1).getUserName() + "\n");
-        System.out.println("The user: " + temp.getLogin() + "\nHas these commits: " + info.toString() + "\nWith a total of: " + info.size() + "\n" + initial + latest);
-        return "The user: " + temp.getLogin() + "\nHas these commits: " + info.toString() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
+        String latest = ("\nLatest commit: " + commitsDataRoot.get(0).getDescription() + "\nDate: " + commitsDataRoot.get(0).getDate() +
+                "\nUser: " + commitsDataRoot.get(0).getUserName() + "\n");
+        String initial = ("\nInitial commit: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDescription() + "\nDate: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDate() +
+                "\nUser: " + commitsDataRoot.get(getCommitDataFromRoot(repositoryName).size() - 1).getUserName() + "\n");
+        System.out.println("The user: " + temp.getLogin() + "\nHas these commits: " + info + "\nWith a total of: " + info.size() + "\n" + initial + latest);
+        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + "in the: " + repositoryName + "\nWith a total of: " + info.size() + "\n" + initial + latest;
     }
 
     /*--------------------TAGS RELATED--------------------*/
@@ -410,7 +423,7 @@ public class GitManager {
      * @throws IOException Thrown due to GitHub
      */
     public @NotNull Map<String, Date> getTag(String repositoryName) throws IOException {
-        GHRepository getRepo = githubLogin.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
         List<GHTag> tags = getRepo.listTags().toList();
         List<String> tagNames = new ArrayList<>();
         List<GHCommit> tagCommits = new ArrayList<>();
@@ -438,7 +451,8 @@ public class GitManager {
     /*--------------------ADDITIONAL CLASSES--------------------*/
 
     /**
-     * Simple nested class for the Commits, where the data is separated in 3 components, Date, Username and Description.
+     * Breakdown of Information received from the GitHub API related to commits.
+     * params used Date, Username and Description.
      */
     public class CommitsDataGit {
         private final GHCommit.ShortInfo description;
@@ -446,7 +460,7 @@ public class GitManager {
         private final String userName;
 
         /**
-         * constructor of the nested class CommitsData
+         * constructor of the class.
          *
          * @param description receives the description of a commit
          * @param date        receives the date of publishing of the commit
@@ -488,7 +502,7 @@ public class GitManager {
     }
 
     /**
-     *Class to allow the HttpRequest data from the commits to be processed and analysed
+     * Class to allow the HttpRequest data from the commits to be processed and analysed
      */
     public static class CommitHttpRequest {
         private String commitDate;
@@ -512,7 +526,7 @@ public class GitManager {
     }
 
     /**
-     *Nested class used in the function to get the commits from the branches, accepts a Map and breaks it down
+     * Nested class used in the function to get the commits from the branches, accepts a Map and breaks it down
      * into the several components.
      */
     public static class CommitUnpack {
@@ -524,5 +538,4 @@ public class GitManager {
             this.commits = cms;
         }
     }
-
 }
