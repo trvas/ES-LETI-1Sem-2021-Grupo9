@@ -195,9 +195,9 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="16.0" layoutY="319.0" prefHeight="200.0" prefWidth="524.0">
+                        <TableView fx:id="meetingsTable" layoutX="16.0" layoutY="319.0" prefHeight="200.0" prefWidth="524.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="meetingsUser" prefWidth="75.0" text="ID" />
                             <TableColumn prefWidth="213.0" text="Nº ACTIVITIES NOT COMMITED" />
                               <TableColumn minWidth="0.0" prefWidth="79.60003662109375" text="HOURS" />
                               <TableColumn prefWidth="81.4000244140625" text="COST" />

@@ -1,11 +1,14 @@
 package es.grupo9;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.HTMLEditor;
@@ -13,6 +16,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Card;
+import org.trello4j.model.Member;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +38,10 @@ public class HelloController{
     WebView MeetingsText,DoneText;
     @FXML
     ComboBox<String> comboBox,comboBox2;
+    @FXML
+    TableView<Object> meetingsTable;
+    @FXML
+    TableColumn<Object, Object> meetingsUser;
 
     TrelloManager trelloManager;
 
@@ -70,6 +78,10 @@ public class HelloController{
             trelloManager.getFinishedSprintBacklog(1).forEach(f-> {
                 comboBox2.getItems().add(f.getName());
             });
+
+            settingTable();
+
+            System.out.println(meetingsTable.getItems());
         }
     }
 
@@ -97,6 +109,37 @@ public class HelloController{
             }
         });
     }
+
+    public void settingTable() throws IOException {
+        final ObservableList<Object> data = FXCollections.observableArrayList();
+
+        for(Member member : trelloManager.getMembers()) {
+            Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName());
+            data.add(new tableData(member.getFullName(), activities[0], activities[1], activities[2]));
+            meetingsUser.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+        }
+
+        Double[] globalActivities = trelloManager.getNotCommittedActivities();
+        data.add(new tableData("global", globalActivities[0], globalActivities[1], globalActivities[2]));
+        meetingsTable.setItems(data);
+    }
+
+    public class tableData{
+        String member;
+        Double hours;
+        Double estimated;
+        Double cost;
+
+        tableData(String member, Double hours, Double estimated, Double cost) {
+            this.member = member;
+            this.hours = hours;
+            this.estimated = estimated;
+            this.cost = cost;
+        }
+
+        // TODO add getters
+    }
+
 
 }
 

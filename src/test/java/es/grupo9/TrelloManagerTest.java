@@ -34,54 +34,6 @@ class TrelloManagerTest {
         Assertions.assertEquals("616485eb23537a5ed11aec71",trelloManager.getMeetings(1).get(0).getId());
     }
 
-    @Test
-    void getCardHours() {
-        // Card ID = 619c4c7a39589204c105f165 ("Criação da interface gráfica") , hours = 14.87
-        Assertions.assertEquals(trelloManager.getCardHours("619c4c7a39589204c105f165"),14.87);
-    }
-
-    @Test
-    void getEstimateCardHours() {
-        // Card ID = 619c4c7a39589204c105f165 ("Criação da interface gráfica") , estimated hours = 14
-        Assertions.assertEquals(trelloManager.getEstimateCardHours("619c4c7a39589204c105f165"), 14);
-    }
-
-    @Test
-    void getSprintHours() throws IOException {
-        // Sprint 1 total hours = 35
-        Assertions.assertEquals(35.0, trelloManager.getSprintHours(1));
-    }
-
-    @Test
-    void getEstimateSprintHours() throws IOException {
-        // Sprint 1 estimated hours = 28
-        Assertions.assertEquals(28.0, trelloManager.getEstimateSprintHours(1));
-    }
-
-    @Test
-    void getSprintCost() throws IOException {
-        // Sprint 1 cost = 35 h * 20 = 700
-        Assertions.assertEquals(700.0,trelloManager.getSprintCost(1));
-    }
-
-    @Test
-    void getSprintHoursByMember() throws IOException {
-        // Tatiana Sprint 1 total hours = 10.0
-        Assertions.assertEquals(10.0, trelloManager.getSprintHoursByMember("Tatiana",1));
-    }
-
-
-    @Test
-    void getEstimateSprintHoursByMember() throws IOException {
-        // Tatiana Sprint 1 estimated hours = 12.0
-        Assertions.assertEquals(12.0, trelloManager.getEstimateSprintHoursByMember("Tatiana",1));
-    }
-
-    @Test
-    void getSprintCostByMember() throws IOException {
-        // Tatiana Sprint 1 cost = 200.0
-        Assertions.assertEquals(200.0, trelloManager.getSprintCostByMember("Tatiana",1));
-    }
 
     @Test
     void getSprintCount() throws IOException {
@@ -102,52 +54,97 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getCommittedActivities() throws IOException {
-        // To update with new values
-        // Current values = [13, 85.64, 1712.8]
-        List<Object> expected = new ArrayList<>();
-        expected.add(0, 13);
-        expected.add(1, 85.64);
-        expected.add(2, 1712.8);
+    void getSprintHours() throws IOException {
+        // Values for Sprint 1 = [35.0, 28.0, 700.0]
+        Double[] expected = new Double[3];
 
-        Assertions.assertEquals(expected, trelloManager.getCommittedActivities());
+        expected[0] = 35.0;
+        expected[1] = 28.0;
+        expected[2] = 700.0;
+
+        Assertions.assertEquals(expected[0], trelloManager.getSprintHours(1)[0]);
+        Assertions.assertEquals(expected[1], trelloManager.getSprintHours(1)[1]);
+        Assertions.assertEquals(expected[2], trelloManager.getSprintHours(1)[2]);
     }
 
     @Test
-    void getNotCommittedActivities() throws IOException {
-        // To update with new
-        // Current values = [11, 18.43, 368.6]
-        List<Object> expected = new ArrayList<>();
-        expected.add(0, 11);
-        expected.add(1, 18.43);
-        expected.add(2, 368.6);
+    void getSprintHoursByMember() throws IOException {
+        // Values for Tatiana, Sprint 1 = [10.0, 12.0, 200.0]
+        Double[] expected = new Double[3];
 
-        Assertions.assertEquals(expected, trelloManager.getNotCommittedActivities());
+        expected[0] = 10.0;
+        expected[1] = 12.0;
+        expected[2] = 200.0;
+
+        Assertions.assertEquals(expected[0], trelloManager.getSprintHoursByMember(1, "Tatiana")[0]);
+        Assertions.assertEquals(expected[1], trelloManager.getSprintHoursByMember(1, "Tatiana")[1]);
+        Assertions.assertEquals(expected[2], trelloManager.getSprintHoursByMember(1, "Tatiana")[2]);
     }
+
+    @Test
+    void getCardHours() throws IOException {
+        // Card ID = 6160c5f03670208ff6030598
+        // Values for card = [5.66, 8.0]
+        Double[] expected = new Double[2];
+
+        expected[0] = 5.66;
+        expected[1] = 8.0;
+
+        Assertions.assertEquals(expected[0], trelloManager.getCardHours("6160c5f03670208ff6030598")[0]);
+        Assertions.assertEquals(expected[1], trelloManager.getCardHours("6160c5f03670208ff6030598")[1]);
+    }
+
+
+    @Test
+    void getCommittedActivities() throws IOException {
+        // To update with new values
+        // Current values = [14.0, 91.89, 1837.8];
+
+        Double[] expected = new Double[3];
+        expected[0] = 14.0;
+        expected[1] = 91.89;
+        expected[2] = 1837.8;
+
+        Assertions.assertArrayEquals(expected, trelloManager.getCommittedActivities());
+    }
+
+
+    @Test
+    void getNotCommittedActivities() throws IOException {
+        // To update with new values
+        // Current values = [11, 18.43, 368.6]
+
+        Double[] expected = new Double[3];
+        expected[0] = 11.0;
+        expected[1] = 18.43;
+        expected[2] = 368.6;
+
+        Assertions.assertArrayEquals(expected, trelloManager.getNotCommittedActivities());
+    }
+
 
     @Test
     void getCommittedActivitiesByMember() throws IOException {
         // To update with new values
-        // Current values Tatiana = [7, 22.14, 442.8]
-        List<Object> expected = new ArrayList<>();
-        expected.add(0, 7);
-        expected.add(1, 22.14);
-        expected.add(2, 442.8);
+        // Current values Tatiana = [8.0, 23.39, 467.8]
+        Double[] expected = new Double[3];
+        expected[0] = 8.0;
+        expected[1] = 23.39;
+        expected[2] = 467.8;
 
-        Assertions.assertEquals(expected, trelloManager.getCommittedActivitiesByMember("Tatiana"));
-
+        Assertions.assertArrayEquals(expected, trelloManager.getCommittedActivitiesByMember("Tatiana"));
     }
 
     @Test
     void getNotCommittedActivitiesByMember() throws IOException {
         // To update with new values
-        // Current values Tatiana = [10, 16.43, 328.6]
-        List<Object> expected = new ArrayList<>();
-        expected.add(0, 10);
-        expected.add(1, 16.43);
-        expected.add(2, 328.6);
+        // Current values Tatiana = [10.0, 16.43, 328.6]
+        Double[] expected = new Double[3];
+        expected[0] = 10.0;
+        expected[1] = 16.43;
+        expected[2] = 328.6;
 
-        Assertions.assertEquals(expected, trelloManager.getNotCommittedActivitiesByMember("Tatiana"));
+        Assertions.assertArrayEquals(expected, trelloManager.getNotCommittedActivitiesByMember("Tatiana"));
 
     }
 }
