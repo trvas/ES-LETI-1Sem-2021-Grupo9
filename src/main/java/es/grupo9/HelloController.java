@@ -4,26 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import org.markdown4j.Markdown4jProcessor;
-import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 
 import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 public class HelloController{
     @FXML
@@ -39,9 +28,12 @@ public class HelloController{
     @FXML
     ComboBox<String> comboBox,comboBox2;
     @FXML
-    TableView<Object> meetingsTable;
+    TableView<Object> meetingsTable, doneTable, reviewTable;
     @FXML
-    TableColumn<Object, Object> meetingsUser;
+    TableColumn<Object, Object> mMember, mActivities, mHours, mCost,
+                                dMember, dActivities, dHours, dCost,
+                                rMember, rEstimated, rHours, rCost;
+
 
     TrelloManager trelloManager;
 
@@ -79,9 +71,9 @@ public class HelloController{
                 comboBox2.getItems().add(f.getName());
             });
 
-            settingTable();
-
-            System.out.println(meetingsTable.getItems());
+            setReviewTable(1);
+            setMeetingsTable(1);
+            setDoneTable(1);
         }
     }
 
@@ -110,36 +102,62 @@ public class HelloController{
         });
     }
 
-    public void settingTable() throws IOException {
-        final ObservableList<Object> data = FXCollections.observableArrayList();
 
+    public void setReviewTable(int sprintNumber) throws IOException {
+        ObservableList<Object> data = FXCollections.observableArrayList();
         for(Member member : trelloManager.getMembers()) {
-            Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName());
-            data.add(new tableData(member.getFullName(), activities[0], activities[1], activities[2]));
-            meetingsUser.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+            Double[] stats = trelloManager.getSprintHoursByMember(member.getFullName(), sprintNumber);
+            data.add(new TableData(member.getFullName(), stats[0], stats[1], stats[2]));
         }
 
-        Double[] globalActivities = trelloManager.getNotCommittedActivities();
-        data.add(new tableData("global", globalActivities[0], globalActivities[1], globalActivities[2]));
+        Double[] globalStats = trelloManager.getSprintHours(sprintNumber);
+        addData(data, globalStats);
+
+        reviewTable.setItems(data);
+        rMember.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+        rEstimated.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
+        rHours.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
+        rCost.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+    }
+
+    public void setMeetingsTable(int sprintNumber) throws IOException {
+        ObservableList<Object> data = FXCollections.observableArrayList();
+        for(Member member : trelloManager.getMembers()) {
+            Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName(), sprintNumber);
+            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
+        }
+
+        Double[] globalActivities = trelloManager.getNotCommittedActivities(sprintNumber);
+        addData(data, globalActivities);
+
         meetingsTable.setItems(data);
+        mMember.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+        mActivities.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
+        mHours.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
+        mCost.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
     }
 
-    public class tableData{
-        String member;
-        Double hours;
-        Double estimated;
-        Double cost;
 
-        tableData(String member, Double hours, Double estimated, Double cost) {
-            this.member = member;
-            this.hours = hours;
-            this.estimated = estimated;
-            this.cost = cost;
+    public void setDoneTable(int sprintNumber) throws IOException {
+        ObservableList<Object> data = FXCollections.observableArrayList();
+        for(Member member : trelloManager.getMembers()) {
+            Double[] activities = trelloManager.getCommittedActivitiesByMember(member.getFullName(), sprintNumber);
+            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
         }
 
-        // TODO add getters
+        Double[] globalActivities = trelloManager.getCommittedActivities(sprintNumber);
+        addData(data, globalActivities);
+
+        doneTable.setItems(data);
+        dMember.setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+        dActivities.setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
+        dHours.setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
+        dCost.setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
     }
 
+    private void addData(ObservableList<Object> data, Double[] globalValues){
+        data.add(new TableData("global", globalValues[0], globalValues[1], globalValues[2]));
+    }
 
 }
 

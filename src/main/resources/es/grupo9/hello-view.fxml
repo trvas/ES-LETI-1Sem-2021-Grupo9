@@ -180,12 +180,12 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="16.0" layoutY="224.0" prefHeight="307.0" prefWidth="745.0">
+                        <TableView fx:id="reviewTable" layoutX="16.0" layoutY="224.0" prefHeight="307.0" prefWidth="745.0">
                           <columns>
-                            <TableColumn prefWidth="90.39996337890625" text="ID" />
-                            <TableColumn prefWidth="116.0" text="Predicted Hours" />
-                              <TableColumn prefWidth="105.39999389648438" text="Hours Performed" />
-                              <TableColumn prefWidth="110.4000244140625" text="Cost" />
+                            <TableColumn fx:id="rMember" prefWidth="90.39996337890625" text="ID" />
+                            <TableColumn fx:id="rEstimated" prefWidth="116.0" text="ESTIMATED HOURS" />
+                              <TableColumn fx:id="rHours" prefWidth="105.39999389648438" text="HOURS WORKED" />
+                              <TableColumn fx:id="rCost" prefWidth="110.4000244140625" text="COST" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -197,10 +197,10 @@
                      <children>
                         <TableView fx:id="meetingsTable" layoutX="16.0" layoutY="319.0" prefHeight="200.0" prefWidth="524.0">
                           <columns>
-                            <TableColumn fx:id="meetingsUser" prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="213.0" text="Nº ACTIVITIES NOT COMMITED" />
-                              <TableColumn minWidth="0.0" prefWidth="79.60003662109375" text="HOURS" />
-                              <TableColumn prefWidth="81.4000244140625" text="COST" />
+                            <TableColumn fx:id="mMember" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="mActivities" prefWidth="213.0" text="Nº ACTIVITIES (NOT COMMITTED)" />
+                              <TableColumn fx:id="mHours" minWidth="0.0" prefWidth="79.60003662109375" text="HOURS" />
+                              <TableColumn fx:id="mCost" prefWidth="81.4000244140625" text="COST" />
                           </columns>
                         </TableView>
                         <WebView fx:id="MeetingsText" layoutX="16.0" layoutY="69.0" prefHeight="226.0" prefWidth="627.0" />
@@ -212,12 +212,12 @@
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="267.0" prefHeight="237.0" prefWidth="658.0">
+                        <TableView fx:id="doneTable" layoutX="14.0" layoutY="267.0" prefHeight="237.0" prefWidth="658.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="230.19992065429688" text="Nº ACTIVITIES COMMITED" />
-                              <TableColumn minWidth="3.20001220703125" prefWidth="81.800048828125" text="HOURS" />
-                              <TableColumn prefWidth="142.0" text="COST" />
+                            <TableColumn fx:id="dMember" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="dActivities" prefWidth="230.19992065429688" text="Nº ACTIVITIES (COMMITTED)" />
+                              <TableColumn fx:id="dHours" minWidth="3.20001220703125" prefWidth="81.800048828125" text="HOURS" />
+                              <TableColumn fx:id="dCost" prefWidth="142.0" text="COST" />
                           </columns>
                         </TableView>
                         <WebView fx:id="DoneText" layoutX="14.0" layoutY="58.0" prefHeight="116.0" prefWidth="658.0" />
