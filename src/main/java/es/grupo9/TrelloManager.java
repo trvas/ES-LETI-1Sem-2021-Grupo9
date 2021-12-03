@@ -91,29 +91,30 @@ public class TrelloManager{
         return cards.size();
     }
 
+    /**
+     * Gets the hours of the Sprints.
+     * @return total hours the sprint
+     */
 
+    public static String getCardDate(String listDate) {
+        List<String> cardsSprint = new ArrayList<>();
 
-    public static List<Card> getCardDate(String listDate) {
+        String str = Arrays.deepToString(cardsSprint.toArray());
 
-        //String c = "abc".substring(2, 3);
-
-        //String str = "xpto@for@xp";
-        //String[] arrOfStr = str.split("@", 5);
-        //List<Card> cards = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("#SPRINT")));
         List<Card> cards2 = new ArrayList<>();
         for (Card card2 : cards2) {
 
             if (card2.getName().contains("#SPRINT")) {
                card2.getDesc().toString();
-             System.out.println(card2.getDesc());
+                cardsSprint.addAll(Collections.singleton(card2.getDesc().toString()));
 
             }
 
         }
 
-        return cards2;
-    }
 
+        return str;
+    }
 
 }
 
