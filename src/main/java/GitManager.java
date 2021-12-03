@@ -55,7 +55,10 @@ public class GitManager {
         if (getUserInfo) {
             GM.userInfo();
         }
-
+        GM.setGithubBranchName("main");
+        GM.setCommitReference("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d");
+        GM.setGithubFileName("README.md");
+        GM.getBranchesInRepository(GITHUB_REPO_NAME);
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
         GM.numberOfCommitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
@@ -63,7 +66,7 @@ public class GitManager {
         GM.getFiles(GITHUB_REPO_NAME);
         GM.getReadMe(GITHUB_REPO_NAME);
 
-        GM.getBranchesInRepository(GITHUB_REPO_NAME);
+
         GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
         var a = GM.getCommitBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
@@ -178,6 +181,7 @@ public class GitManager {
             info = url + "\n" + avatarUrl + "\n" + name + ";\n" + login + ";\n" + email + ";\n" + bio + ";\n" + location + ";\n" + twtUser + ";\n" + company + ".\n";
             collaboratorsInfo.add(info);
         }
+        System.out.println(collaboratorsInfo);
         return collaboratorsInfo;
     }
 
@@ -253,6 +257,21 @@ public class GitManager {
         return out;
     }
 
+    /*--------------------BRANCHES RELATED--------------------*/
+
+    /**
+     * Returns all the branches in the repository in question
+     *
+     * @param repositoryName the name of the repository
+     * @return returns a list with the names of the branches.
+     * @throws Exception thrown when the GHuser is null
+     */
+    public @NotNull List<String> getBranchesInRepository(String repositoryName) throws Exception {
+        Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
+        getRepos.forEach((r, s) -> this.branchesName.add(r));
+        return this.branchesName;
+    }
+
     /*--------------------FILE RELATED--------------------*/
 
     /**
@@ -310,22 +329,6 @@ public class GitManager {
     public @NotNull String readFileContent(String repositoryName, String fileName, String ref) throws IOException {
         InputStream fileReading = userOfLogin.getRepository(repositoryName).getFileContent(fileName, ref).read();
         return new String(fileReading.readAllBytes(), StandardCharsets.UTF_8);
-    }
-
-    /*--------------------BRANCHES RELATED--------------------*/
-
-    /**
-     * Returns all the branches in the repository in question
-     *
-     * @param repositoryName the name of the repository
-     * @return returns a list with the names of the branches.
-     * @throws Exception thrown when the GHuser is null
-     */
-    public @NotNull List<String> getBranchesInRepository(String repositoryName) throws Exception {
-        Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
-        getRepos.forEach((r, s) -> this.branchesName.add(r));
-        System.out.println(branchesName);
-        return this.branchesName;
     }
 
     /*--------------------COMMIT RELATED--------------------*/
@@ -409,8 +412,7 @@ public class GitManager {
                 "\nUser: " + commitsDataRoot.get(0).getUserName() + "\n");
         String initial = ("\nInitial commit: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDescription() + "\nDate: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDate() +
                 "\nUser: " + commitsDataRoot.get(getCommitDataFromRoot(repositoryName).size() - 1).getUserName() + "\n");
-        System.out.println("The user: " + temp.getLogin() + "\nHas these commits: " + info + "\nWith a total of: " + info.size() + "\n" + initial + latest);
-        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + "in the: " + repositoryName + "\nWith a total of: " + info.size() + "\n" + initial + latest;
+        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + "in Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
     }
 
     /*--------------------TAGS RELATED--------------------*/
