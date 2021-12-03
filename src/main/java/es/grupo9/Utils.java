@@ -4,19 +4,15 @@ import java.text.DecimalFormat;
 
 public class Utils{
 
+    // Price per hour worked
+    private static int price = 20;
+
     /**
-     * Returns the cost based on the hours worked and the price per hour.
-     * @param hours hours worked.
-     * @param price cost per hour.
-     * @return int cost of the hours worked.
+     * Sets the price per hour to be used to calculate costs.
+     * @param newPrice new price value.
      */
-    public static Double getCost(Double hours, int price) {
-        // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        Double cost = hours * price;
-
-        return Double.valueOf(df.format(cost));
+    public static void setPrice(int newPrice) {
+        price = newPrice;
     }
 
     /**
@@ -25,8 +21,11 @@ public class Utils{
      * @return int cost of the hours worked.
      */
     public static Double getCost(Double hours) {
+        DecimalFormat df = new DecimalFormat("#.##");
 
-        return getCost(hours, 20);
+        Double cost = hours * price;
+
+        return Double.valueOf(df.format(cost));
     }
 
     /**

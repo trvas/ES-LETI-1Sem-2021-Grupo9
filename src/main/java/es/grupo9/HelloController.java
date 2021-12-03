@@ -12,6 +12,7 @@ import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class HelloController{
@@ -105,42 +106,56 @@ public class HelloController{
 
     public void setReviewTable(int sprintNumber) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
+        Double[] globalStats = new Double[] {0.0, 0.0, 0.0};
+
         for(Member member : trelloManager.getMembers()) {
             Double[] stats = trelloManager.getSprintHoursByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), stats[0], stats[1], stats[2]));
+
+            globalStats[0] += stats[0];
+            globalStats[1] += stats[1];
+            globalStats[2] += stats[2];
+
         }
 
-        Double[] globalStats = trelloManager.getSprintHours(sprintNumber);
         setTableItems(data, globalStats, reviewTable, new TableColumn[]{rMember, rEstimated, rHours, rCost});
     }
 
     public void setMeetingsTable(int sprintNumber) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
+        Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
+
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
+
+            globalActivities[0] += activities[0];
+            globalActivities[1] += activities[1];
+            globalActivities[2] += activities[2];
         }
 
-        Double[] globalActivities = trelloManager.getNotCommittedActivities(sprintNumber);
         setTableItems(data, globalActivities, meetingsTable, new TableColumn[]{mMember, mActivities, mHours, mCost});
     }
 
 
     public void setDoneTable(int sprintNumber) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
+        Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
+
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getCommittedActivitiesByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
-        }
 
-        Double[] globalActivities = trelloManager.getCommittedActivities(sprintNumber);
+            globalActivities[0] += activities[0];
+            globalActivities[1] += activities[1];
+            globalActivities[2] += activities[2];
+        }
 
         setTableItems(data, globalActivities, doneTable, new TableColumn[]{dMember, dActivities, dHours, dCost});
     }
 
     private void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
         data.add(new TableData("global", dataArray[0], dataArray[1], dataArray[2]));
-
         tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
         tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
         tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
@@ -148,7 +163,6 @@ public class HelloController{
 
         tableView.setItems(data);
     }
-
 }
 
 

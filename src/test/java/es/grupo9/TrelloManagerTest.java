@@ -52,14 +52,6 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getSprintHours() throws IOException {
-        // Values for Sprint 1 = [35.0, 28.0, 700.0]
-        Double[] expected = new Double[]{35.0, 28.0, 700.0};
-
-        Assertions.assertArrayEquals(expected, trelloManager.getSprintHours(1));
-    }
-
-    @Test
     void getSprintHoursByMember() throws IOException {
         // Values for Tatiana, Sprint 1 = [10.0, 12.0, 200.0]
         Double[] expected = new Double[]{10.0, 12.0, 200.0};
@@ -75,25 +67,6 @@ class TrelloManagerTest {
 
         Assertions.assertArrayEquals(expected, trelloManager.getCardHours("6160c5f03670208ff6030598"));
     }
-
-
-    @Test
-    void getCommittedActivities() throws IOException {
-        // Values sprint 1 = [7.0, 35.0, 700.0]
-        Double[] expected = new Double[]{7.0, 35.0, 700.0};
-
-        Assertions.assertArrayEquals(expected, trelloManager.getCommittedActivities(1));
-    }
-
-
-    @Test
-    void getNotCommittedActivities() throws IOException {
-        // Values sprint 1 = [4.0, 7.0, 140.0]
-        Double[] expected = new Double[]{4.0, 7.0, 140.0};
-
-        Assertions.assertArrayEquals(expected, trelloManager.getNotCommittedActivities(1));
-    }
-
 
     @Test
     void getCommittedActivitiesByMember() throws IOException {

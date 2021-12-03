@@ -11,12 +11,14 @@ public class UtilsTest {
     }
 
     @Test
-    public void getCost() {
-        Assertions.assertEquals(1, Utils.getCost(1.0, 40) );
+    public void setPrice() {
+        Utils.setPrice(40);
+
+        Assertions.assertEquals(40, Utils.getCost(1.0) );
     }
 
     @Test
-    public void getCostWithoutValue() {
+    public void getCost() {
         Assertions.assertEquals(20, Utils.getCost(1.0));
     }
 

@@ -84,33 +84,6 @@ public class TrelloManager{
         return hours;
     }
 
-
-    /**
-     * Returns a Double array with the (global) number of hours worked, hours estimated and the cost of the hours worked.
-     * This method works by iterating through the "Increment" list of the SPRINT requested.
-     * @param sprintNumber number of the SPRINT.
-     * @return Double[] with the following format: [HOURS WORKED, HOURS ESTIMATED, COST OF HOURS WORKED].
-     * @throws IOException see {@link #getBoardListIdByName(String)};
-     */
-    public Double[] getSprintHours(int sprintNumber) throws IOException {
-        Double[] sprint = new Double[3];
-        List<Card> sprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
-        Double real = 0.0;
-        Double estimate = 0.0;
-
-        // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        // Sum up hours worked on each card
-        for (Card card : sprintList) {
-            Double[] aux = getCardHours(card.getId());
-            real += aux[0];
-            estimate += aux[1];
-        }
-
-        return new Double[] {Double.valueOf(df.format(real)), Double.valueOf(df.format(estimate)), Double.valueOf(df.format(Utils.getCost(real)))};
-    }
-
     /**
      * Returns a Double array with the number of hours worked, hours estimated and the cost of the hours worked of a given member.
      * This method works by iterating through the "Increment" list of the SPRINT requested and deleting the cards that don't
@@ -141,49 +114,6 @@ public class TrelloManager{
         }
 
         return new Double[] {Double.valueOf(df.format(real)), Double.valueOf(df.format(estimate)), Double.valueOf(df.format(Utils.getCost(real)))};
-    }
-
-    /**
-     * Returns an array with the (global) amount of committed activities and the total hours worked on those activities,
-     * as well as the cost. This method works by iterating every "Increment" list of the given SPRINT.
-     * @param sprintNumber number of the sprint.
-     * @return Double[] with the following format [NUMBER OF ACTIVITIES, TOTAL HOURS WORKED, COST OF HOURS WORKED].
-     * @throws IOException see {@link #getBoardListIdByName(String)};
-     */
-    public Double[] getCommittedActivities(int sprintNumber) throws IOException {
-        double totalHours = 0.0;
-
-        // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        List<Card> activitiesCount = new ArrayList<>(trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment")));
-        totalHours += getSprintHours(sprintNumber)[0];
-
-        return new Double[] {(double) activitiesCount.size(), Double.valueOf(df.format(totalHours)), Utils.getCost(totalHours)};
-    }
-
-    /**
-     * Returns an array with the (global) amount of not committed activities and the total hours worked on those activities,
-     * as well as the cost. This method works by iterating every "Meetings" list of the given SPRINT.
-     * @param sprintNumber number of the sprint.
-     * @return Double[] with the following format [NUMBER OF ACTIVITIES, TOTAL HOURS WORKED, COST OF HOURS WORKED].
-     * @throws IOException see {@link #getBoardListIdByName(String)};
-     */
-    public Double[] getNotCommittedActivities(int sprintNumber) throws IOException {
-        List<Card> activitiesCount = new ArrayList<>();
-        double totalHours = 0.0;
-
-        // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-
-        List<Card> meetings = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Meetings"));
-        activitiesCount.addAll(meetings);
-
-        for(Card card : meetings) {
-           totalHours += getCardHours(card.getId())[0];
-        }
-
-        return new Double[] {(double) activitiesCount.size(), Double.valueOf(df.format(totalHours)), Utils.getCost(totalHours)};
     }
 
     /**
@@ -322,11 +252,5 @@ public class TrelloManager{
                 "e3ee0d6a1686b4b43ba5d046bbce20af",
                 "80644fefce741495acc2f1ebf7174b536ae31a6c5c425622fbf5477f82463b84",
                 "614de300aa6df33863299b6c");
-
-        System.out.println(Arrays.toString(trelloManager.getCommittedActivities(1)));
-        System.out.println(Arrays.toString(trelloManager.getNotCommittedActivities(1)));
-        System.out.println(Arrays.toString(trelloManager.getCommittedActivitiesByMember("Tatiana",1)));
-        System.out.println(Arrays.toString(trelloManager.getNotCommittedActivitiesByMember("Tatiana",1)));
-
     }
 }
