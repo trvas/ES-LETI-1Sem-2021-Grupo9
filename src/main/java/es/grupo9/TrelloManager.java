@@ -104,7 +104,7 @@ public class TrelloManager{
         List<Card> cards2 = new ArrayList<>();
         for (Card card2 : cards2) {
 
-            if (card2.getName().contains("#SPRINT")) {
+            if (card2.getName().contains("Sprints")) {
                card2.getDesc().toString();
                 cardsSprint.addAll(Collections.singleton(card2.getDesc().toString()));
 
