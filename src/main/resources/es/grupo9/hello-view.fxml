@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -191,11 +192,11 @@
                      </children></AnchorPane>
                 </content>
             </Tab>
-            <Tab text="Meetings">
+            <Tab fx:id="TabMeetings1" onSelectionChanged="#tables1" text="Meetings">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="meetingsTable" layoutX="16.0" layoutY="312.0" prefHeight="147.0" prefWidth="485.0">
+                        <TableView fx:id="meetingsTable" layoutX="16.0" layoutY="242.0" prefHeight="147.0" prefWidth="485.0">
                           <columns>
                             <TableColumn fx:id="mMember" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="mActivities" prefWidth="213.0" text="Nº ACTIVITIES (NOT COMMITTED)" />
@@ -203,25 +204,27 @@
                               <TableColumn fx:id="mCost" prefWidth="106.4000244140625" text="COST" />
                           </columns>
                         </TableView>
-                        <WebView fx:id="MeetingsText" layoutX="16.0" layoutY="69.0" prefHeight="226.0" prefWidth="627.0" />
-                        <ComboBox fx:id="comboBox" layoutX="16.0" layoutY="30.0" onAction="#setComboBox" prefHeight="26.0" prefWidth="185.0" promptText="Choose..." />
+                        <WebView fx:id="MeetingsText" layoutX="16.0" layoutY="58.0" prefHeight="157.0" prefWidth="628.0" />
+                        <ComboBox fx:id="comboBox" layoutX="16.0" layoutY="21.0" onAction="#setComboBox" prefHeight="26.0" prefWidth="185.0" promptText="Choose..." />
+                        <PieChart fx:id="PieMeetings1" layoutX="475.0" layoutY="209.0" prefHeight="258.0" prefWidth="247.0" />
                      </children></AnchorPane>
                 </content>
             </Tab>
-            <Tab text="Done">
+            <Tab fx:id="TabDone1" onSelectionChanged="#tables2" text="Done">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="doneTable" layoutX="14.0" layoutY="188.0" prefHeight="167.0" prefWidth="543.0">
+                        <TableView fx:id="doneTable" layoutX="14.0" layoutY="188.0" prefHeight="167.0" prefWidth="476.0">
                           <columns>
                             <TableColumn fx:id="dMember" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="dActivities" prefWidth="230.19992065429688" text="Nº ACTIVITIES (COMMITTED)" />
                               <TableColumn fx:id="dHours" minWidth="3.20001220703125" prefWidth="81.800048828125" text="HOURS" />
-                              <TableColumn fx:id="dCost" prefWidth="149.60001220703123" text="COST" />
+                              <TableColumn fx:id="dCost" prefWidth="79.20001220703125" text="COST" />
                           </columns>
                         </TableView>
                         <WebView fx:id="DoneText" layoutX="14.0" layoutY="58.0" prefHeight="116.0" prefWidth="658.0" />
                         <ComboBox fx:id="comboBox2" layoutX="14.0" layoutY="22.0" onAction="#setComboBox2" prefHeight="26.0" prefWidth="185.0" promptText="Choose..." />
+                        <PieChart fx:id="PieDone1" layoutX="471.0" layoutY="187.0" prefHeight="258.0" prefWidth="247.0" />
                      </children></AnchorPane>
                 </content>
             </Tab>

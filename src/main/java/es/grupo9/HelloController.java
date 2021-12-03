@@ -3,7 +3,9 @@ package es.grupo9;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
@@ -34,9 +36,14 @@ public class HelloController{
     TableColumn<Object, Object> mMember, mActivities, mHours, mCost,
                                 dMember, dActivities, dHours, dCost,
                                 rMember, rEstimated, rHours, rCost;
-
+    @FXML
+    Tab TabMeetings1, TabDone1;
+    @FXML
+    PieChart PieReview1_2, PieReview1_1, PieMeetings1, PieDone1;
 
     TrelloManager trelloManager;
+    int i = 0;
+    int j = 0;
 
     /**
      * Handler for when the button is clicked
@@ -71,13 +78,29 @@ public class HelloController{
             trelloManager.getFinishedSprintBacklog(1).forEach(f-> {
                 comboBox2.getItems().add(f.getName());
             });
-
             setReviewTable(1);
-            setMeetingsTable(1);
-            setDoneTable(1);
         }
     }
 
+    @FXML
+    public void tables1(Event t) throws IOException {
+        if(i == 0){
+            if(t.getSource() == this.TabMeetings1){
+                setMeetingsTable(1);
+                i = 1;
+            }
+        }
+    }
+
+    @FXML
+    public void tables2(Event t) throws IOException {
+        if(j == 0){
+            if(t.getSource() == this.TabDone1){
+                setDoneTable(1);
+                j = 1;
+            }
+        }
+    }
 
     @FXML
     public void setComboBox(ActionEvent e) throws IOException {
@@ -123,34 +146,40 @@ public class HelloController{
 
     public void setMeetingsTable(int sprintNumber) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> pieChart = FXCollections.observableArrayList();
         Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
+            String a = member.getFullName();
+            pieChart.add(new PieChart.Data(a, activities[0]));
 
             globalActivities[0] += activities[0];
             globalActivities[1] += activities[1];
             globalActivities[2] += activities[2];
         }
-
+        PieMeetings1.setData(pieChart);
         setTableItems(data, globalActivities, meetingsTable, new TableColumn[]{mMember, mActivities, mHours, mCost});
     }
 
 
     public void setDoneTable(int sprintNumber) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> pieChart = FXCollections.observableArrayList();
         Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getCommittedActivitiesByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
+            String s = member.getFullName();
+            pieChart.add(new PieChart.Data(s, activities[0]));
 
             globalActivities[0] += activities[0];
             globalActivities[1] += activities[1];
             globalActivities[2] += activities[2];
         }
-
+        PieDone1.setData(pieChart);
         setTableItems(data, globalActivities, doneTable, new TableColumn[]{dMember, dActivities, dHours, dCost});
     }
 
