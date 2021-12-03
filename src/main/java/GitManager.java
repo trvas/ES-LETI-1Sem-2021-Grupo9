@@ -61,7 +61,7 @@ public class GitManager {
         GM.getBranchesInRepository(GITHUB_REPO_NAME);
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
-        GM.numberOfCommitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
+        GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
 
         GM.getFiles(GITHUB_REPO_NAME);
         GM.getReadMe(GITHUB_REPO_NAME);
@@ -69,7 +69,7 @@ public class GitManager {
 
         GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
-        var a = GM.getCommitBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
+        var a = GM.getCommitFromBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
         for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
         }
@@ -94,6 +94,18 @@ public class GitManager {
         this.mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+    }
+
+    public String getGithubBranchName() {
+        return GITHUB_BRANCH_NAME;
+    }
+
+    public String getCommitReference() {
+        return COMMIT_REFERENCE;
+    }
+
+    public String getGithubFileName() {
+        return GITHUB_FILE_NAME;
     }
 
     public void setGithubBranchName(String githubBranchName) {
@@ -181,7 +193,6 @@ public class GitManager {
             info = url + "\n" + avatarUrl + "\n" + name + ";\n" + login + ";\n" + email + ";\n" + bio + ";\n" + location + ";\n" + twtUser + ";\n" + company + ".\n";
             collaboratorsInfo.add(info);
         }
-        System.out.println(collaboratorsInfo);
         return collaboratorsInfo;
     }
 
@@ -364,7 +375,7 @@ public class GitManager {
      * @return returns a Map into a nested class for it to be able to be processed and used.
      * @throws IOException throws Exception due to .execute and .string
      */
-    public CommitUnpack getCommitBranches(String user, String branchName) throws IOException {
+    public CommitUnpack getCommitFromBranches(String user, String branchName) throws IOException {
         List<CommitHttpRequest> commits = new ArrayList<>();
 
         int page = 1;
@@ -398,7 +409,7 @@ public class GitManager {
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
      */
-    public @NotNull String numberOfCommitsInRoot(String repositoryName, String userLogin) throws IOException {
+    public @NotNull String commitsInRoot(String repositoryName, String userLogin) throws IOException {
         GHUser temp = gitHub.getUser(userLogin);
         getCommitDataFromRoot(repositoryName);
         List<String> info = new ArrayList<>();
@@ -412,7 +423,7 @@ public class GitManager {
                 "\nUser: " + commitsDataRoot.get(0).getUserName() + "\n");
         String initial = ("\nInitial commit: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDescription() + "\nDate: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDate() +
                 "\nUser: " + commitsDataRoot.get(getCommitDataFromRoot(repositoryName).size() - 1).getUserName() + "\n");
-        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + "in Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
+        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + " in the Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
     }
 
     /*--------------------TAGS RELATED--------------------*/
@@ -424,7 +435,7 @@ public class GitManager {
      * @return Returns a Map with the Name of the Tag, and it's Date of publish
      * @throws IOException Thrown due to GitHub
      */
-    public @NotNull Map<String, Date> getTag(String repositoryName) throws IOException {
+    public @NotNull String getTag(String repositoryName) throws IOException {
         GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
         List<GHTag> tags = getRepo.listTags().toList();
         List<String> tagNames = new ArrayList<>();
@@ -447,7 +458,7 @@ public class GitManager {
         for (int i = 0; i < tagNames.size(); i++) {
             out.put(tagNames.get(i), tagDate.get(i));
         }
-        return out;
+        return out.toString();
     }
 
     /*--------------------ADDITIONAL CLASSES--------------------*/
