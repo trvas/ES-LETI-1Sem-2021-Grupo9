@@ -50,7 +50,6 @@ public class GitManager {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
         GM.connect();
 
-
         GM.getCollaborators(GITHUB_REPO_NAME);
         if (getUserInfo) {
             GM.userInfo();
