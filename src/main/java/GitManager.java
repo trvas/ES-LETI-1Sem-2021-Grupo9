@@ -148,7 +148,6 @@ public class GitManager {
     public List<String> getCollaborators(String repositoryName) throws IOException {
         Set<String> collaboratorNames = userOfLogin.getRepository(repositoryName).getCollaboratorNames();
         this.collaboratorsNames = new ArrayList<>(collaboratorNames);
-        System.out.println(collaboratorsNames);
         return collaboratorsNames;
     }
 
@@ -182,7 +181,6 @@ public class GitManager {
             info = url + "\n" + avatarUrl + "\n" + name + ";\n" + login + ";\n" + email + ";\n" + bio + ";\n" + location + ";\n" + twtUser + ";\n" + company + ".\n";
             collaboratorsInfo.add(info);
         }
-        System.out.println(collaboratorsInfo);
         return collaboratorsInfo;
     }
 
@@ -217,7 +215,6 @@ public class GitManager {
             Map<String, GHRepository> temp = user.getRepositories();
             repositoriesUserData.put(user.getLogin(), temp.values().stream().map(GHRepository::getName).collect(Collectors.toList()));
         }
-        System.out.println(repositoriesUserData);
         return repositoriesUserData;
     }
 
@@ -256,7 +253,6 @@ public class GitManager {
             }
             out.add("\n" + user.getLogin() + "\n" + publicRepositories + repoCount + "\n" + privateRepositories + privateRepoCount);
         }
-        System.out.println(out);
         return out;
     }
 

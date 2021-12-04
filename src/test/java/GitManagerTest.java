@@ -14,7 +14,6 @@ class GitManagerTest {
     void setUp() throws Exception {
         gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
         gitManager.getCollaborators("test_repo");
-        //gitManager.getBranchesInRepository("test_repo");
     }
 
     @Test
@@ -42,9 +41,8 @@ class GitManagerTest {
     @Test
     void getCollaborators() throws IOException {
         String expected = """
-                            Collaborators for the following Repository: test_repo
-                            Are: [rfgoo-iscte, trvas, Henrique-DeSousa, glrss-iscte]""";
-        Assertions.assertEquals(expected, gitManager.getCollaborators("test_repo"));
+                         [rfgoo-iscte, trvas, Henrique-DeSousa, glrss-iscte]""";
+        Assertions.assertEquals(expected, gitManager.getCollaborators("test_repo").toString());
     }
 
     @Test
@@ -169,7 +167,7 @@ class GitManagerTest {
 
     @Test
     void getCommitBranches() throws IOException {
-        String expected = "GitManager$CommitUnpack@7d1cfb8b";
+        String expected = "GitManager$CommitUnpack@3a320ade";
         Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main").toString());
     }
 
