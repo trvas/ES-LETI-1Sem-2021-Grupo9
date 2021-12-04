@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 public class GitManager {
 
-    private static String GITHUB_OAUTH = "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"; // gitHub's token
-    private static String GITHUB_LOGIN = "Henrique-DeSousa"; //User's login
-    private static String GITHUB_REPO_NAME = "test_repo"; //Name of the repository
+    private static String GITHUB_OAUTH; // gitHub's token
+    private static String GITHUB_LOGIN; //User's login
+    private static String GITHUB_REPO_NAME; //Name of the repository
     private static String GITHUB_BRANCH_NAME; //Name of the branch
     private static String COMMIT_REFERENCE; // Reference to get the file from.
     private static String GITHUB_FILE_NAME; // Name of the file to look
@@ -35,7 +35,7 @@ public class GitManager {
     private GitHub gitHub;
     private boolean valid = false; // if the flag is set to true, then it moves
     private static boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
-    private Set<String> collaboratorNames = new HashSet<>();
+    private List<String> collaboratorsNames = new ArrayList<>();
     private List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
     private List<String> branchesName = new ArrayList<>();
     private OkHttpClient client = new OkHttpClient();
@@ -56,24 +56,27 @@ public class GitManager {
         if (getUserInfo) {
             GM.userInfo();
         }
-        GM.setGithubBranchName("master");
-        GM.setCommitReference("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d");
+        GM.setGithubBranchName("main");
+        GM.setCommitReference("dbb04cbad190efce1176dbd3a9a0412a749fb56f");
         GM.setGithubFileName("README.md");
-        GM.getBranchesInRepository(GITHUB_REPO_NAME);
+
+
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
-        GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
 
-        GM.getFiles(GITHUB_REPO_NAME);
+        GM.getBranchesInRepository(GITHUB_REPO_NAME);
+
         GM.getReadMe(GITHUB_REPO_NAME);
-
-
+        GM.getFiles(GITHUB_REPO_NAME);
         GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
-        var a = GM.getCommitFromBranches(GITHUB_LOGIN, "master");
+        GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
+        var a = GM.getCommitFromBranches(GITHUB_LOGIN,GITHUB_BRANCH_NAME);
+
         for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
         }
+
         GM.getTag(GITHUB_REPO_NAME);
     }
 
@@ -144,24 +147,10 @@ public class GitManager {
      * @throws IOException Thrown due to GHUser
      */
     @org.jetbrains.annotations.NotNull
-    public String getCollaborators(String repositoryName) throws IOException {
-        GHRepository collaboratorsRepository = userOfLogin.getRepository(repositoryName);
-
-        collaboratorNames = collaboratorsRepository.getCollaboratorNames();
-        String collaborators = collaboratorNames.toString();
-
-        return "Collaborators for the following Repository: " + repositoryName + "\nAre: " + collaborators;
-    }
-
-
-    /**
-     * Function to return a List of the collaborators to be used in other functions to gather information regarding all the contributors
-     *
-     * @return List with the names of each contributor.
-     */
-    @Contract(" -> new")
-    public @NotNull List<String> collaboratorsList() {
-        return new ArrayList<>(collaboratorNames);
+    public List<String> getCollaborators(String repositoryName) throws IOException {
+        Set<String> collaboratorNames = userOfLogin.getRepository(repositoryName).getCollaboratorNames();
+        this.collaboratorsNames = new ArrayList<>(collaboratorNames);
+        return collaboratorsNames;
     }
 
     /*--------------------USER RELATED--------------------*/
@@ -177,8 +166,8 @@ public class GitManager {
         String info;
         List<String> collaboratorsInfo = new ArrayList<>();
 
-        for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = gitHub.getUser(collaboratorsList().get(i));
+        for (String collaboratorsName : collaboratorsNames) {
+            user = gitHub.getUser(collaboratorsName);
 
             String name = user.getName();
             URL url = user.getHtmlUrl();
@@ -222,8 +211,8 @@ public class GitManager {
         Map<String, List<String>> repositoriesUserData = new HashMap<>();
         GHUser user;
 
-        for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = gitHub.getUser(collaboratorsList().get(i));
+        for (String collaboratorsName : collaboratorsNames) {
+            user = gitHub.getUser(collaboratorsName);
 
             Map<String, GHRepository> temp = user.getRepositories();
             repositoriesUserData.put(user.getLogin(), temp.values().stream().map(GHRepository::getName).collect(Collectors.toList()));
@@ -246,8 +235,8 @@ public class GitManager {
         int privateRepoCount;
         Optional<Integer> privateRepositoryCount;
 
-        for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = gitHub.getUser(collaboratorsList().get(i));
+        for (String collaboratorsName : collaboratorsNames) {
+            user = gitHub.getUser(collaboratorsName);
 
             publicRepositories = "Number of Public Repositories: ";
             privateRepositories = "Number of Private Repositories: ";
@@ -384,11 +373,11 @@ public class GitManager {
             Request request = new Request.Builder()
                     .addHeader("Authorization", "Bearer " + GITHUB_OAUTH)
                     .url(String.format(this.url + "/commits?" + "&author=" + user + "&sha=" + branchName + "&page=%d", page++)).build();
-
+            System.out.println(request);
             try (Response response = client.newCall(request).execute()) {
                 try {
                     var cm = this.mapper.readValue(Objects.requireNonNull(response.body()).string(), CommitHttpRequest[].class);
-
+                    System.out.println(cm);
                     if (cm.length == 0) {
                         break;
                     }
