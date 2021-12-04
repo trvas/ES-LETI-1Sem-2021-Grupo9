@@ -1,4 +1,5 @@
-import es.grupo9.GitManager;
+package es.grupo9;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,12 +13,8 @@ class GitManagerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
+        gitManager = new GitManager("TOKEN", "Henrique-DeSousa", "test_repo");
         gitManager.getCollaborators("test_repo");
-    }
-
-    @Test
-    void main() {
     }
 
     @Test
@@ -155,20 +152,19 @@ class GitManagerTest {
 
     @Test
     void readFileContent() throws IOException {
-        System.out.println(gitManager.readFileContent("test_repo", "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
         Assertions.assertNotNull(gitManager.readFileContent("test_repo", "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
     }
 
     @Test
     void getCommitDataFromRoot() throws IOException {
-        String expected = "[es.grupo9.GitManager$CommitsDataGit@5ffc5491, es.grupo9.GitManager$CommitsDataGit@705202d1, es.grupo9.GitManager$CommitsDataGit@3c443976, es.grupo9.GitManager$CommitsDataGit@3e58d65e]";
-        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot("test_repo").toString());
+        String expected = "Henrique-DeSousa";
+        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot("test_repo").get(1).getUserName());
     }
 
     @Test
     void getCommitBranches() throws IOException {
-        String expected = "GitManager$CommitUnpack@3a320ade";
-        Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main").toString());
+        String expected = "Henrique-DeSousa";
+        Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main").name);
     }
 
     @Test
@@ -196,6 +192,6 @@ class GitManagerTest {
 
         String tag = """
                {test=Sun Nov 21 14:47:21 WET 2021, Tag2=Sun Nov 21 16:14:31 WET 2021}""";
-        Assertions.assertEquals(tag, gitManager.getTag("test_repo").toString());
+        Assertions.assertEquals(tag, gitManager.getTag("test_repo"));
     }
 }

@@ -30,23 +30,19 @@ public class GitManager {
     private static String GITHUB_BRANCH_NAME; //Name of the branch
     private static String COMMIT_REFERENCE; // Reference to get the file from.
     private static String GITHUB_FILE_NAME; // Name of the file to look
-    private GHUser userOfLogin;
-    private GitHub gitHub;
+    private final GHUser userOfLogin;
+    private final GitHub gitHub;
     private boolean valid = false; // if the flag is set to true, then it moves
     private static boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
     private List<String> collaboratorsNames = new ArrayList<>();
-    private List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
-    private List<String> branchesName = new ArrayList<>();
-    private OkHttpClient client = new OkHttpClient();
-    private String url;
-    private ObjectMapper mapper;
+    private final List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
+    private final List<String> branchesName = new ArrayList<>();
+    private final OkHttpClient client = new OkHttpClient();
+    private final String url;
+    private final ObjectMapper mapper;
 
-    /**
-     * The main function of this class
-     *
-     * @param args normal thing in a main
-     * @throws Exception due to the functions it's calling, GitHub or GHUser being null
-     */
+
+    // function to test directly some of the functionalities. to be deleted on the final commit
     public static void main(String[] args) throws Exception {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
         GM.connect();
@@ -59,7 +55,6 @@ public class GitManager {
         GM.setCommitReference("dbb04cbad190efce1176dbd3a9a0412a749fb56f");
         GM.setGithubFileName("README.md");
 
-
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
 
@@ -71,10 +66,10 @@ public class GitManager {
 
         GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
         var a = GM.getCommitFromBranches(GITHUB_LOGIN,GITHUB_BRANCH_NAME);
-        Collections.reverse(a.commits);
+        Collections.reverse(a.commit);
 
-        for (var commit : a.commits) {
-            System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
+        for (var commit : a.commit) {
+            System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.name);
         }
 
         GM.getTag(GITHUB_REPO_NAME);
@@ -89,9 +84,9 @@ public class GitManager {
      * @throws IOException throws exception when GitHub is null or GHUser is null
      */
     public GitManager(String auth, String userName, String repoName) throws IOException {
-        this.GITHUB_LOGIN = userName;
-        this.GITHUB_OAUTH = auth;
-        this.GITHUB_REPO_NAME = repoName;
+        GITHUB_LOGIN = userName;
+        GITHUB_OAUTH = auth;
+        GITHUB_REPO_NAME = repoName;
         gitHub = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
         userOfLogin = gitHub.getUser(GITHUB_LOGIN);
         this.url = "https://api.github.com/repos/" + GITHUB_LOGIN + "/" + GITHUB_REPO_NAME; // trvas + ES-LETI-1Sem-2021-Grupo9
@@ -113,15 +108,15 @@ public class GitManager {
     }
 
     public void setGithubBranchName(String githubBranchName) {
-        this.GITHUB_BRANCH_NAME = githubBranchName;
+        GITHUB_BRANCH_NAME = githubBranchName;
     }
 
     public void setCommitReference(String commitReference) {
-        this.COMMIT_REFERENCE = commitReference;
+        COMMIT_REFERENCE = commitReference;
     }
 
     public void setGithubFileName(String githubFileName) {
-        this.GITHUB_FILE_NAME = githubFileName;
+        GITHUB_FILE_NAME = githubFileName;
     }
 
 
@@ -506,12 +501,12 @@ public class GitManager {
      * Class to allow the HttpRequest data from the commits to be processed and analysed
      */
     public static class CommitHttpRequest {
-        private String commitDate;
-        private String commitMessage;
+        public String commitDate;
+        public String commitMessage;
 
         @SuppressWarnings("unchecked")
         @JsonProperty("commit")
-        private void unpack(Map<String, Object> commit) {
+        public void unpack(Map<String, Object> commit) {
             this.commitMessage = (String) commit.get("message");
             Map<String, String> committer = (Map<String, String>) commit.get("author");
             this.commitDate = committer.get("date");
@@ -531,12 +526,12 @@ public class GitManager {
      * into the several components.
      */
     public static class CommitUnpack {
-        String personName;
-        List<CommitHttpRequest> commits;
+        String name;
+        List<CommitHttpRequest> commit;
 
-        public CommitUnpack(String personName, List<CommitHttpRequest> cms) {
-            this.personName = personName;
-            this.commits = cms;
+        public CommitUnpack(String name, List<CommitHttpRequest> cms) {
+            this.name = name;
+            this.commit = cms;
         }
     }
 }
