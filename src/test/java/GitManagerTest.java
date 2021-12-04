@@ -14,6 +14,7 @@ class GitManagerTest {
     @BeforeEach
     void setUp() throws IOException {
         gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
+        gitManager.getCollaborators("test_repo");
     }
 
     @Test
@@ -50,7 +51,6 @@ class GitManagerTest {
 
     @Test
     void userInfo() throws IOException {
-        gitManager.getCollaborators("test_repo");
         List<String> nul = gitManager.userInfo();
 
         Assertions.assertEquals(nul, gitManager.userInfo());
@@ -83,6 +83,7 @@ class GitManagerTest {
     @Test
     void getFiles() throws Exception {
         @NotNull Map<String, List<String>> files = gitManager.getFiles("test_repo");
+        System.out.println(files);
         Assertions.assertEquals(files, gitManager.getFiles("test_repo"));
     }
 
@@ -100,6 +101,7 @@ class GitManagerTest {
     @Test
     void getCommitBranches() throws IOException {
         String rawCom = "GitManager$CommitUnpack@3a320ade";
+        System.out.println(gitManager.getCommitFromBranches("Henrique-DeSousa", "main"));
         Assertions.assertNotEquals(rawCom, gitManager.getCommitFromBranches("Henrique-DeSousa", "main"));
     }
 

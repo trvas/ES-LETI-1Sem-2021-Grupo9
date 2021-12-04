@@ -78,14 +78,14 @@ public class GitManager {
     /**
      * Constructor Function, create the object.
      *
-     * @param AUTH     receives the user TOKEN
-     * @param USERNAME receives the user's LOGIN
+     * @param auth     receives the user TOKEN
+     * @param userName receives the user's LOGIN
      * @param repoName receives the user desired repository
      * @throws IOException throws exception when GitHub is null or GHUser is null
      */
-    public GitManager(String AUTH, String USERNAME, String repoName) throws IOException {
-        this.GITHUB_LOGIN = USERNAME;
-        this.GITHUB_OAUTH = AUTH;
+    public GitManager(String auth, String userName, String repoName) throws IOException {
+        this.GITHUB_LOGIN = userName;
+        this.GITHUB_OAUTH = auth;
         this.GITHUB_REPO_NAME = repoName;
         gitHub = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
         userOfLogin = gitHub.getUser(GITHUB_LOGIN);
@@ -148,7 +148,7 @@ public class GitManager {
         collaboratorNames = collaboratorsRepository.getCollaboratorNames();
         String collaborators = collaboratorNames.toString();
 
-        return "Collaborators for the following Repository: " + repositoryName + "\nAre: " + collaborators;
+        return "Collaborators for the following Repository: " + repositoryName +"\nAre: "  + collaborators;
     }
 
 
