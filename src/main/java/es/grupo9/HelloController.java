@@ -14,7 +14,7 @@ import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class HelloController{
@@ -42,6 +42,8 @@ public class HelloController{
     PieChart PieReview1_2, PieReview1_1, PieMeetings1, PieDone1;
 
     TrelloManager trelloManager;
+    GitManager gitManager;
+
     int i = 0;
     int j = 0;
 
@@ -60,17 +62,15 @@ public class HelloController{
     @FXML
     public void searching(ActionEvent e) throws IOException {
         if(e.getSource() == this.Search){
-            String API_KEY = this.Input1.getText();
-            String TOKEN = this.Input2.getText();
-            String BOARD_ID = this.Input3.getText();
-            String GIT_KEY = this.Input4.getText();
-            String TOKEN_G = this.Input5.getText();
-            String DDD = this.Input6.getText();
+            String TRELLO_APIKEY = this.Input1.getText();
+            String TRELLO_TOKEN = this.Input2.getText();
+            String TRELLO_BOARDID = this.Input3.getText();
+            String GIT_ID = this.Input4.getText();
+            String GIT_TOKEN = this.Input5.getText();
+            String GIT_REPONAME = this.Input6.getText();
 
-            trelloManager = new TrelloManager(
-                    "e3ee0d6a1686b4b43ba5d046bbce20af",
-                    "80644fefce741495acc2f1ebf7174b536ae31a6c5c425622fbf5477f82463b84",
-                    "614de300aa6df33863299b6c");
+            trelloManager = new TrelloManager(TRELLO_APIKEY, TRELLO_TOKEN, TRELLO_BOARDID);
+            gitManager = new GitManager(GIT_ID, GIT_TOKEN, GIT_REPONAME);
 
             trelloManager.getMeetings(1).forEach(f-> {
                     comboBox.getItems().add(f.getName());
@@ -136,15 +136,13 @@ public class HelloController{
         for(Member member : trelloManager.getMembers()) {
             Double[] stats = trelloManager.getSprintHoursByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), stats[0], stats[1], stats[2]));
-            String s1 = member.getFullName();
-            pieChart1.add(new PieChart.Data(s1, stats[0]));
-            String s2 = member.getFullName();
-            pieChart2.add(new PieChart.Data(s2, stats[1]));
+            String s = member.getFullName();
+            pieChart1.add(new PieChart.Data(s, stats[0]));
+            pieChart2.add(new PieChart.Data(s, stats[1]));
 
             globalStats[0] += stats[0];
             globalStats[1] += stats[1];
             globalStats[2] += stats[2];
-
         }
         PieReview1_1.setData(pieChart1);
         PieReview1_2.setData(pieChart2);
@@ -158,13 +156,11 @@ public class HelloController{
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
-            String a = member.getFullName();
-            pieChart.add(new PieChart.Data(a, activities[0]));
+            ArrayList<Double[]> arrayList = new ArrayList<>();
+            arrayList.add(0, activities);
+            arrayList.add(1, globalActivities);
 
-            globalActivities[0] += activities[0];
-            globalActivities[1] += activities[1];
-            globalActivities[2] += activities[2];
+            addActivities(member, arrayList, data, pieChart);
         }
         PieMeetings1.setData(pieChart);
         setTableItems(data, globalActivities, meetingsTable, new TableColumn[]{mMember, mActivities, mHours, mCost});
@@ -178,13 +174,11 @@ public class HelloController{
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
-            String s = member.getFullName();
-            pieChart.add(new PieChart.Data(s, activities[0]));
+            ArrayList<Double[]> arrayList = new ArrayList<>();
+            arrayList.add(0, activities);
+            arrayList.add(1, globalActivities);
 
-            globalActivities[0] += activities[0];
-            globalActivities[1] += activities[1];
-            globalActivities[2] += activities[2];
+            addActivities(member, arrayList, data, pieChart);
         }
         PieDone1.setData(pieChart);
         setTableItems(data, globalActivities, doneTable, new TableColumn[]{dMember, dActivities, dHours, dCost});
@@ -192,12 +186,22 @@ public class HelloController{
 
     private void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
         data.add(new TableData("global", dataArray[0], dataArray[1], dataArray[2]));
-        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
-        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
-        tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
-        tableColumns[3].setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<>("member"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<>("activities"));
+        tableColumns[2].setCellValueFactory(new PropertyValueFactory<>("hours"));
+        tableColumns[3].setCellValueFactory(new PropertyValueFactory<>("cost"));
 
         tableView.setItems(data);
+    }
+
+    private void addActivities(Member member, ArrayList<Double[]> arrayList, ObservableList<Object> data, ObservableList<PieChart.Data> pieChart){
+        data.add(new TableData(member.getFullName(), arrayList.get(0)[0], arrayList.get(0)[1], arrayList.get(0)[2]));
+        String a = member.getFullName();
+        pieChart.add(new PieChart.Data(a, arrayList.get(0)[0]));
+
+        arrayList.get(1)[0] += arrayList.get(0)[0];
+        arrayList.get(1)[1] += arrayList.get(0)[1];
+        arrayList.get(1)[2] += arrayList.get(0)[2];
     }
 }
 
