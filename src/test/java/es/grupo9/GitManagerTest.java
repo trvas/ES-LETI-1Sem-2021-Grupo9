@@ -205,7 +205,7 @@ class GitManagerTest {
                 Date: Sun Nov 21 16:14:31 WET 2021
                 User: Henrique-DeSousa""";
 
-        Assertions.assertEquals(expected, gitManager.numberOfCommitsInRoot("test_repo", "Henrique-DeSousa"));
+        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot("test_repo"));
     }
 
     @Test

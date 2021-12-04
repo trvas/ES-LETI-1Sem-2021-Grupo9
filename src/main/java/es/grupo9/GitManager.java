@@ -185,11 +185,11 @@ public class GitManager {
 
             String avatarUrl = user.getAvatarUrl();
             String login = user.getLogin();
-            String email = getUserInformation(user.getEmail(), "Your email isn't public");
+            String email = getUserInformation(user.getEmail(), "Email not public");
             String bio = getUserInformation(user.getBio(), "No bio available");
             String location = getUserInformation(user.getLocation(), "Unknown location");
-            String twtUser = getUserInformation(user.getTwitterUsername(), "Not available");
-            String company = getUserInformation(user.getCompany(), "You don't have a company");
+            String twtUser = getUserInformation(user.getTwitterUsername(), "No Twitter available");
+            String company = getUserInformation(user.getCompany(), "No company");
 
             info = url + "\n" + avatarUrl + "\n" + name + ";\n" + login + ";\n" + email + ";\n" + bio + ";\n" + location + ";\n" + twtUser + ";\n" + company + ".\n";
             collaboratorsInfo.add(info);
@@ -254,13 +254,13 @@ public class GitManager {
 
             repoCount = user.getPublicRepoCount();
             if (user.getPublicRepoCount() == 0) {
-                publicRepositories = "You have no Public Repositories.";
+                publicRepositories = "No Public Repositories. ";
             }
 
             privateRepositoryCount = user.getTotalPrivateRepoCount();
             if (privateRepositoryCount.isEmpty()) {
                 privateRepoCount = 0;
-                privateRepositories = "You have no visible private Repositories.";
+                privateRepositories = "No visible Private Repositories. ";
             } else {
                 privateRepoCount = privateRepositoryCount.get();
             }
