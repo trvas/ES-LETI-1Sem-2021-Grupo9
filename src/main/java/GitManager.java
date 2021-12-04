@@ -33,7 +33,7 @@ public class GitManager {
     private GitHub gitHub;
     private boolean valid = false; // if the flag is set to true, then it moves
     private static boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
-    private Set<String> collaboratorNames = new HashSet<>();
+    private List<String> collaboratorsNames = new ArrayList<>();
     private List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
     private List<String> branchesName = new ArrayList<>();
     private OkHttpClient client = new OkHttpClient();
@@ -54,24 +54,27 @@ public class GitManager {
         if (getUserInfo) {
             GM.userInfo();
         }
-        GM.setGithubBranchName(GITHUB_BRANCH_NAME);
-        GM.setCommitReference(COMMIT_REFERENCE);
-        GM.setGithubFileName(GITHUB_FILE_NAME);
-        GM.getBranchesInRepository(GITHUB_REPO_NAME);
+        GM.setGithubBranchName("main");
+        GM.setCommitReference("dbb04cbad190efce1176dbd3a9a0412a749fb56f");
+        GM.setGithubFileName("README.md");
+
+
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
-        GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
 
-        GM.getFiles(GITHUB_REPO_NAME);
+        GM.getBranchesInRepository(GITHUB_REPO_NAME);
+
         GM.getReadMe(GITHUB_REPO_NAME);
-
-
+        GM.getFiles(GITHUB_REPO_NAME);
         GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
-        var a = GM.getCommitFromBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
+        GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
+        var a = GM.getCommitFromBranches(GITHUB_LOGIN,GITHUB_BRANCH_NAME);
+
         for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
         }
+
         GM.getTag(GITHUB_REPO_NAME);
     }
 
@@ -142,24 +145,11 @@ public class GitManager {
      * @throws IOException Thrown due to GHUser
      */
     @org.jetbrains.annotations.NotNull
-    public String getCollaborators(String repositoryName) throws IOException {
-        GHRepository collaboratorsRepository = userOfLogin.getRepository(repositoryName);
-
-        collaboratorNames = collaboratorsRepository.getCollaboratorNames();
-        String collaborators = collaboratorNames.toString();
-
-        return "Collaborators for the following Repository: " + repositoryName +"\nAre: "  + collaborators;
-    }
-
-
-    /**
-     * Function to return a List of the collaborators to be used in other functions to gather information regarding all the contributors
-     *
-     * @return List with the names of each contributor.
-     */
-    @Contract(" -> new")
-    public @NotNull List<String> collaboratorsList() {
-        return new ArrayList<>(collaboratorNames);
+    public List<String> getCollaborators(String repositoryName) throws IOException {
+        Set<String> collaboratorNames = userOfLogin.getRepository(repositoryName).getCollaboratorNames();
+        this.collaboratorsNames = new ArrayList<>(collaboratorNames);
+        System.out.println(collaboratorsNames);
+        return collaboratorsNames;
     }
 
     /*--------------------USER RELATED--------------------*/
@@ -175,23 +165,24 @@ public class GitManager {
         String info;
         List<String> collaboratorsInfo = new ArrayList<>();
 
-        for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = gitHub.getUser(collaboratorsList().get(i));
+        for (String collaboratorsName : collaboratorsNames) {
+            user = gitHub.getUser(collaboratorsName);
 
             String name = user.getName();
             URL url = user.getHtmlUrl();
 
             String avatarUrl = user.getAvatarUrl();
             String login = user.getLogin();
-            String email = getUserInformation(user.getEmail(), "Your email isn't public");
+            String email = getUserInformation(user.getEmail(), "Email not public");
             String bio = getUserInformation(user.getBio(), "No bio available");
             String location = getUserInformation(user.getLocation(), "Unknown location");
-            String twtUser = getUserInformation(user.getTwitterUsername(), "Not available");
-            String company = getUserInformation(user.getCompany(), "You don't have a company");
+            String twtUser = getUserInformation(user.getTwitterUsername(), "No Twitter available");
+            String company = getUserInformation(user.getCompany(), "No company");
 
             info = url + "\n" + avatarUrl + "\n" + name + ";\n" + login + ";\n" + email + ";\n" + bio + ";\n" + location + ";\n" + twtUser + ";\n" + company + ".\n";
             collaboratorsInfo.add(info);
         }
+        System.out.println(collaboratorsInfo);
         return collaboratorsInfo;
     }
 
@@ -220,12 +211,13 @@ public class GitManager {
         Map<String, List<String>> repositoriesUserData = new HashMap<>();
         GHUser user;
 
-        for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = gitHub.getUser(collaboratorsList().get(i));
+        for (String collaboratorsName : collaboratorsNames) {
+            user = gitHub.getUser(collaboratorsName);
 
             Map<String, GHRepository> temp = user.getRepositories();
             repositoriesUserData.put(user.getLogin(), temp.values().stream().map(GHRepository::getName).collect(Collectors.toList()));
         }
+        System.out.println(repositoriesUserData);
         return repositoriesUserData;
     }
 
@@ -244,26 +236,27 @@ public class GitManager {
         int privateRepoCount;
         Optional<Integer> privateRepositoryCount;
 
-        for (int i = 0; i < collaboratorsList().size(); i++) {
-            user = gitHub.getUser(collaboratorsList().get(i));
+        for (String collaboratorsName : collaboratorsNames) {
+            user = gitHub.getUser(collaboratorsName);
 
             publicRepositories = "Number of Public Repositories: ";
             privateRepositories = "Number of Private Repositories: ";
 
             repoCount = user.getPublicRepoCount();
             if (user.getPublicRepoCount() == 0) {
-                publicRepositories = "You have no Public Repositories.";
+                publicRepositories = "No Public Repositories. ";
             }
 
             privateRepositoryCount = user.getTotalPrivateRepoCount();
             if (privateRepositoryCount.isEmpty()) {
                 privateRepoCount = 0;
-                privateRepositories = "You have no visible private Repositories.";
+                privateRepositories = "No visible Private Repositories. ";
             } else {
                 privateRepoCount = privateRepositoryCount.get();
             }
             out.add("\n" + user.getLogin() + "\n" + publicRepositories + repoCount + "\n" + privateRepositories + privateRepoCount);
         }
+        System.out.println(out);
         return out;
     }
 
@@ -382,11 +375,11 @@ public class GitManager {
             Request request = new Request.Builder()
                     .addHeader("Authorization", "Bearer " + GITHUB_OAUTH)
                     .url(String.format(this.url + "/commits?" + "&author=" + user + "&sha=" + branchName + "&page=%d", page++)).build();
-
+            System.out.println(request);
             try (Response response = client.newCall(request).execute()) {
                 try {
                     var cm = this.mapper.readValue(Objects.requireNonNull(response.body()).string(), CommitHttpRequest[].class);
-
+                    System.out.println(cm);
                     if (cm.length == 0) {
                         break;
                     }
@@ -397,6 +390,7 @@ public class GitManager {
                 }
             }
         }
+        System.out.println(new CommitUnpack(user, commits));
         return new CommitUnpack(user, commits);
     }
 
