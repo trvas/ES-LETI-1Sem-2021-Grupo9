@@ -1,5 +1,4 @@
 import es.grupo9.GitManager;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ class GitManagerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gitManager = new GitManager("token", "Henrique-DeSousa", "test_repo");
+        gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
         gitManager.getCollaborators("test_repo");
     }
 
