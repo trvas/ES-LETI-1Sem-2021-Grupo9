@@ -1,13 +1,11 @@
 package es.grupo9;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.util.*;
 
 class GitManagerTest {
@@ -15,10 +13,10 @@ class GitManagerTest {
     GitManager gitManager;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() throws Exception {
         gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo" );
-        gitManager.connect();
         gitManager.getCollaborators("test_repo");
+        gitManager.getBranchesInRepository("test_repo");
     }
 
     @AfterEach
@@ -26,23 +24,23 @@ class GitManagerTest {
     }
 
     @Test
-    void main() {
-    }
-
-    @Test
     void setGithubBranchName() {
-        // Assertions.assertEquals(branchN, gitManager.setGithubBranchName(branchN));
+        gitManager.setGithubBranchName("master");
+        Assertions.assertEquals("master", gitManager.getGithubBranchName());
     }
 
     @Test
     void setCommitReference() {
-        // Assertions.assertNotEquals(null, gitManager.setCommitReference("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
+        gitManager.setCommitReference("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d");
+        Assertions.assertEquals("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d", gitManager.getCommitReference());
     }
 
     @Test
     void setGithubFileName() {
-        //Assertions.assertEquals(info, gitManager.userInfo());
+        gitManager.setGithubFileName("README.md");
+        Assertions.assertEquals("README.md", gitManager.getGithubFileName());
     }
+
 
     @Test
     void getCollaborators() throws IOException {
@@ -60,6 +58,7 @@ class GitManagerTest {
 
     @Test
     void userInfo() throws IOException {
+
         List<String> expected = Arrays.asList(
                 """
                 https://github.com/rfgoo-iscte
@@ -157,6 +156,7 @@ class GitManagerTest {
     }
 
     // returns null. check why
+
     @Test
     void getFiles() throws Exception {
         Map<String, List<String>> expected = new HashMap<>();
@@ -187,7 +187,7 @@ class GitManagerTest {
     void getCommitBranches() throws IOException {
         String expected = """
                 GitManager$CommitUnpack@7d1cfb8b""";
-        Assertions.assertEquals(expected, gitManager.getCommitBranches("Henrique-DeSousa", "main"));
+        Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main"));
     }
 
     @Test
