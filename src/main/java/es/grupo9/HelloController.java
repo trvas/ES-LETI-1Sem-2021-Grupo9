@@ -14,7 +14,7 @@ import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class HelloController{
@@ -27,7 +27,7 @@ public class HelloController{
     @FXML
     TabPane TabPane1,TabPane2,TabPane3;
     @FXML
-    WebView MeetingsText,DoneText;
+    WebView MeetingsText,DoneText,ReadMe;
     @FXML
     ComboBox<String> comboBox,comboBox2;
     @FXML
@@ -40,10 +40,11 @@ public class HelloController{
     Tab TabMeetings1, TabDone1;
     @FXML
     PieChart PieReview1_2, PieReview1_1, PieMeetings1, PieDone1;
+    @FXML
+    Slider SliderCost;
 
     TrelloManager trelloManager;
     GitManager gitManager;
-
     int i = 0;
     int j = 0;
 
@@ -62,22 +63,31 @@ public class HelloController{
     @FXML
     public void searching(ActionEvent e) throws IOException {
         if(e.getSource() == this.Search){
-            String TRELLO_APIKEY = this.Input1.getText();
-            String TRELLO_TOKEN = this.Input2.getText();
-            String TRELLO_BOARDID = this.Input3.getText();
-            String GIT_ID = this.Input4.getText();
-            String GIT_TOKEN = this.Input5.getText();
-            String GIT_REPONAME = this.Input6.getText();
+            String API_KEY = this.Input1.getText();
+            String TOKEN = this.Input2.getText();
+            String BOARD_ID = this.Input3.getText();
+            String GIT_KEY = this.Input4.getText();
+            String GIT_NAME = this.Input5.getText();
+            String REPO_NAME = this.Input6.getText();
 
-            trelloManager = new TrelloManager(TRELLO_APIKEY, TRELLO_TOKEN, TRELLO_BOARDID);
-            gitManager = new GitManager(GIT_ID, GIT_TOKEN, GIT_REPONAME);
+            trelloManager = new TrelloManager(
+                    "e3ee0d6a1686b4b43ba5d046bbce20af",
+                    "80644fefce741495acc2f1ebf7174b536ae31a6c5c425622fbf5477f82463b84",
+                    "614de300aa6df33863299b6c");
+            gitManager = new GitManager(
+                    "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",
+                    "henrique-deSousa",
+                    "test_repo");
 
-            trelloManager.getMeetings(1).forEach(f-> {
-                    comboBox.getItems().add(f.getName());
-            });
-            trelloManager.getFinishedSprintBacklog(1).forEach(f-> {
-                comboBox2.getItems().add(f.getName());
-            });
+            Utils.setPrice((int)SliderCost.getValue());
+            trelloManager.getMeetings(1).forEach(f-> comboBox.getItems().add(f.getName()));
+            trelloManager.getFinishedSprintBacklog(1).forEach(f-> comboBox2.getItems().add(f.getName()));
+
+            gitManager.connect();
+            gitManager.getCollaborators();
+            ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
+            System.out.println(gitManager.getTag());
+
             setReviewTable(1);
         }
     }
@@ -103,7 +113,7 @@ public class HelloController{
     }
 
     @FXML
-    public void setComboBox(ActionEvent e) throws IOException {
+    public void setComboBox() throws IOException {
         trelloManager.getMeetings(1).forEach(f-> {
             try {
                 if(Objects.equals(this.comboBox.getValue(), f.getName()))
@@ -115,7 +125,7 @@ public class HelloController{
     }
 
     @FXML
-    public void setComboBox2(ActionEvent e) throws IOException {
+    public void setComboBox2() throws IOException {
         trelloManager.getFinishedSprintBacklog(1).forEach(f-> {
             try {
                 if(Objects.equals(this.comboBox2.getValue(), f.getName()))
@@ -136,13 +146,15 @@ public class HelloController{
         for(Member member : trelloManager.getMembers()) {
             Double[] stats = trelloManager.getSprintHoursByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), stats[0], stats[1], stats[2]));
-            String s = member.getFullName();
-            pieChart1.add(new PieChart.Data(s, stats[0]));
-            pieChart2.add(new PieChart.Data(s, stats[1]));
+            String s1 = member.getFullName();
+            pieChart1.add(new PieChart.Data(s1, stats[0]));
+            String s2 = member.getFullName();
+            pieChart2.add(new PieChart.Data(s2, stats[1]));
 
             globalStats[0] += stats[0];
             globalStats[1] += stats[1];
             globalStats[2] += stats[2];
+
         }
         PieReview1_1.setData(pieChart1);
         PieReview1_2.setData(pieChart2);
@@ -156,11 +168,13 @@ public class HelloController{
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            ArrayList<Double[]> arrayList = new ArrayList<>();
-            arrayList.add(0, activities);
-            arrayList.add(1, globalActivities);
+            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
+            String a = member.getFullName();
+            pieChart.add(new PieChart.Data(a, activities[0]));
 
-            addActivities(member, arrayList, data, pieChart);
+            globalActivities[0] += activities[0];
+            globalActivities[1] += activities[1];
+            globalActivities[2] += activities[2];
         }
         PieMeetings1.setData(pieChart);
         setTableItems(data, globalActivities, meetingsTable, new TableColumn[]{mMember, mActivities, mHours, mCost});
@@ -174,11 +188,13 @@ public class HelloController{
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            ArrayList<Double[]> arrayList = new ArrayList<>();
-            arrayList.add(0, activities);
-            arrayList.add(1, globalActivities);
+            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
+            String s = member.getFullName();
+            pieChart.add(new PieChart.Data(s, activities[0]));
 
-            addActivities(member, arrayList, data, pieChart);
+            globalActivities[0] += activities[0];
+            globalActivities[1] += activities[1];
+            globalActivities[2] += activities[2];
         }
         PieDone1.setData(pieChart);
         setTableItems(data, globalActivities, doneTable, new TableColumn[]{dMember, dActivities, dHours, dCost});
@@ -186,22 +202,12 @@ public class HelloController{
 
     private void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
         data.add(new TableData("global", dataArray[0], dataArray[1], dataArray[2]));
-        tableColumns[0].setCellValueFactory(new PropertyValueFactory<>("member"));
-        tableColumns[1].setCellValueFactory(new PropertyValueFactory<>("activities"));
-        tableColumns[2].setCellValueFactory(new PropertyValueFactory<>("hours"));
-        tableColumns[3].setCellValueFactory(new PropertyValueFactory<>("cost"));
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
+        tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
+        tableColumns[3].setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
 
         tableView.setItems(data);
-    }
-
-    private void addActivities(Member member, ArrayList<Double[]> arrayList, ObservableList<Object> data, ObservableList<PieChart.Data> pieChart){
-        data.add(new TableData(member.getFullName(), arrayList.get(0)[0], arrayList.get(0)[1], arrayList.get(0)[2]));
-        String a = member.getFullName();
-        pieChart.add(new PieChart.Data(a, arrayList.get(0)[0]));
-
-        arrayList.get(1)[0] += arrayList.get(0)[0];
-        arrayList.get(1)[1] += arrayList.get(0)[1];
-        arrayList.get(1)[2] += arrayList.get(0)[2];
     }
 }
 

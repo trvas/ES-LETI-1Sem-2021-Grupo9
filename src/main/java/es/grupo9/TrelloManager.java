@@ -9,7 +9,6 @@ import org.trello4j.model.Member;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TrelloManager{
@@ -34,7 +33,7 @@ public class TrelloManager{
      */
     public List<Card> getFinishedSprintBacklog(int sprintNumber) throws IOException {
         // Get the list of cards from the board
-        List<Card> cards = trello.getCardsByList(getBoardListIdByName("#SPRINT" +  sprintNumber + " - Increment"));
+        List<Card> cards = trello.getCardsByList(getSprintListByName(sprintNumber, "Done"));
 
         // Returns the cards from the Done list of the sprint asked
         return new ArrayList<>(cards);
@@ -94,7 +93,7 @@ public class TrelloManager{
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
     public Double[] getSprintHoursByMember(String memberName, int sprintNumber) throws IOException {
-        List<Card> memberSprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
+        List<Card> memberSprintList = trello.getCardsByList(getSprintListByName(sprintNumber, "Done"));
 
         // Removing cards without the member
         String memberId = getMemberIdByName(memberName);
@@ -127,25 +126,24 @@ public class TrelloManager{
      */
     public Double[] getCommittedActivitiesByMember(String memberName, int sprintNumber) throws IOException {
         Double[] activities = new Double[3];
-        List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
         // Format to only have 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
 
-         List<Card> memberSprintList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Increment"));
+        List<Card> memberSprintList = trello.getCardsByList(getSprintListByName(sprintNumber, "Done"));
 
-         // Removing cards without the member
-         String memberId = getMemberIdByName(memberName);
-         memberSprintList.removeIf(card -> !(card.getIdMembers().contains(memberId)));
+        // Removing cards without the member
+        String memberId = getMemberIdByName(memberName);
+        memberSprintList.removeIf(card -> !(card.getIdMembers().contains(memberId)));
 
-         activitiesCount.addAll(memberSprintList);
-         totalHours += getSprintHoursByMember(memberName, sprintNumber)[0];
+        List<Card> activitiesCount = new ArrayList<>(memberSprintList);
+        totalHours += getSprintHoursByMember(memberName, sprintNumber)[0];
 
-         activities[0] = (double) activitiesCount.size();
-         activities[1] = Double.valueOf(df.format(totalHours));
-         activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
+        activities[0] = (double) activitiesCount.size();
+        activities[1] = Double.valueOf(df.format(totalHours));
+        activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
 
-         return activities;
+        return activities;
     }
 
     /**
@@ -159,18 +157,17 @@ public class TrelloManager{
      */
     public Double[] getNotCommittedActivitiesByMember(String memberName, int sprintNumber) throws IOException {
         Double[] activities = new Double[3];
-        List<Card> activitiesCount = new ArrayList<>();
         double totalHours = 0.0;
         // Format to only have 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
 
-        List<Card> memberMeetingList = trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Meetings"));
+        List<Card> memberMeetingList = trello.getCardsByList(getSprintListByName(sprintNumber, "Meetings"));
 
         // Removing cards without the member
         String memberId = getMemberIdByName(memberName);
         memberMeetingList.removeIf(card -> !(card.getIdMembers().contains(memberId)));
 
-        activitiesCount.addAll(memberMeetingList);
+        List<Card> activitiesCount = new ArrayList<>(memberMeetingList);
         for(Card card : memberMeetingList) {
             totalHours += getCardHours(card.getId())[0];
         }
@@ -190,9 +187,25 @@ public class TrelloManager{
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
     public List<Card> getMeetings(int sprintNumber) throws IOException {
-        return trello.getCardsByList(getBoardListIdByName("#SPRINT" + sprintNumber + " - Meetings"));
+        return trello.getCardsByList(getSprintListByName(sprintNumber, "Meetings"));
     }
 
+    /**
+     * Returns the ID of a Board List provided its name and Sprint number.
+     * @param sprintNumber number of the Sprint.
+     * @param listName name of the Board the user wants the ID from.
+     * @return String ID of the Board List.
+     * @throws IOException if list isn't part of the board.
+     */
+    private String getSprintListByName(int sprintNumber, String listName) throws IOException {
+        List<org.trello4j.model.List> boardLists = trello.getListByBoard(boardId);
+        for(org.trello4j.model.List boardList : boardLists) {
+            if (boardList.getName().contains("Sprint " + sprintNumber) && boardList.getName().contains(listName)) {
+                return boardList.getId();
+            }
+        }
+        throw new IOException("List does not exist in this board.");
+    }
 
     /**
      * Returns the ID of a Board List provided its name.
@@ -200,7 +213,7 @@ public class TrelloManager{
      * @return String ID of the Board List.
      * @throws IOException if list isn't part of the board.
      */
-    public String getBoardListIdByName(String listName) throws IOException {
+    private String getBoardListIdByName(String listName) throws IOException {
         List<org.trello4j.model.List> boardLists = trello.getListByBoard(boardId);
         for(org.trello4j.model.List boardList : boardLists) {
             if (boardList.getName().contains(listName)) {
@@ -245,12 +258,5 @@ public class TrelloManager{
 
     public List<Member> getMembers(){
         return trello.getMembersByBoard(boardId);
-    }
-
-    public static void main(String[] args) throws IOException {
-        TrelloManager trelloManager = new TrelloManager(
-                "e3ee0d6a1686b4b43ba5d046bbce20af",
-                "80644fefce741495acc2f1ebf7174b536ae31a6c5c425622fbf5477f82463b84",
-                "614de300aa6df33863299b6c");
     }
 }

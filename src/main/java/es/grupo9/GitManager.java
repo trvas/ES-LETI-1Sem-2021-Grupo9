@@ -47,7 +47,7 @@ public class GitManager {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
         GM.connect();
 
-        GM.getCollaborators(GITHUB_REPO_NAME);
+        GM.getCollaborators();
         if (getUserInfo) {
             GM.userInfo();
         }
@@ -60,7 +60,7 @@ public class GitManager {
 
         GM.getBranchesInRepository(GITHUB_REPO_NAME);
 
-        GM.getReadMe(GITHUB_REPO_NAME);
+        GM.getReadMe();
         GM.getFiles(GITHUB_REPO_NAME);
         GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
@@ -72,7 +72,7 @@ public class GitManager {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.name);
         }
 
-        GM.getTag(GITHUB_REPO_NAME);
+        GM.getTag();
     }
 
     /**
@@ -137,13 +137,12 @@ public class GitManager {
     /**
      * Function used to get the name of the collaborators of a specific Repository
      *
-     * @param repositoryName Name of the repository to fetch the Collaborators
      * @return returns a string with the name of all the collaborators
      * @throws IOException Thrown due to GHUser
      */
     @org.jetbrains.annotations.NotNull
-    public List<String> getCollaborators(String repositoryName) throws IOException {
-        Set<String> collaboratorNames = userOfLogin.getRepository(repositoryName).getCollaboratorNames();
+    public List<String> getCollaborators() throws IOException {
+        Set<String> collaboratorNames = userOfLogin.getRepository(GITHUB_REPO_NAME).getCollaboratorNames();
         this.collaboratorsNames = new ArrayList<>(collaboratorNames);
         return collaboratorsNames;
     }
@@ -273,12 +272,12 @@ public class GitManager {
     /**
      * Gets the README from any repository that was given and reads the data in it.
      *
-     * @param repositoryName the repository to look for
+     *
      * @return contentReadMe returns the content of the README file
      * @throws IOException thrown when the GHuser is null
      */
-    public @NotNull String getReadMe(String repositoryName) throws IOException {
-        GHContent readMeContents = userOfLogin.getRepository(repositoryName).getReadme();
+    public @NotNull String getReadMe() throws IOException {
+        GHContent readMeContents = userOfLogin.getRepository(GITHUB_REPO_NAME).getReadme();
         InputStream readMe = readMeContents.read();
         return new String(readMe.readAllBytes(), StandardCharsets.UTF_8);
     }
@@ -414,12 +413,11 @@ public class GitManager {
     /**
      * Function to return the Tags that were made in a Repository.
      *
-     * @param repositoryName Name of the repository to fetch Tags
      * @return Returns a Map with the Name of the Tag, and it's Date of publish
      * @throws IOException Thrown due to GitHub
      */
-    public @NotNull String getTag(String repositoryName) throws IOException {
-        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
+    public @NotNull String getTag() throws IOException {
+        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME);
         List<GHTag> tags = getRepo.listTags().toList();
         List<String> tagNames = new ArrayList<>();
         List<GHCommit> tagCommits = new ArrayList<>();

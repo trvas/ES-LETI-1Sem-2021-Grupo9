@@ -40,12 +40,6 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getBoardListIdByName() throws IOException {
-        // ID Lista "Sprints" da Board = 61606295191d043999a57bcb
-        Assertions.assertEquals("61606295191d043999a57bcb", trelloManager.getBoardListIdByName("Sprints"));
-    }
-
-    @Test
     void getMemberIdByName() throws IOException {
         // Tatiana Member ID = 614dd7696ae49f2cea41608b
         Assertions.assertEquals("614dd7696ae49f2cea41608b", trelloManager.getMemberIdByName("Tatiana"));
