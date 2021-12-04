@@ -134,34 +134,34 @@ class GitManagerTest {
     @Test
     void getBranchesInRepository() throws Exception {
         List<String> expected = Arrays.asList("main", "master");
-        Assertions.assertEquals(expected, gitManager.getBranchesInRepository("test_repo"));
+        Assertions.assertEquals(expected, gitManager.getBranchesInRepository());
     }
 
     @Test
     void testGetReadMe() throws IOException {
-        Assertions.assertNotEquals(null, gitManager.getReadMe("test_repo"));
+        Assertions.assertNotEquals(null, gitManager.getReadMe());
     }
 
     @Test
     void getFiles() throws Exception {
-        gitManager.getBranchesInRepository("test_repo");
+        gitManager.getBranchesInRepository();
         Map<String, List<String>> expected = new HashMap<>();
         expected.put("main", Arrays.asList("README.md", "kekwtest"));
         expected.put("master", Arrays.asList(".idea", "README.md", "calc.py", "calc2.0.py"));
 
-        Assertions.assertEquals(expected, gitManager.getFiles("test_repo"));
+        Assertions.assertEquals(expected, gitManager.getFiles());
     }
 
     @Test
     void readFileContent() throws IOException {
-        System.out.println(gitManager.readFileContent("test_repo", "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
-        Assertions.assertNotNull(gitManager.readFileContent("test_repo", "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
+        System.out.println(gitManager.readFileContent( "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
+        Assertions.assertNotNull(gitManager.readFileContent( "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
     }
 
     @Test
     void getCommitDataFromRoot() throws IOException {
         String expected = "[es.grupo9.GitManager$CommitsDataGit@5ffc5491, es.grupo9.GitManager$CommitsDataGit@705202d1, es.grupo9.GitManager$CommitsDataGit@3c443976, es.grupo9.GitManager$CommitsDataGit@3e58d65e]";
-        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot("test_repo").toString());
+        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot().toString());
     }
 
     @Test
@@ -186,7 +186,7 @@ class GitManagerTest {
         User: Henrique-DeSousa
         """;
 
-        Assertions.assertEquals(expected, gitManager.commitsInRoot("test_repo", "Henrique-DeSousa"));
+        Assertions.assertEquals(expected, gitManager.commitsInRoot( "Henrique-DeSousa"));
 
     }
 
@@ -195,6 +195,6 @@ class GitManagerTest {
 
         String tag = """
                {test=Sun Nov 21 14:47:21 WET 2021, Tag2=Sun Nov 21 16:14:31 WET 2021}""";
-        Assertions.assertEquals(tag, gitManager.getTag("test_repo").toString());
+        Assertions.assertEquals(tag, gitManager.getTag().toString());
     }
 }
