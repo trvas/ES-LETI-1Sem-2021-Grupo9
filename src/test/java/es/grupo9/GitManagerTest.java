@@ -14,7 +14,7 @@ class GitManagerTest {
     @BeforeEach
     void setUp() throws Exception {
         gitManager = new GitManager("TOKEN", "Henrique-DeSousa", "test_repo");
-        gitManager.getCollaborators("test_repo");
+        gitManager.getCollaborators();
     }
 
     @Test
@@ -39,7 +39,7 @@ class GitManagerTest {
     void getCollaborators() throws IOException {
         String expected = """
                          [rfgoo-iscte, trvas, Henrique-DeSousa, glrss-iscte]""";
-        Assertions.assertEquals(expected, gitManager.getCollaborators("test_repo").toString());
+        Assertions.assertEquals(expected, gitManager.getCollaborators().toString());
     }
 
     @Test
@@ -132,17 +132,17 @@ class GitManagerTest {
     @Test
     void getBranchesInRepository() throws Exception {
         List<String> expected = Arrays.asList("main", "master");
-        Assertions.assertEquals(expected, gitManager.getBranchesInRepository("test_repo"));
+        Assertions.assertEquals(expected, gitManager.getBranchesInRepository());
     }
 
     @Test
     void testGetReadMe() throws IOException {
-        Assertions.assertNotEquals(null, gitManager.getReadMe("test_repo"));
+        Assertions.assertNotEquals(null, gitManager.getReadMe());
     }
 
     @Test
     void getFiles() throws Exception {
-        gitManager.getBranchesInRepository("test_repo");
+        gitManager.getBranchesInRepository();
         Map<String, List<String>> expected = new HashMap<>();
         expected.put("main", Arrays.asList("README.md", "kekwtest"));
         expected.put("master", Arrays.asList(".idea", "README.md", "calc.py", "calc2.0.py"));
@@ -192,6 +192,6 @@ class GitManagerTest {
 
         String tag = """
                {test=Sun Nov 21 14:47:21 WET 2021, Tag2=Sun Nov 21 16:14:31 WET 2021}""";
-        Assertions.assertEquals(tag, gitManager.getTag("test_repo"));
+        Assertions.assertEquals(tag, gitManager.getTag());
     }
 }
