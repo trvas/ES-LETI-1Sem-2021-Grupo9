@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 public class GitManager {
 
-    private static String GITHUB_OAUTH; // gitHub's token
-    private static String GITHUB_LOGIN; //User's login
-    private static String GITHUB_REPO_NAME; //Name of the repository
+    private static String GITHUB_OAUTH = "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"; // gitHub's token
+    private static String GITHUB_LOGIN = "Henrique-DeSousa"; //User's login
+    private static String GITHUB_REPO_NAME = "test_repo"; //Name of the repository
     private static String GITHUB_BRANCH_NAME; //Name of the branch
     private static String COMMIT_REFERENCE; // Reference to get the file from.
     private static String GITHUB_FILE_NAME; // Name of the file to look
@@ -56,9 +56,9 @@ public class GitManager {
         if (getUserInfo) {
             GM.userInfo();
         }
-        GM.setGithubBranchName(GITHUB_BRANCH_NAME);
-        GM.setCommitReference(COMMIT_REFERENCE);
-        GM.setGithubFileName(GITHUB_FILE_NAME);
+        GM.setGithubBranchName("master");
+        GM.setCommitReference("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d");
+        GM.setGithubFileName("README.md");
         GM.getBranchesInRepository(GITHUB_REPO_NAME);
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
@@ -70,7 +70,7 @@ public class GitManager {
 
         GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
-        var a = GM.getCommitFromBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
+        var a = GM.getCommitFromBranches(GITHUB_LOGIN, "master");
         for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
         }
@@ -150,7 +150,7 @@ public class GitManager {
         collaboratorNames = collaboratorsRepository.getCollaboratorNames();
         String collaborators = collaboratorNames.toString();
 
-        return "Collaborators for the following Repository: " + repositoryName +"\nAre: "  + collaborators;
+        return "Collaborators for the following Repository: " + repositoryName + "\nAre: " + collaborators;
     }
 
 
@@ -399,6 +399,7 @@ public class GitManager {
                 }
             }
         }
+        System.out.println(new CommitUnpack(user, commits));
         return new CommitUnpack(user, commits);
     }
 
