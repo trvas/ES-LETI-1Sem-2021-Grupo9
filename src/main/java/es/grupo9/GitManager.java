@@ -84,14 +84,14 @@ public class GitManager {
     /**
      * Constructor Function, create the object.
      *
-     * @param AUTH     receives the user TOKEN
-     * @param USERNAME receives the user's LOGIN
+     * @param auth     receives the user TOKEN
+     * @param userName receives the user's LOGIN
      * @param repoName receives the user desired repository
      * @throws IOException throws exception when GitHub is null or GHUser is null
      */
-    public GitManager(String AUTH, String USERNAME, String repoName) throws IOException {
-        this.GITHUB_LOGIN = USERNAME;
-        this.GITHUB_OAUTH = AUTH;
+    public GitManager(String auth, String userName, String repoName) throws IOException {
+        this.GITHUB_LOGIN = userName;
+        this.GITHUB_OAUTH = auth;
         this.GITHUB_REPO_NAME = repoName;
         gitHub = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
         userOfLogin = gitHub.getUser(GITHUB_LOGIN);
@@ -99,9 +99,18 @@ public class GitManager {
         this.mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
-        GHRepository collaboratorsRepository = userOfLogin.getRepository(repoName);
-        collaboratorNames = collaboratorsRepository.getCollaboratorNames();
+    }
 
+    public String getGithubBranchName() {
+        return GITHUB_BRANCH_NAME;
+    }
+
+    public String getCommitReference() {
+        return COMMIT_REFERENCE;
+    }
+
+    public String getGithubFileName() {
+        return GITHUB_FILE_NAME;
     }
 
     public void setGithubBranchName(String githubBranchName) {
@@ -142,6 +151,10 @@ public class GitManager {
      */
     @NotNull
     public String getCollaborators(String repositoryName) throws IOException {
+        GHRepository collaboratorsRepository = userOfLogin.getRepository(repositoryName);
+        collaboratorNames = collaboratorsRepository.getCollaboratorNames();
+
+
         String collaborators = collaboratorNames.toString();
 
         return "Collaborators for the following Repository: " + repositoryName + "\nAre: " + collaborators;
@@ -373,7 +386,7 @@ public class GitManager {
      * @return returns a Map into a nested class for it to be able to be processed and used.
      * @throws IOException throws Exception due to .execute and .string
      */
-    public CommitUnpack getCommitBranches(String user, String branchName) throws IOException {
+    public CommitUnpack getCommitFromBranches(String user, String branchName) throws IOException {
         List<CommitHttpRequest> commits = new ArrayList<>();
 
         int page = 1;
