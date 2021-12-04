@@ -129,18 +129,25 @@ public class HelloController{
 
     public void setReviewTable(int sprintNumber) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> pieChart1 = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> pieChart2 = FXCollections.observableArrayList();
         Double[] globalStats = new Double[] {0.0, 0.0, 0.0};
 
         for(Member member : trelloManager.getMembers()) {
             Double[] stats = trelloManager.getSprintHoursByMember(member.getFullName(), sprintNumber);
             data.add(new TableData(member.getFullName(), stats[0], stats[1], stats[2]));
+            String s1 = member.getFullName();
+            pieChart1.add(new PieChart.Data(s1, stats[0]));
+            String s2 = member.getFullName();
+            pieChart2.add(new PieChart.Data(s2, stats[1]));
 
             globalStats[0] += stats[0];
             globalStats[1] += stats[1];
             globalStats[2] += stats[2];
 
         }
-
+        PieReview1_1.setData(pieChart1);
+        PieReview1_2.setData(pieChart2);
         setTableItems(data, globalStats, reviewTable, new TableColumn[]{rMember, rEstimated, rHours, rCost});
     }
 

@@ -189,6 +189,8 @@
                               <TableColumn fx:id="rCost" prefWidth="81.60000000000002" text="COST" />
                           </columns>
                         </TableView>
+                        <PieChart fx:id="PieReview1_2" layoutX="474.0" layoutY="210.0" prefHeight="258.0" prefWidth="247.0" />
+                        <PieChart fx:id="PieReview1_1" layoutX="497.0" layoutY="40.0" prefHeight="124.0" prefWidth="166.0" />
                      </children></AnchorPane>
                 </content>
             </Tab>
