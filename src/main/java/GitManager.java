@@ -46,7 +46,8 @@ public class GitManager {
      * @throws Exception due to the functions it's calling, GitHub or GHUser being null
      */
     public static void main(String[] args) throws Exception {
-        GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
+       // GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
+        GitManager GM = new GitManager("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", "Henrique-DeSousa", "test_repo");
         GM.connect();
 
         GM.getCollaborators(GITHUB_REPO_NAME);
@@ -504,12 +505,12 @@ public class GitManager {
      * Class to allow the HttpRequest data from the commits to be processed and analysed
      */
     public static class CommitHttpRequest {
-        private String commitDate;
-        private String commitMessage;
+        public String commitDate;
+        public String commitMessage;
 
         @SuppressWarnings("unchecked")
         @JsonProperty("commit")
-        private void unpack(Map<String, Object> commit) {
+        public void unpack(Map<String, Object> commit) {
             this.commitMessage = (String) commit.get("message");
             Map<String, String> committer = (Map<String, String>) commit.get("author");
             this.commitDate = committer.get("date");
