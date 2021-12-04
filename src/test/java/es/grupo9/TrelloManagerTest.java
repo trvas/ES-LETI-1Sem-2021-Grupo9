@@ -15,7 +15,7 @@ class TrelloManagerTest {
 
     @BeforeEach
     void setUp() {
-        trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+        //trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
     }
 
     @AfterEach
