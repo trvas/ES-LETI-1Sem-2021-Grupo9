@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
  */
 public class GitManager {
 
-    private static String GITHUB_OAUTH = "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"; // gitHub's token
-    private static String GITHUB_LOGIN = "Henrique-DeSousa"; //User's login
-    private static String GITHUB_REPO_NAME = "test_repo"; //Name of the repository
+    private static String GITHUB_OAUTH; // gitHub's token
+    private static String GITHUB_LOGIN; //User's login
+    private static String GITHUB_REPO_NAME; //Name of the repository
     private static String GITHUB_BRANCH_NAME; //Name of the branch
     private static String COMMIT_REFERENCE; // Reference to get the file from.
     private static String GITHUB_FILE_NAME; // Name of the file to look
