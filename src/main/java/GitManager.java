@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.kohsuke.github.*;
 
@@ -70,6 +69,7 @@ public class GitManager {
 
         GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
         var a = GM.getCommitFromBranches(GITHUB_LOGIN,GITHUB_BRANCH_NAME);
+        Collections.reverse(a.commits);
 
         for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
@@ -371,11 +371,9 @@ public class GitManager {
             Request request = new Request.Builder()
                     .addHeader("Authorization", "Bearer " + GITHUB_OAUTH)
                     .url(String.format(this.url + "/commits?" + "&author=" + user + "&sha=" + branchName + "&page=%d", page++)).build();
-            System.out.println(request);
             try (Response response = client.newCall(request).execute()) {
                 try {
                     var cm = this.mapper.readValue(Objects.requireNonNull(response.body()).string(), CommitHttpRequest[].class);
-                    System.out.println(cm);
                     if (cm.length == 0) {
                         break;
                     }
@@ -386,7 +384,6 @@ public class GitManager {
                 }
             }
         }
-        System.out.println(new CommitUnpack(user, commits));
         return new CommitUnpack(user, commits);
     }
 
