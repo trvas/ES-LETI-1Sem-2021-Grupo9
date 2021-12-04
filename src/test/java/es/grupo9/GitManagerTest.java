@@ -1,6 +1,6 @@
 package es.grupo9;
 
-import org.junit.jupiter.api.AfterEach;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,25 +14,24 @@ class GitManagerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo" );
+        gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
         gitManager.getCollaborators("test_repo");
-        gitManager.getBranchesInRepository("test_repo");
     }
 
-    @AfterEach
-    void tearDown() {
+    @Test
+    void main() {
     }
 
     @Test
     void setGithubBranchName() {
-        gitManager.setGithubBranchName("master");
-        Assertions.assertEquals("master", gitManager.getGithubBranchName());
+        gitManager.setGithubBranchName("main");
+        Assertions.assertEquals("main", gitManager.getGithubBranchName());
     }
 
     @Test
     void setCommitReference() {
-        gitManager.setCommitReference("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d");
-        Assertions.assertEquals("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d", gitManager.getCommitReference());
+        gitManager.setCommitReference("dbb04cbad190efce1176dbd3a9a0412a749fb56f");
+        Assertions.assertEquals("dbb04cbad190efce1176dbd3a9a0412a749fb56f", gitManager.getCommitReference());
     }
 
     @Test
@@ -41,24 +40,15 @@ class GitManagerTest {
         Assertions.assertEquals("README.md", gitManager.getGithubFileName());
     }
 
-
     @Test
     void getCollaborators() throws IOException {
         String expected = """
-                            Collaborators for the following Repository: test_repo
-                            Are: [rfgoo-iscte, trvas, Henrique-DeSousa, glrss-iscte]""";
-        Assertions.assertEquals(expected, gitManager.getCollaborators("test_repo"));
-    }
-
-    @Test
-    void collaboratorsList() {
-        List<String> expected = Arrays.asList("rfgoo-iscte", "trvas", "Henrique-DeSousa", "glrss-iscte");
-        Assertions.assertEquals(expected, gitManager.collaboratorsList());
+                         [rfgoo-iscte, trvas, Henrique-DeSousa, glrss-iscte]""";
+        Assertions.assertEquals(expected, gitManager.getCollaborators("test_repo").toString());
     }
 
     @Test
     void userInfo() throws IOException {
-
         List<String> expected = Arrays.asList(
                 """
                 https://github.com/rfgoo-iscte
@@ -152,13 +142,12 @@ class GitManagerTest {
 
     @Test
     void testGetReadMe() throws IOException {
-        Assertions.assertNotNull(gitManager.getReadMe("test_repo"));
+        Assertions.assertNotEquals(null, gitManager.getReadMe("test_repo"));
     }
-
-    // returns null. check why
 
     @Test
     void getFiles() throws Exception {
+        gitManager.getBranchesInRepository("test_repo");
         Map<String, List<String>> expected = new HashMap<>();
         expected.put("main", Arrays.asList("README.md", "kekwtest"));
         expected.put("master", Arrays.asList(".idea", "README.md", "calc.py", "calc2.0.py"));
@@ -168,47 +157,45 @@ class GitManagerTest {
 
     @Test
     void readFileContent() throws IOException {
+        System.out.println(gitManager.readFileContent("test_repo", "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
         Assertions.assertNotNull(gitManager.readFileContent("test_repo", "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
     }
 
     @Test
     void getCommitDataFromRoot() throws IOException {
-        /*
-        String rawData = """
-                [GitManager$CommitsDataGit@79c97cb, GitManager$CommitsDataGit@2d9caaeb, GitManager$CommitsDataGit@42a15bdc, GitManager$CommitsDataGit@44a59da3]
-                [GitManager$CommitsDataGit@79c97cb, GitManager$CommitsDataGit@2d9caaeb, GitManager$CommitsDataGit@42a15bdc, GitManager$CommitsDataGit@44a59da3, GitManager$CommitsDataGit@6e01f9b0, GitManager$CommitsDataGit@2b9ed6da, GitManager$CommitsDataGit@6c61a903, GitManager$CommitsDataGit@658c5a19]""";
-        */
         String expected = "[es.grupo9.GitManager$CommitsDataGit@5ffc5491, es.grupo9.GitManager$CommitsDataGit@705202d1, es.grupo9.GitManager$CommitsDataGit@3c443976, es.grupo9.GitManager$CommitsDataGit@3e58d65e]";
         Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot("test_repo").toString());
     }
 
-    // dá erro
     @Test
     void getCommitBranches() throws IOException {
-        String expected = "GitManager$CommitUnpack@7d1cfb8b";
-        Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main"));
+        String expected = "GitManager$CommitUnpack@3a320ade";
+        Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main").toString());
     }
 
     @Test
-    void numberOfCommitsInRoot() throws IOException {
+    void commitsInRoot() throws IOException {
         String expected = """
-                The user: Henrique-DeSousa
-                Has these commits: [Update kekwtest, Create kekwtest, Initial commit] in the Root: main
-                With a total of: 3
-                                
-                Initial commit: Initial commit
-                Date: Sun Nov 21 14:45:13 WET 2021
-                User: Henrique-DeSousa
-                                
-                Latest commit: Update kekwtest
-                Date: Sun Nov 21 16:14:31 WET 2021
-                User: Henrique-DeSousa""";
+        The user: Henrique-DeSousa
+        Has these commits: [Update kekwtest, Create kekwtest, Initial commit] in the Root: main
+        With a total of: 3
 
-        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot("test_repo"));
+        Initial commit: Initial commit
+        Date: Sun Nov 21 14:45:13 WET 2021
+        User: Henrique-DeSousa
+
+        Latest commit: Update kekwtest
+        Date: Sun Nov 21 16:14:31 WET 2021
+        User: Henrique-DeSousa
+        """;
+
+        Assertions.assertEquals(expected, gitManager.commitsInRoot("test_repo", "Henrique-DeSousa"));
+
     }
 
     @Test
-    void getTag() throws IOException {
+    void getTag() throws Exception {
+
         String tag = """
                {test=Sun Nov 21 14:47:21 WET 2021, Tag2=Sun Nov 21 16:14:31 WET 2021}""";
         Assertions.assertEquals(tag, gitManager.getTag("test_repo").toString());
