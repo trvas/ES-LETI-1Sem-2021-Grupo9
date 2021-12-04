@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 public class GitManager {
 
-    private static String GITHUB_OAUTH = "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"; // gitHub's token
-    private static String GITHUB_LOGIN = "Henrique-DeSousa"; //User's login
-    private static String GITHUB_REPO_NAME = "test_repo"; //Name of the repository
+    private static String GITHUB_OAUTH; // gitHub's token
+    private static String GITHUB_LOGIN; //User's login
+    private static String GITHUB_REPO_NAME; //Name of the repository
     private static String GITHUB_BRANCH_NAME; //Name of the branch
     private static String COMMIT_REFERENCE; // Reference to get the file from.
     private static String GITHUB_FILE_NAME; // Name of the file to look
@@ -52,18 +52,17 @@ public class GitManager {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
         GM.connect();
 
-        /*
         GM.getCollaborators(GITHUB_REPO_NAME);
         if (getUserInfo) {
             GM.userInfo();
         }
-        GM.setGithubBranchName("main");
-        GM.setCommitReference("059178ff832ae4b5372cd2ffa5d0a44ac1644d4d");
-        GM.setGithubFileName("README.md");
+        GM.setGithubBranchName(GITHUB_BRANCH_NAME);
+        GM.setCommitReference(COMMIT_REFERENCE);
+        GM.setGithubFileName(GITHUB_FILE_NAME);
         GM.getBranchesInRepository(GITHUB_REPO_NAME);
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
-        GM.numberOfCommitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
+        GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
 
         GM.getFiles(GITHUB_REPO_NAME);
         GM.getReadMe(GITHUB_REPO_NAME);
@@ -71,14 +70,11 @@ public class GitManager {
 
         GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
-        var a = GM.getCommitBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
+        var a = GM.getCommitFromBranches(GITHUB_LOGIN, GITHUB_BRANCH_NAME);
         for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
         }
-        GM.getTag(GITHUB_REPO_NAME); */
-
-        System.out.println(GM.collaboratorsList());
-
+        GM.getTag(GITHUB_REPO_NAME);
     }
 
     /**
@@ -140,8 +136,6 @@ public class GitManager {
 
     /*--------------------COLLABORATORS RELATED--------------------*/
 
-
-    // check if this is really needed or if getCollaboratorsList is enough
     /**
      * Function used to get the name of the collaborators of a specific Repository
      *
@@ -149,15 +143,14 @@ public class GitManager {
      * @return returns a string with the name of all the collaborators
      * @throws IOException Thrown due to GHUser
      */
-    @NotNull
+    @org.jetbrains.annotations.NotNull
     public String getCollaborators(String repositoryName) throws IOException {
         GHRepository collaboratorsRepository = userOfLogin.getRepository(repositoryName);
+
         collaboratorNames = collaboratorsRepository.getCollaboratorNames();
-
-
         String collaborators = collaboratorNames.toString();
 
-        return "Collaborators for the following Repository: " + repositoryName + "\nAre: " + collaborators;
+        return "Collaborators for the following Repository: " + repositoryName +"\nAre: "  + collaborators;
     }
 
 
@@ -192,16 +185,15 @@ public class GitManager {
 
             String avatarUrl = user.getAvatarUrl();
             String login = user.getLogin();
-            String email = getUserInformation(user.getEmail(), "Email not public");
+            String email = getUserInformation(user.getEmail(), "Your email isn't public");
             String bio = getUserInformation(user.getBio(), "No bio available");
             String location = getUserInformation(user.getLocation(), "Unknown location");
-            String twtUser = getUserInformation(user.getTwitterUsername(), "No Twitter available");
-            String company = getUserInformation(user.getCompany(), "No company");
+            String twtUser = getUserInformation(user.getTwitterUsername(), "Not available");
+            String company = getUserInformation(user.getCompany(), "You don't have a company");
 
             info = url + "\n" + avatarUrl + "\n" + name + ";\n" + login + ";\n" + email + ";\n" + bio + ";\n" + location + ";\n" + twtUser + ";\n" + company + ".\n";
             collaboratorsInfo.add(info);
         }
-        // System.out.println(collaboratorsInfo);
         return collaboratorsInfo;
     }
 
@@ -220,8 +212,6 @@ public class GitManager {
 
     /*--------------------REPOSITORY RELATED--------------------*/
 
-
-    // this function returns the repositories of all users
     /**
      * Gathers all the repositories that the user has or participated in, although only shows the public ones it does also count the privates
      *
@@ -264,13 +254,13 @@ public class GitManager {
 
             repoCount = user.getPublicRepoCount();
             if (user.getPublicRepoCount() == 0) {
-                publicRepositories = "No Public Repositories. ";
+                publicRepositories = "You have no Public Repositories.";
             }
 
             privateRepositoryCount = user.getTotalPrivateRepoCount();
             if (privateRepositoryCount.isEmpty()) {
                 privateRepoCount = 0;
-                privateRepositories = "No visible Private Repositories. ";
+                privateRepositories = "You have no visible private Repositories.";
             } else {
                 privateRepoCount = privateRepositoryCount.get();
             }
@@ -420,7 +410,7 @@ public class GitManager {
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
      */
-    public @NotNull String numberOfCommitsInRoot(String repositoryName, String userLogin) throws IOException {
+    public @NotNull String commitsInRoot(String repositoryName, String userLogin) throws IOException {
         GHUser temp = gitHub.getUser(userLogin);
         getCommitDataFromRoot(repositoryName);
         List<String> info = new ArrayList<>();
@@ -434,7 +424,7 @@ public class GitManager {
                 "\nUser: " + commitsDataRoot.get(0).getUserName() + "\n");
         String initial = ("\nInitial commit: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDescription() + "\nDate: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDate() +
                 "\nUser: " + commitsDataRoot.get(getCommitDataFromRoot(repositoryName).size() - 1).getUserName() + "\n");
-        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + "in Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
+        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + " in the Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
     }
 
     /*--------------------TAGS RELATED--------------------*/
@@ -446,7 +436,7 @@ public class GitManager {
      * @return Returns a Map with the Name of the Tag, and it's Date of publish
      * @throws IOException Thrown due to GitHub
      */
-    public @NotNull Map<String, Date> getTag(String repositoryName) throws IOException {
+    public @NotNull String getTag(String repositoryName) throws IOException {
         GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
         List<GHTag> tags = getRepo.listTags().toList();
         List<String> tagNames = new ArrayList<>();
@@ -469,7 +459,7 @@ public class GitManager {
         for (int i = 0; i < tagNames.size(); i++) {
             out.put(tagNames.get(i), tagDate.get(i));
         }
-        return out;
+        return out.toString();
     }
 
     /*--------------------ADDITIONAL CLASSES--------------------*/
