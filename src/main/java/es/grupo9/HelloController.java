@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Objects;
 
 public class HelloController{
@@ -27,13 +28,16 @@ public class HelloController{
     @FXML
     WebView MeetingsText,DoneText,ReadMe,TagsText;
     @FXML
-    ComboBox<String> comboBox,comboBox2;
+    ComboBox<String> comboBox,comboBox2,comboBox3;
     @FXML
-    TableView<Object> meetingsTable, doneTable, reviewTable;
+    TableView<Object> meetingsTable, doneTable, reviewTable, commitsTable;
     @FXML
     TableColumn<Object, Object> mMember, mActivities, mHours, mCost,
                                 dMember, dActivities, dHours, dCost,
                                 rMember, rEstimated, rHours, rCost;
+
+    @FXML
+    TableColumn<Object, Object> branch, description, date;
     @FXML
     Tab TabMeetings1, TabDone1;
     @FXML
@@ -60,7 +64,7 @@ public class HelloController{
     }
 
     @FXML
-    public void searching(ActionEvent e) throws IOException {
+    public void searching(ActionEvent e) throws Exception {
         if(e.getSource() == this.Search){
             String API_KEY = this.Input1.getText();
             String TOKEN = this.Input2.getText();
@@ -81,12 +85,13 @@ public class HelloController{
             Utils.setPrice((int)SliderCost.getValue());
             trelloManager.getMeetings(1).forEach(f-> comboBox.getItems().add(f.getName()));
             trelloManager.getFinishedSprintBacklog(1).forEach(f-> comboBox2.getItems().add(f.getName()));
+            gitManager.getCollaborators().forEach(f->comboBox3.getItems().add(f));
+            setReviewTable(1);
 
             gitManager.connect();
             gitManager.getCollaborators();
             ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
 
-            setReviewTable(1);
         }
     }
 
@@ -111,9 +116,9 @@ public class HelloController{
     }
 
     @FXML
-    public void home(Event e) throws IOException {
+    public void home(Event e) throws Exception {
         if(e.getSource() == this.idHome){
-            TagsText.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getTag()));
+            TagsText.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getTag().toString()));
         }
     }
 
@@ -140,6 +145,34 @@ public class HelloController{
             }
         });
     }
+
+    @FXML
+    public void setComboBox3() throws IOException {
+        gitManager.getCollaborators().forEach(f-> {
+            if(Objects.equals(this.comboBox3.getValue(),f)){
+                try {
+                    setCommitsTable(f);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void setCommitsTable(String userName) throws Exception {
+        ObservableList<Object> data = FXCollections.observableArrayList();
+
+        for(String branches : gitManager.getBranchesInRepository()) {
+            var a = gitManager.getCommits(userName,branches);
+            for (GitManager.CommitHttpRequest commit : a.commits){
+                data.add(new TableData(branches, commit.commitMessage, commit.commitDate));
+            }
+        }
+        Collections.reverse(data);
+        setTableCommits(data, commitsTable, new TableColumn[]{branch, description, date});
+    }
+
+
 
 
     public void setReviewTable(int sprintNumber) throws IOException {
@@ -214,7 +247,12 @@ public class HelloController{
 
         tableView.setItems(data);
     }
+
+    private void setTableCommits(ObservableList<Object> data, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns) {
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("branch"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("description"));
+        tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("date"));
+
+        tableView.setItems(data);
+    }
 }
-
-
-

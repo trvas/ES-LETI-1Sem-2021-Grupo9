@@ -8,6 +8,15 @@ public class TableData {
     SimpleDoubleProperty activities;
     SimpleDoubleProperty hours;
     SimpleDoubleProperty cost;
+    SimpleStringProperty branch;
+    SimpleStringProperty description;
+    SimpleStringProperty date;
+
+    TableData(String branch, String description, String date){
+        this.branch= new SimpleStringProperty(branch);
+        this.description= new SimpleStringProperty(description);
+        this.date= new SimpleStringProperty(date);
+    }
 
     TableData(String member, Double activities, Double hours, Double cost) {
         this.member = new SimpleStringProperty(member);
@@ -46,6 +55,31 @@ public class TableData {
 
     public void setCost(Double c) {
         cost.set(c);
+    }
+
+
+    public String getBranch() {
+        return branch.get();
+    }
+
+    public void setBranch(String b) {
+        branch.set(b);
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public void setDescription(String d) {
+        description.set(d);
+    }
+
+    public String getDate() {
+        return date.get();
+    }
+
+    public void setDate(String g) {
+        date.set(g);
     }
 
 }

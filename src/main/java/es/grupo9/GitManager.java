@@ -33,7 +33,7 @@ public class GitManager {
     private final GHUser userOfLogin;
     private final GitHub gitHub;
     private boolean valid = false; // if the flag is set to true, then it moves
-    private static boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
+    private static final boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
     private List<String> collaboratorsNames = new ArrayList<>();
     private final List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
     private final List<String> branchesName = new ArrayList<>();
@@ -41,8 +41,12 @@ public class GitManager {
     private final String url;
     private final ObjectMapper mapper;
 
-
-    // function to test directly some of the functionalities. to be deleted on the final commit
+    /**
+     * The main function of this class
+     *
+     * @param args normal thing in a main
+     * @throws Exception due to the functions it's calling, GitHub or GHUser being null
+     */
     public static void main(String[] args) throws Exception {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
         GM.connect();
@@ -55,20 +59,20 @@ public class GitManager {
         GM.setCommitReference("dbb04cbad190efce1176dbd3a9a0412a749fb56f");
         GM.setGithubFileName("README.md");
 
+
         GM.userRepositories();
         GM.numberOfRepositoriesOwned();
 
-        GM.getBranchesInRepository(GITHUB_REPO_NAME);
+        GM.getBranchesInRepository();
 
         GM.getReadMe();
-        GM.getFiles(GITHUB_REPO_NAME);
-        GM.readFileContent(GITHUB_REPO_NAME, GITHUB_FILE_NAME, COMMIT_REFERENCE);
+        GM.getFiles();
+        GM.readFileContent(GITHUB_FILE_NAME, COMMIT_REFERENCE);
 
-        GM.commitsInRoot(GITHUB_REPO_NAME, GITHUB_LOGIN);
-        var a = GM.getCommitFromBranches(GITHUB_LOGIN,GITHUB_BRANCH_NAME);
-        Collections.reverse(a.commit);
+        var a = GM.getCommits("rfgoo-iscte", GITHUB_BRANCH_NAME);
+        Collections.reverse(a.commits);
 
-        for (var commit : a.commit) {
+        for (var commit : a.commits) {
             System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.name);
         }
 
@@ -89,7 +93,7 @@ public class GitManager {
         GITHUB_REPO_NAME = repoName;
         gitHub = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
         userOfLogin = gitHub.getUser(GITHUB_LOGIN);
-        this.url = "https://api.github.com/repos/" + GITHUB_LOGIN + "/" + GITHUB_REPO_NAME; // trvas + ES-LETI-1Sem-2021-Grupo9
+        this.url = "https://api.github.com/repos/" + GITHUB_LOGIN + "/" + GITHUB_REPO_NAME;
         this.mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
@@ -137,6 +141,7 @@ public class GitManager {
     /**
      * Function used to get the name of the collaborators of a specific Repository
      *
+     * @param repositoryName Name of the repository to fetch the Collaborators
      * @return returns a string with the name of all the collaborators
      * @throws IOException Thrown due to GHUser
      */
@@ -257,13 +262,14 @@ public class GitManager {
     /**
      * Returns all the branches in the repository in question
      *
-     * @param repositoryName the name of the repository
      * @return returns a list with the names of the branches.
      * @throws Exception thrown when the GHuser is null
      */
-    public @NotNull List<String> getBranchesInRepository(String repositoryName) throws Exception {
-        Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
-        getRepos.forEach((r, s) -> this.branchesName.add(r));
+    public @NotNull List<String> getBranchesInRepository() throws Exception {
+        if (branchesName.isEmpty()) {
+            Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME).getBranches();
+            getRepos.forEach((r, s) -> this.branchesName.add(r));
+        }
         return this.branchesName;
     }
 
@@ -271,7 +277,6 @@ public class GitManager {
 
     /**
      * Gets the README from any repository that was given and reads the data in it.
-     *
      *
      * @return contentReadMe returns the content of the README file
      * @throws IOException thrown when the GHuser is null
@@ -285,13 +290,12 @@ public class GitManager {
     /**
      * Function to get Branches and their Files from a RepositoryName
      *
-     * @param repositoryName The name of the Repository to inspect
      * @return returns a map containing a Map containing the name of the Branch and the Files inside it
      * @throws IOException thrown due to the GitHub
      */
-    public @NotNull Map<String, List<String>> getFiles(String repositoryName) throws Exception {
-        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
-        Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getBranches();
+    public @NotNull Map<String, List<String>> getFiles() throws Exception {
+        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME);
+        Map<String, GHBranch> getRepos = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME).getBranches();
         List<String> branchesSha = new ArrayList<>();
 
         Map<String, List<String>> files = new HashMap<>();
@@ -315,39 +319,38 @@ public class GitManager {
     /**
      * Retrieves and reads the content of the file in question
      *
-     * @param repositoryName The repository in which to look for the file
-     * @param fileName       The name of the file
-     * @param ref            The commit reference of the file.
+     * @param fileName The name of the file
+     * @param ref      The commit reference of the file.
      * @return returns the contents of the file, be it in python, java, or any other language.
      * @throws IOException thrown when the GHuser is null
      */
-    public @NotNull String readFileContent(String repositoryName, String fileName, String ref) throws IOException {
-        InputStream fileReading = userOfLogin.getRepository(repositoryName).getFileContent(fileName, ref).read();
+    public @NotNull String readFileContent(String fileName, String ref) throws IOException {
+        InputStream fileReading = userOfLogin.getRepository(GITHUB_REPO_NAME).getFileContent(fileName, ref).read();
         return new String(fileReading.readAllBytes(), StandardCharsets.UTF_8);
     }
 
     /*--------------------COMMIT RELATED--------------------*/
 
     /**
-     * Gets the commits' data from the root of the Repository and by user
-     *
-     * @param repositoryName name of the repository to look
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
+     * @Deprecated use getCommits
      */
-    public @NotNull List<CommitsDataGit> getCommitDataFromRoot(String repositoryName) throws IOException {
-        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName);
-
+    @Deprecated
+    public @NotNull List<CommitsDataGit> getCommitDataFromRoot() throws IOException {
+        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME);
 
         List<GHCommit> commits = getRepo.listCommits().toList();
-        commits.forEach((s) -> {
-            try {
-                CommitsDataGit commitData = new CommitsDataGit(s.getCommitShortInfo(), s.getCommitDate(), s.getAuthor());
-                commitsDataRoot.add(commitData);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        if (commitsDataRoot.isEmpty()) {
+            commits.forEach((s) -> {
+                try {
+                    CommitsDataGit commitData = new CommitsDataGit(s.getCommitShortInfo(), s.getCommitDate(), s.getAuthor());
+                    commitsDataRoot.add(commitData);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
         return commitsDataRoot;
     }
 
@@ -359,7 +362,7 @@ public class GitManager {
      * @return returns a Map into a nested class for it to be able to be processed and used.
      * @throws IOException throws Exception due to .execute and .string
      */
-    public CommitUnpack getCommitFromBranches(String user, String branchName) throws IOException {
+    public CommitUnpack getCommits(String user, String branchName) throws IOException {
         List<CommitHttpRequest> commits = new ArrayList<>();
 
         int page = 1;
@@ -384,16 +387,15 @@ public class GitManager {
     }
 
     /**
-     * Gets the number of commits from a certain user.
-     *
-     * @param repositoryName name of the repository to look
-     * @param userLogin      name of the user to retrieve the commits.
+     * @param userLogin name of the user to retrieve the commits.
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
+     * @Deprecated use getCommits
      */
-    public @NotNull String commitsInRoot(String repositoryName, String userLogin) throws IOException {
+    @Deprecated
+    public @NotNull String commitsInRoot(String userLogin) throws IOException {
         GHUser temp = gitHub.getUser(userLogin);
-        getCommitDataFromRoot(repositoryName);
+        getCommitDataFromRoot();
         List<String> info = new ArrayList<>();
 
         for (CommitsDataGit commitsData : commitsDataRoot) {
@@ -404,8 +406,8 @@ public class GitManager {
         String latest = ("\nLatest commit: " + commitsDataRoot.get(0).getDescription() + "\nDate: " + commitsDataRoot.get(0).getDate() +
                 "\nUser: " + commitsDataRoot.get(0).getUserName() + "\n");
         String initial = ("\nInitial commit: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDescription() + "\nDate: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDate() +
-                "\nUser: " + commitsDataRoot.get(getCommitDataFromRoot(repositoryName).size() - 1).getUserName() + "\n");
-        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + " in the Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + repositoryName).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
+                "\nUser: " + commitsDataRoot.get(getCommitDataFromRoot().size() - 1).getUserName() + "\n");
+        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + " in the Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
     }
 
     /*--------------------TAGS RELATED--------------------*/
@@ -416,7 +418,7 @@ public class GitManager {
      * @return Returns a Map with the Name of the Tag, and it's Date of publish
      * @throws IOException Thrown due to GitHub
      */
-    public @NotNull String getTag() throws IOException {
+    public Map<String, Date> getTag() throws IOException {
         GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME);
         List<GHTag> tags = getRepo.listTags().toList();
         List<String> tagNames = new ArrayList<>();
@@ -439,7 +441,7 @@ public class GitManager {
         for (int i = 0; i < tagNames.size(); i++) {
             out.put(tagNames.get(i), tagDate.get(i));
         }
-        return out.toString();
+        return out;
     }
 
     /*--------------------ADDITIONAL CLASSES--------------------*/
@@ -508,14 +510,7 @@ public class GitManager {
             this.commitMessage = (String) commit.get("message");
             Map<String, String> committer = (Map<String, String>) commit.get("author");
             this.commitDate = committer.get("date");
-        }
-
-        public String getCommitDate() {
-            return commitDate;
-        }
-
-        public String getCommitMessage() {
-            return commitMessage;
+            commitDate = commitDate.substring(0, commitDate.indexOf("T"));
         }
     }
 
@@ -525,11 +520,11 @@ public class GitManager {
      */
     public static class CommitUnpack {
         String name;
-        List<CommitHttpRequest> commit;
+        List<CommitHttpRequest> commits;
 
-        public CommitUnpack(String name, List<CommitHttpRequest> cms) {
-            this.name = name;
-            this.commit = cms;
+        public CommitUnpack(String personName, List<CommitHttpRequest> cms) {
+            this.name = personName;
+            this.commits = cms;
         }
     }
 }

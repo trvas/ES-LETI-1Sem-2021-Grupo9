@@ -246,7 +246,15 @@
          </children></Pane>
       <Pane fx:id="PaneHome" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #99ccff;">
          <children>
-            <WebView fx:id="TagsText" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="370.0" />
+            <WebView fx:id="TagsText" layoutX="208.0" layoutY="214.0" prefHeight="58.0" prefWidth="458.0" />
+            <TableView fx:id="commitsTable" layoutX="14.0" layoutY="287.0" prefHeight="200.0" prefWidth="652.0">
+              <columns>
+                <TableColumn fx:id="branch" prefWidth="126.19998168945312" text="Branch" />
+                <TableColumn fx:id="description" prefWidth="383.6000671386719" text="Description" />
+                  <TableColumn fx:id="date" prefWidth="138.60003662109375" text="Date" />
+              </columns>
+            </TableView>
+            <ComboBox fx:id="comboBox3" layoutX="14.0" layoutY="247.0" onAction="#setComboBox3" prefHeight="25.0" prefWidth="179.0" promptText="Choose..." />
          </children></Pane>
     </children>
 </AnchorPane>
