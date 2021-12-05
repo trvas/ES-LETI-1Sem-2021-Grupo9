@@ -12,7 +12,7 @@ class GitManagerTest {
     @BeforeEach
     void setUp() throws Exception {
         gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
-        gitManager.getCollaborators("test_repo");
+        gitManager.getCollaborators();
     }
 
     @Test
@@ -41,7 +41,7 @@ class GitManagerTest {
     void getCollaborators() throws IOException {
         String expected = """
                          [rfgoo-iscte, trvas, Henrique-DeSousa, glrss-iscte]""";
-        Assertions.assertEquals(expected, gitManager.getCollaborators("test_repo").toString());
+        Assertions.assertEquals(expected, gitManager.getCollaborators().toString());
     }
 
     @Test

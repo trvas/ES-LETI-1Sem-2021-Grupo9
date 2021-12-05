@@ -47,9 +47,10 @@ public class GitManager {
      */
     public static void main(String[] args) throws Exception {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
+
         GM.connect();
 
-        GM.getCollaborators(GITHUB_REPO_NAME);
+        GM.getCollaborators();
         if (getUserInfo) {
             GM.userInfo();
         }
@@ -121,7 +122,6 @@ public class GitManager {
         GITHUB_FILE_NAME = githubFileName;
     }
 
-
     /**
      * This function is to complement the previous function by verifying that the information provided is correct
      *
@@ -139,13 +139,12 @@ public class GitManager {
     /**
      * Function used to get the name of the collaborators of a specific Repository
      *
-     * @param repositoryName Name of the repository to fetch the Collaborators
      * @return returns a string with the name of all the collaborators
      * @throws IOException Thrown due to GHUser
      */
     @org.jetbrains.annotations.NotNull
-    public List<String> getCollaborators(String repositoryName) throws IOException {
-        Set<String> collaboratorNames = userOfLogin.getRepository(repositoryName).getCollaboratorNames();
+    public List<String> getCollaborators() throws IOException {
+        Set<String> collaboratorNames = userOfLogin.getRepository(GITHUB_REPO_NAME).getCollaboratorNames();
         this.collaboratorsNames = new ArrayList<>(collaboratorNames);
         return collaboratorsNames;
     }
@@ -416,13 +415,13 @@ public class GitManager {
      * @return Returns a Map with the Name of the Tag, and it's Date of publish
      * @throws IOException Thrown due to GitHub
      */
-    public Map<String, Date> getTag() throws IOException {
+    public List<Object[]> getTag() throws IOException {
         GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME);
         List<GHTag> tags = getRepo.listTags().toList();
         List<String> tagNames = new ArrayList<>();
         List<GHCommit> tagCommits = new ArrayList<>();
         List<Date> tagDate = new ArrayList<>();
-        Map<String, Date> out = new HashMap<>();
+        List<Object[]> out = new ArrayList<>();
 
         tags.forEach(s -> {
             tagNames.add(s.getName());
@@ -437,7 +436,7 @@ public class GitManager {
             }
         });
         for (int i = 0; i < tagNames.size(); i++) {
-            out.put(tagNames.get(i), tagDate.get(i));
+            out.add(new Object[]{tagNames.get(i), tagDate.get(i)});
         }
         return out;
     }
