@@ -167,7 +167,7 @@ class GitManagerTest {
     @Test
     void getCommitBranches() throws IOException {
         String expected = "GitManager$CommitUnpack@3a320ade";
-        Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main").toString());
+        Assertions.assertEquals(expected, gitManager.getCommits("Henrique-DeSousa", "main").toString());
     }
 
     @Test
