@@ -15,7 +15,7 @@ public class UtilsTest {
 
     @BeforeEach
     public void SetUp() throws IOException {
-        gitManager = new GitManager(config.OAUTH, config.LOGIN, config.REPO_NAME);
+        gitManager = new GitManager(config.GIT_TOKEN, config.LOGIN, config.REPO_NAME);
         trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
     }
 

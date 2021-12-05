@@ -51,7 +51,7 @@ public class GitManager {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
         GM.connect();
 
-        GM.getCollaborators(GITHUB_REPO_NAME);
+        GM.getCollaborators();
         if (getUserInfo) {
             GM.userInfo();
         }
@@ -73,7 +73,7 @@ public class GitManager {
         Collections.reverse(a.commits);
 
         for (var commit : a.commits) {
-            System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.personName);
+            System.out.println(commit.commitMessage + " " + commit.commitDate + " " + a.name);
         }
 
         GM.getTag();
@@ -141,13 +141,12 @@ public class GitManager {
     /**
      * Function used to get the name of the collaborators of a specific Repository
      *
-     * @param repositoryName Name of the repository to fetch the Collaborators
      * @return returns a string with the name of all the collaborators
      * @throws IOException Thrown due to GHUser
      */
     @org.jetbrains.annotations.NotNull
-    public List<String> getCollaborators(String repositoryName) throws IOException {
-        Set<String> collaboratorNames = userOfLogin.getRepository(repositoryName).getCollaboratorNames();
+    public List<String> getCollaborators() throws IOException {
+        Set<String> collaboratorNames = userOfLogin.getRepository(GITHUB_REPO_NAME).getCollaboratorNames();
         this.collaboratorsNames = new ArrayList<>(collaboratorNames);
         return collaboratorsNames;
     }
@@ -334,7 +333,7 @@ public class GitManager {
     /**
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
-     * @Deprecated use getCommits
+     * @Deprecated use {@link #getCommits(String, String)};
      */
     @Deprecated
     public @NotNull List<CommitsDataGit> getCommitDataFromRoot() throws IOException {
@@ -390,7 +389,7 @@ public class GitManager {
      * @param userLogin name of the user to retrieve the commits.
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
-     * @Deprecated use getCommits
+     * @Deprecated use {@link #getCommits(String, String)};
      */
     @Deprecated
     public @NotNull String commitsInRoot(String userLogin) throws IOException {
@@ -519,11 +518,11 @@ public class GitManager {
      * into the several components.
      */
     public static class CommitUnpack {
-        String personName;
+        String name;
         List<CommitHttpRequest> commits;
 
         public CommitUnpack(String personName, List<CommitHttpRequest> cms) {
-            this.personName = personName;
+            this.name = personName;
             this.commits = cms;
         }
     }

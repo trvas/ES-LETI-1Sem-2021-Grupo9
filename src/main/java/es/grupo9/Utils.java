@@ -1,13 +1,10 @@
 package es.grupo9;
 
-import org.trello4j.model.Member;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -136,8 +133,8 @@ public class Utils {
         // Get all the necessary information from GitManager
         for (String branch : gitManager.getBranchesInRepository()) {
             for (String collaborator : gitManager.getCollaborators()) {
-                GitManager.CommitUnpack collabCommits = gitManager.getCommitFromBranches(collaborator, branch);
-                for (GitManager.CommitHttpRequest commit : collabCommits.commit) {
+                GitManager.CommitUnpack collabCommits = gitManager.getCommits(collaborator, branch);
+                for (GitManager.CommitHttpRequest commit : collabCommits.commits) {
                     // Add the string with collaborator name, branch, message and date
                     commitsInfo.add(collaborator + "," + branch + "," + commit.commitMessage + "," + commit.commitDate);
                 }

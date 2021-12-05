@@ -13,7 +13,7 @@ class GitManagerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gitManager = new GitManager("TOKEN", "Henrique-DeSousa", "test_repo");
+        gitManager = new GitManager(config.GIT_TOKEN, "Henrique-DeSousa", "test_repo");
         gitManager.getCollaborators();
     }
 
@@ -147,44 +147,18 @@ class GitManagerTest {
         expected.put("main", Arrays.asList("README.md", "kekwtest"));
         expected.put("master", Arrays.asList(".idea", "README.md", "calc.py", "calc2.0.py"));
 
-        Assertions.assertEquals(expected, gitManager.getFiles("test_repo"));
+        Assertions.assertEquals(expected, gitManager.getFiles());
     }
 
     @Test
     void readFileContent() throws IOException {
-        Assertions.assertNotNull(gitManager.readFileContent("test_repo", "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
-    }
-
-    @Test
-    void getCommitDataFromRoot() throws IOException {
-        String expected = "Henrique-DeSousa";
-        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot("test_repo").get(1).getUserName());
+        Assertions.assertNotNull(gitManager.readFileContent( "README.md", "059178ff832ae4b5372cd2ffa5d0a44ac1644d4d"));
     }
 
     @Test
     void getCommitBranches() throws IOException {
         String expected = "Henrique-DeSousa";
-        Assertions.assertEquals(expected, gitManager.getCommitFromBranches("Henrique-DeSousa", "main").name);
-    }
-
-    @Test
-    void commitsInRoot() throws IOException {
-        String expected = """
-        The user: Henrique-DeSousa
-        Has these commits: [Update kekwtest, Create kekwtest, Initial commit] in the Root: main
-        With a total of: 3
-
-        Initial commit: Initial commit
-        Date: Sun Nov 21 14:45:13 WET 2021
-        User: Henrique-DeSousa
-
-        Latest commit: Update kekwtest
-        Date: Sun Nov 21 16:14:31 WET 2021
-        User: Henrique-DeSousa
-        """;
-
-        Assertions.assertEquals(expected, gitManager.commitsInRoot("test_repo", "Henrique-DeSousa"));
-
+        Assertions.assertEquals(expected, gitManager.getCommits("Henrique-DeSousa", "main").name);
     }
 
     @Test
@@ -192,6 +166,6 @@ class GitManagerTest {
 
         String tag = """
                {test=Sun Nov 21 14:47:21 WET 2021, Tag2=Sun Nov 21 16:14:31 WET 2021}""";
-        Assertions.assertEquals(tag, gitManager.getTag());
+        Assertions.assertEquals(tag, gitManager.getTag().toString());
     }
 }
