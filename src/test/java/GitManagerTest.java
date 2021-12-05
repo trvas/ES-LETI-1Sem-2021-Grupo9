@@ -159,35 +159,9 @@ class GitManagerTest {
     }
 
     @Test
-    void getCommitDataFromRoot() throws IOException {
-        String expected = "[es.grupo9.GitManager$CommitsDataGit@5ffc5491, es.grupo9.GitManager$CommitsDataGit@705202d1, es.grupo9.GitManager$CommitsDataGit@3c443976, es.grupo9.GitManager$CommitsDataGit@3e58d65e]";
-        Assertions.assertEquals(expected, gitManager.getCommitDataFromRoot().toString());
-    }
-
-    @Test
     void getCommitBranches() throws IOException {
         String expected = "GitManager$CommitUnpack@3a320ade";
         Assertions.assertEquals(expected, gitManager.getCommits("Henrique-DeSousa", "main").toString());
-    }
-
-    @Test
-    void commitsInRoot() throws IOException {
-        String expected = """
-        The user: Henrique-DeSousa
-        Has these commits: [Update kekwtest, Create kekwtest, Initial commit] in the Root: main
-        With a total of: 3
-
-        Initial commit: Initial commit
-        Date: Sun Nov 21 14:45:13 WET 2021
-        User: Henrique-DeSousa
-
-        Latest commit: Update kekwtest
-        Date: Sun Nov 21 16:14:31 WET 2021
-        User: Henrique-DeSousa
-        """;
-
-        Assertions.assertEquals(expected, gitManager.commitsInRoot( "Henrique-DeSousa"));
-
     }
 
     @Test

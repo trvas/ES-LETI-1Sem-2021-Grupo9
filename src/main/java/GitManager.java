@@ -28,17 +28,16 @@ public class GitManager {
     private static String GITHUB_BRANCH_NAME; //Name of the branch
     private static String COMMIT_REFERENCE; // Reference to get the file from.
     private static String GITHUB_FILE_NAME; // Name of the file to look
-    private GHUser userOfLogin;
-    private GitHub gitHub;
+    private final GHUser userOfLogin;
+    private final GitHub gitHub;
     private boolean valid = false; // if the flag is set to true, then it moves
-    private static boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
+    private static final boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
     private List<String> collaboratorsNames = new ArrayList<>();
-    private List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
-    private List<String> branchesName = new ArrayList<>();
-    private OkHttpClient client = new OkHttpClient();
-    private String url;
-    private ObjectMapper mapper;
-    private List<String> tempName = new ArrayList<>();
+    private final List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
+    private final List<String> branchesName = new ArrayList<>();
+    private final OkHttpClient client = new OkHttpClient();
+    private final String url;
+    private final ObjectMapper mapper;
 
     /**
      * The main function of this class
@@ -87,9 +86,9 @@ public class GitManager {
      * @throws IOException throws exception when GitHub is null or GHUser is null
      */
     public GitManager(String auth, String userName, String repoName) throws IOException {
-        this.GITHUB_LOGIN = userName;
-        this.GITHUB_OAUTH = auth;
-        this.GITHUB_REPO_NAME = repoName;
+        GITHUB_LOGIN = userName;
+        GITHUB_OAUTH = auth;
+        GITHUB_REPO_NAME = repoName;
         gitHub = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();
         userOfLogin = gitHub.getUser(GITHUB_LOGIN);
         this.url = "https://api.github.com/repos/" + GITHUB_LOGIN + "/" + GITHUB_REPO_NAME;
@@ -111,15 +110,15 @@ public class GitManager {
     }
 
     public void setGithubBranchName(String githubBranchName) {
-        this.GITHUB_BRANCH_NAME = githubBranchName;
+        GITHUB_BRANCH_NAME = githubBranchName;
     }
 
     public void setCommitReference(String commitReference) {
-        this.COMMIT_REFERENCE = commitReference;
+        COMMIT_REFERENCE = commitReference;
     }
 
     public void setGithubFileName(String githubFileName) {
-        this.GITHUB_FILE_NAME = githubFileName;
+        GITHUB_FILE_NAME = githubFileName;
     }
 
 
