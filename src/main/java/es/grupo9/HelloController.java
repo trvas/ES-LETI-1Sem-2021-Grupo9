@@ -12,22 +12,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 public class HelloController{
     @FXML
     TextField Input1,Input2,Input3,Input4,Input5,Input6;
     @FXML
-    Button id1,id2,id3,id4,Search;
+    Button id1,id2,id3,id4,idHome,Search;
     @FXML
-    Pane Pane;
+    Pane Pane,PaneHome;
     @FXML
     TabPane TabPane1,TabPane2,TabPane3;
     @FXML
-    WebView MeetingsText,DoneText,ReadMe;
+    WebView MeetingsText,DoneText,ReadMe,TagsText;
     @FXML
     ComboBox<String> comboBox,comboBox2;
     @FXML
@@ -58,6 +56,7 @@ public class HelloController{
         else if(e.getSource() == this.id2) TabPane1.toFront();
         else if(e.getSource() == this.id3) TabPane2.toFront();
         else if(e.getSource() == this.id4) TabPane3.toFront();
+        else if(e.getSource() == this.idHome) PaneHome.toFront();
     }
 
     @FXML
@@ -86,7 +85,6 @@ public class HelloController{
             gitManager.connect();
             gitManager.getCollaborators();
             ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
-            System.out.println(gitManager.getTag());
 
             setReviewTable(1);
         }
@@ -109,6 +107,13 @@ public class HelloController{
                 setDoneTable(1);
                 j = 1;
             }
+        }
+    }
+
+    @FXML
+    public void home(Event e) throws IOException {
+        if(e.getSource() == this.idHome){
+            TagsText.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getTag()));
         }
     }
 
