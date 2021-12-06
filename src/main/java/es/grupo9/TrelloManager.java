@@ -253,21 +253,47 @@ public class TrelloManager{
         return cards.size();
     }
 
-    /**
-     * Returns the number of members on the board.
-     * @return int number of members on the board.
-     */
     public int getMemberCount() {
         List<Member> memberList = trello.getMembersByBoard(boardId);
         return memberList.size();
     }
 
-    /**
-     * Returns a list with all the members on the board.
-     * @return List<Member> list of all the members.
-     */
     public List<Member> getMembers(){
         return trello.getMembersByBoard(boardId);
+    }
+
+    /**
+     * Returns the beginning and end date of each Sprint.
+     * @param sprintNumber number of the Sprint.
+     * @return String beginning and end date of each Sprint.
+     * @throws IOException see {@link #getBoardListIdByName(String)};
+     */
+    public String getDate(int sprintNumber) throws IOException {
+        String date = "";
+
+        for (Card sprint : trello.getCardsByList(getBoardListIdByName("Sprints"))) {
+            if(sprint.getName().contains(String.valueOf(sprintNumber))) {
+                date = sprint.getDesc();
+            }
+        }
+
+        return date;
+    }
+    /**
+     * Gets the project name (title of the board).
+     * @return String project name.
+     */
+    public String getProjectName() {
+        return trello.getBoard(boardId).getName();
+    }
+
+    /**
+     * Returns the beginning date of the project. Works by getting the beginning date of the first Sprint.
+     * @return String beginning date.
+     * @throws IOException see {@link #getBoardListIdByName(String)};
+     */
+    public String getBeginningDate() throws IOException {
+        return getSprintDate(1).split(":")[1].split("\n")[0];
     }
 
     /**
@@ -287,23 +313,5 @@ public class TrelloManager{
 
         return date;
     }
-
-    /**
-     * Gets the project name (title of the board).
-     * @return String project name.
-     */
-    public String getProjectName() {
-        return trello.getBoard(boardId).getName();
-    }
-
-    /**
-     * Returns the beginning date of the project. Works by getting the beginning date of the first Sprint.
-     * @return String beginning date.
-     * @throws IOException see {@link #getBoardListIdByName(String)};
-     */
-    public String getBeginningDate() throws IOException {
-        return getSprintDate(1).split(":")[1].split("\n")[0];
-    }
-
 
 }

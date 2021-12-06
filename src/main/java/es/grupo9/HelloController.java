@@ -14,14 +14,13 @@ import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public class HelloController{
     @FXML
     TextField Input1,Input2,Input3,Input4,Input5,Input6;
     @FXML
-    Button id1,id2,id3,id4,idHome,Search;
+    Button id1,id2,id3,id4,idHome,Search,Export;
     @FXML
     Pane Pane,PaneHome;
     @FXML
@@ -86,7 +85,6 @@ public class HelloController{
                     "henrique-deSousa",
                     "test_repo");
 
-
             StringBuilder ids = new StringBuilder("<b>Projeto:</b> " + trelloManager.getProjectName() +
                     "\n\n<b>Elementos:</b> ");
 
@@ -95,8 +93,8 @@ public class HelloController{
             }
 
             ids.append("\n\n<b>Data de início:</b> ").append(trelloManager.getBeginningDate());
-
             ProjectIds.getEngine().loadContent(new Markdown4jProcessor().process(ids.toString()));
+
 
             Utils.setPrice((int)SliderCost.getValue());
             trelloManager.getMeetings(1).forEach(f-> comboBox.getItems().add(f.getName()));
@@ -110,6 +108,14 @@ public class HelloController{
             ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
         }
     }
+
+    @FXML
+    public void export(ActionEvent e) throws Exception {
+        if(e.getSource() == this.Export){
+            Utils.exportCSV(trelloManager,gitManager);
+        }
+    }
+
 
     @FXML
     public void tables1(Event t) throws IOException {
