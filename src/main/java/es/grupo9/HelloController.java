@@ -26,7 +26,7 @@ public class HelloController{
     @FXML
     TabPane TabPane1,TabPane2,TabPane3;
     @FXML
-    WebView MeetingsText,DoneText,ReadMe;
+    WebView MeetingsText,DoneText,ReadMe,Sprint1Date,ProjectIds;
     @FXML
     ComboBox<String> comboBox,comboBox2,comboBox3;
     @FXML
@@ -85,10 +85,21 @@ public class HelloController{
                     "henrique-deSousa",
                     "test_repo");
 
+
+
+            // trelloManager.getMembers().forEach(member -> member.getFullName())
+
+            String ids = "<b>Projeto:</b> " + trelloManager.getProjectName() +
+                         "\n<b>Elementos:</b> " +  trelloManager.getMembers() +
+                         "\n<b>Data de início:</b> " + trelloManager.getBeginningDate();
+
+            ProjectIds.getEngine().loadContent(new Markdown4jProcessor().process(ids));
+
             Utils.setPrice((int)SliderCost.getValue());
             trelloManager.getMeetings(1).forEach(f-> comboBox.getItems().add(f.getName()));
             trelloManager.getFinishedSprintBacklog(1).forEach(f-> comboBox2.getItems().add(f.getName()));
             gitManager.getCollaborators().forEach(f->comboBox3.getItems().add(f));
+            Sprint1Date.getEngine().loadContent(new Markdown4jProcessor().process(trelloManager.getSprintDate(1)));
             setReviewTable(1);
 
             gitManager.connect();

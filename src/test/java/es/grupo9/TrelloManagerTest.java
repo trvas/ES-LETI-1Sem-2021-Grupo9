@@ -78,4 +78,10 @@ class TrelloManagerTest {
         Assertions.assertArrayEquals(expected, trelloManager.getNotCommittedActivitiesByMember("Tatiana", 1));
 
     }
+
+    @Test
+    void getSprintDate() throws IOException {
+        String expected = "Data de início: 20/11/2021\nData de fim: 4/12/2021";
+        Assertions.assertEquals(expected, trelloManager.getSprintDate(1));
+    }
 }
