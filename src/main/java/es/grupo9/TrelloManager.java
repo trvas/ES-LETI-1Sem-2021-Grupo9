@@ -5,6 +5,7 @@ import org.trello4j.TrelloImpl;
 // import org.trello4j.model.Board;
 import org.trello4j.model.Card;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -116,7 +117,32 @@ public class TrelloManager{
         return str;
     }
 
-}
+
+
+    public String getSprintDate(int sprintNumber) throws IOException {
+        String date = "";
+
+        for (Card sprint : trello.getCardsByList(getBoardListIdByName("Sprints"))) {
+            if(sprint.getName().contains(String.valueOf(sprintNumber))) {
+                date = sprint.getDesc();
+            }
+        }
+
+        return date;
+    }
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 
 
 
