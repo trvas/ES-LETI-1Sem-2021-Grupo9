@@ -14,6 +14,7 @@ import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class HelloController{
@@ -86,14 +87,16 @@ public class HelloController{
                     "test_repo");
 
 
+            StringBuilder ids = new StringBuilder("<b>Projeto:</b> " + trelloManager.getProjectName() +
+                    "\n\n<b>Elementos:</b> ");
 
-            // trelloManager.getMembers().forEach(member -> member.getFullName())
+            for (Member member : trelloManager.getMembers()) {
+                ids.append("\n- ").append(member.getFullName()).append(" ");
+            }
 
-            String ids = "<b>Projeto:</b> " + trelloManager.getProjectName() +
-                         "\n<b>Elementos:</b> " +  trelloManager.getMembers() +
-                         "\n<b>Data de início:</b> " + trelloManager.getBeginningDate();
+            ids.append("\n\n<b>Data de início:</b> ").append(trelloManager.getBeginningDate());
 
-            ProjectIds.getEngine().loadContent(new Markdown4jProcessor().process(ids));
+            ProjectIds.getEngine().loadContent(new Markdown4jProcessor().process(ids.toString()));
 
             Utils.setPrice((int)SliderCost.getValue());
             trelloManager.getMeetings(1).forEach(f-> comboBox.getItems().add(f.getName()));
