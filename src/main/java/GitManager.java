@@ -47,7 +47,6 @@ public class GitManager {
      */
     public static void main(String[] args) throws Exception {
         GitManager GM = new GitManager(GITHUB_OAUTH, GITHUB_LOGIN, GITHUB_REPO_NAME);
-
         GM.connect();
 
         GM.getCollaborators();
