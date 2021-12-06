@@ -268,7 +268,7 @@ public class TrelloManager{
      * @return String beginning and end date of each Sprint.
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
-    public String getDate(int sprintNumber) throws IOException {
+    public String getSprintDate(int sprintNumber) throws IOException {
         String date = "";
 
         for (Card sprint : trello.getCardsByList(getBoardListIdByName("Sprints"))) {
@@ -280,5 +280,20 @@ public class TrelloManager{
         return date;
     }
 
+    /**
+     * Gets the project name (title of the board).
+     * @return String project name.
+     */
+    public String getProjectName() {
+        return trello.getBoard(boardId).getName();
+    }
 
+    /**
+     * Returns the beginning date of the project. Works by getting the beginning date of the first Sprint.
+     * @return String beginning date.
+     * @throws IOException see {@link #getBoardListIdByName(String)};
+     */
+    public String getBeginningDate() throws IOException {
+        return getSprintDate(1).split(":")[1].split("\n")[0];
+    }
 }
