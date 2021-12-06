@@ -11,11 +11,18 @@ public class TableData {
     SimpleStringProperty branch;
     SimpleStringProperty description;
     SimpleStringProperty date;
+    SimpleStringProperty tag;
+    SimpleStringProperty date2;
 
     TableData(String branch, String description, String date){
         this.branch= new SimpleStringProperty(branch);
         this.description= new SimpleStringProperty(description);
         this.date= new SimpleStringProperty(date);
+    }
+
+    TableData(String tag, String date2){
+        this.tag = new SimpleStringProperty(tag);
+        this.date2 = new SimpleStringProperty(date2);
     }
 
     TableData(String member, Double activities, Double hours, Double cost) {
@@ -57,6 +64,11 @@ public class TableData {
         cost.set(c);
     }
 
+    public String getDate() { return date.get();}
+
+    public void setDate(String p) {
+        date.set(p);
+    }
 
     public String getBranch() {
         return branch.get();
@@ -74,12 +86,16 @@ public class TableData {
         description.set(d);
     }
 
-    public String getDate() {
-        return date.get();
+    public String getTag() { return tag.get(); }
+
+    public void setTag(String l) {
+        tag.set(l);
     }
 
-    public void setDate(String g) {
-        date.set(g);
+    public String getDate2() { return date2.get();}
+
+    public void setDate2(String p) {
+        date2.set(p);
     }
 
 }

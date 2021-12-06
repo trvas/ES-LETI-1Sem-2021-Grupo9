@@ -26,11 +26,11 @@ public class HelloController{
     @FXML
     TabPane TabPane1,TabPane2,TabPane3;
     @FXML
-    WebView MeetingsText,DoneText,ReadMe,TagsText;
+    WebView MeetingsText,DoneText,ReadMe;
     @FXML
     ComboBox<String> comboBox,comboBox2,comboBox3;
     @FXML
-    TableView<Object> meetingsTable, doneTable, reviewTable, commitsTable;
+    TableView<Object> meetingsTable, doneTable, reviewTable, commitsTable, tagsTable;
     @FXML
     TableColumn<Object, Object> mMember, mActivities, mHours, mCost,
                                 dMember, dActivities, dHours, dCost,
@@ -38,6 +38,8 @@ public class HelloController{
 
     @FXML
     TableColumn<Object, Object> branch, description, date;
+    @FXML
+    TableColumn<Object, Object> tag, date2;
     @FXML
     Tab TabMeetings1, TabDone1;
     @FXML
@@ -49,6 +51,7 @@ public class HelloController{
     GitManager gitManager;
     int i = 0;
     int j = 0;
+    int k = 0;
 
     /**
      * Handler for when the button is clicked
@@ -91,7 +94,6 @@ public class HelloController{
             gitManager.connect();
             gitManager.getCollaborators();
             ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
-
         }
     }
 
@@ -117,8 +119,11 @@ public class HelloController{
 
     @FXML
     public void home(Event e) throws Exception {
-        if(e.getSource() == this.idHome){
-            TagsText.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getTag().toString()));
+        if(k == 0){
+        if(e.getSource() == this.idHome) {
+            setTabsTable();
+            k = 1;
+        }
         }
     }
 
@@ -159,6 +164,17 @@ public class HelloController{
         });
     }
 
+    public void setTabsTable() throws Exception {
+        ObservableList<Object> data = FXCollections.observableArrayList();
+
+        for (int k = 0; k <gitManager.getTag().size() ; k++) {
+            data.add(new TableData(String.valueOf(gitManager.getTag().get(k)[0]),String.valueOf(gitManager.getTag().get(k)[1])));
+        }
+
+        setTableTags(data, tagsTable, new TableColumn[]{tag, date2});
+    }
+
+
     public void setCommitsTable(String userName) throws Exception {
         ObservableList<Object> data = FXCollections.observableArrayList();
 
@@ -171,8 +187,6 @@ public class HelloController{
         Collections.reverse(data);
         setTableCommits(data, commitsTable, new TableColumn[]{branch, description, date});
     }
-
-
 
 
     public void setReviewTable(int sprintNumber) throws IOException {
@@ -252,6 +266,13 @@ public class HelloController{
         tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("branch"));
         tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("description"));
         tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("date"));
+
+        tableView.setItems(data);
+    }
+
+    private void setTableTags(ObservableList<Object> data, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns) {
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("tag"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("date2"));
 
         tableView.setItems(data);
     }
