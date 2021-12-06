@@ -76,8 +76,10 @@ public class TrelloManager{
         }
 
         Double[] hours = new Double[2];
-        hours[0] = Double.valueOf(df.format(Utils.getSum(real)));
-        hours[1] = Double.valueOf(df.format(Utils.getSum(estimate)));
+        //hours[0] = Double.valueOf(df.format(Utils.getSum(real)));
+        hours[0] = Utils.getSum(real);
+        //hours[1] = Double.valueOf(df.format(Utils.getSum(estimate)));
+        hours[1] = Utils.getSum(estimate);
 
 
         return hours;
@@ -112,7 +114,8 @@ public class TrelloManager{
             estimate += aux[1];
         }
 
-        return new Double[] {Double.valueOf(df.format(real)), Double.valueOf(df.format(estimate)), Double.valueOf(df.format(Utils.getCost(real)))};
+        // return new Double[] {Double.valueOf(df.format(real)), Double.valueOf(df.format(estimate)), Double.valueOf(df.format(Utils.getCost(real)))};
+        return new Double[] {real, estimate, real};
     }
 
     /**
@@ -140,8 +143,10 @@ public class TrelloManager{
         totalHours += getSprintHoursByMember(memberName, sprintNumber)[0];
 
         activities[0] = (double) activitiesCount.size();
-        activities[1] = Double.valueOf(df.format(totalHours));
-        activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
+        // activities[1] = Double.valueOf(df.format(totalHours));
+        activities[1] = totalHours;
+        // activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
+        activities[2] = Utils.getCost(totalHours);
 
         return activities;
     }
@@ -174,8 +179,10 @@ public class TrelloManager{
 
 
         activities[0] = (double) activitiesCount.size();
-        activities[1] = Double.valueOf(df.format(totalHours));
-        activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
+        // activities[1] = Double.valueOf(df.format(totalHours));
+        activities[1] = totalHours;
+        // activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
+        activities[2] = Utils.getCost(totalHours);
 
         return activities;
     }

@@ -33,7 +33,7 @@ public class Utils {
 
         Double cost = hours * price;
 
-        return Double.valueOf(df.format(cost));
+        return Double.valueOf(cost);
     }
 
     /**

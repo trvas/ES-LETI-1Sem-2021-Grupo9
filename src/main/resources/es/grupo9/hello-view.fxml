@@ -1,26 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.web.WebView?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.grupo9.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.grupo9.HelloController">
     <children>
+      <TabPane fx:id="TabPane3" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #4d79ff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Review">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="reviewTable11" layoutX="42.0" layoutY="274.0" prefHeight="160.0" prefWidth="636.0">
+                           <columns>
+                              <TableColumn fx:id="rMember11" prefWidth="125.39996337890625" text="ID" />
+                              <TableColumn fx:id="rEstimated11" prefWidth="196.800048828125" text="ESTIMATED HOURS" />
+                              <TableColumn fx:id="rHours11" prefWidth="171.19989013671875" text="HOURS WORKED" />
+                              <TableColumn fx:id="rCost11" prefWidth="148.0" text="COST" />
+                           </columns>
+                        </TableView>
+                        <PieChart fx:id="PieReview1_211" labelsVisible="false" layoutX="87.0" layoutY="63.0" legendSide="LEFT" prefHeight="200.0" prefWidth="417.0" title=" " />
+                        <PieChart fx:id="PieReview1_111" labelsVisible="false" layoutX="474.0" layoutY="84.0" prefHeight="171.0" prefWidth="206.0" />
+                        <WebView fx:id="Sprint1Date11" layoutX="42.0" layoutY="14.0" prefHeight="59.0" prefWidth="200.0" />
+                        <Label layoutX="519.0" layoutY="62.0" text="Estimated Hours" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="308.0" layoutY="62.0" text="Hours Worked" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="TabMeetings111" onSelectionChanged="#tables1" text="Meetings">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="meetingsTable11" layoutX="16.0" layoutY="227.0" prefHeight="145.0" prefWidth="500.0">
+                           <columns>
+                              <TableColumn fx:id="mMember11" prefWidth="112.80000305175781" text="ID" />
+                              <TableColumn fx:id="mActivities11" prefWidth="202.4000244140625" text="Nº ACTIVITIES (NOT COMMITTED)" />
+                              <TableColumn fx:id="mHours11" minWidth="0.0" prefWidth="71.199951171875" text="HOURS" />
+                              <TableColumn fx:id="mCost11" prefWidth="98.4000244140625" text="COST" />
+                           </columns>
+                        </TableView>
+                        <WebView fx:id="MeetingsText11" layoutX="16.0" layoutY="58.0" prefHeight="158.0" prefWidth="500.0" />
+                        <ComboBox fx:id="comboBox11" layoutX="16.0" layoutY="21.0" onAction="#setComboBox" prefHeight="26.0" prefWidth="185.0" promptText="Choose a meeting..." />
+                        <PieChart fx:id="PieMeetings111" layoutX="489.0" layoutY="98.0" prefHeight="258.0" prefWidth="247.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="TabDone111" onSelectionChanged="#tables2" text="Done">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="doneTable11" layoutX="14.0" layoutY="188.0" prefHeight="167.0" prefWidth="500.0">
+                           <columns>
+                              <TableColumn fx:id="dMember11" prefWidth="131.2000274658203" text="ID" />
+                              <TableColumn fx:id="dActivities11" prefWidth="184.0" text="Nº ACTIVITIES (COMMITTED)" />
+                              <TableColumn fx:id="dHours11" minWidth="3.20001220703125" prefWidth="73.5999755859375" text="HOURS" />
+                              <TableColumn fx:id="dCost11" prefWidth="85.5999755859375" text="COST" />
+                           </columns>
+                        </TableView>
+                        <WebView fx:id="DoneText11" layoutX="14.0" layoutY="58.0" prefHeight="116.0" prefWidth="500.0" />
+                        <ComboBox fx:id="comboBox211" layoutX="14.0" layoutY="22.0" onAction="#setComboBox2" prefHeight="26.0" prefWidth="185.0" promptText="Choose a card..." />
+                        <PieChart fx:id="PieDone3" layoutX="486.0" layoutY="79.0" prefHeight="258.0" prefWidth="247.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
         <VBox prefHeight="574.0" prefWidth="205.0" style="-fx-background-color: #AED6F1;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Pane prefHeight="92.0" prefWidth="206.0">
@@ -128,62 +188,6 @@
                </graphic>
             </Button>
             </children></VBox>
-      <TabPane fx:id="TabPane2" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #809fff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <tabs>
-             <Tab text="Review">
-                 <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                 </content>
-             </Tab>
-             <Tab text="Meetings">
-                 <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                 </content>
-             </Tab>
-             <Tab text="Done">
-                 <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                 </content>
-             </Tab>
-         </tabs>
-      </TabPane>
-      <TabPane fx:id="TabPane3" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #4db8ff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <tabs>
-            <Tab text="Review">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
-             <Tab text="Meetings">
-                 <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                 </content>
-             </Tab>
-             <Tab text="Done">
-                 <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                 </content>
-             </Tab>
-         </tabs>
-      </TabPane>
-      <Pane fx:id="PaneHome" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #99ccff;">
-         <children>
-            <TableView fx:id="commitsTable" layoutX="14.0" layoutY="287.0" prefHeight="200.0" prefWidth="652.0">
-              <columns>
-                <TableColumn fx:id="branch" prefWidth="126.19998168945312" text="Branch" />
-                <TableColumn fx:id="description" prefWidth="383.6000671386719" text="Description" />
-                  <TableColumn fx:id="date" prefWidth="129.39996337890625" text="Date" />
-              </columns>
-            </TableView>
-            <ComboBox fx:id="comboBox3" layoutX="14.0" layoutY="247.0" onAction="#setComboBox3" prefHeight="25.0" prefWidth="179.0" promptText="Choose a member..." />
-            <TableView fx:id="tagsTable" layoutX="346.0" layoutY="172.0" prefHeight="100.0" prefWidth="320.0">
-              <columns>
-                <TableColumn fx:id="tag" prefWidth="106.79998779296875" text="Tags" />
-                <TableColumn fx:id="date2" prefWidth="198.79998779296875" text="Date" />
-              </columns>
-            </TableView>
-            <WebView fx:id="ReadMe" layoutX="11.0" layoutY="14.0" prefHeight="145.0" prefWidth="652.0" />
-         </children></Pane>
       <Pane fx:id="Pane" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #99ccff;" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="Input1" layoutX="69.0" layoutY="58.0" prefHeight="25.0" prefWidth="223.0" />
@@ -231,6 +235,24 @@
             </TextField>
             <WebView fx:id="ProjectIds" layoutX="355.0" layoutY="58.0" prefHeight="200.0" prefWidth="280.0" />
          </children></Pane>
+      <Pane fx:id="PaneHome" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #99ccff;">
+         <children>
+            <TableView fx:id="commitsTable" layoutX="14.0" layoutY="287.0" prefHeight="200.0" prefWidth="652.0">
+              <columns>
+                <TableColumn fx:id="branch" prefWidth="126.19998168945312" text="Branch" />
+                <TableColumn fx:id="description" prefWidth="383.6000671386719" text="Description" />
+                  <TableColumn fx:id="date" prefWidth="129.39996337890625" text="Date" />
+              </columns>
+            </TableView>
+            <ComboBox fx:id="comboBox3" layoutX="14.0" layoutY="247.0" onAction="#setComboBox3" prefHeight="25.0" prefWidth="179.0" promptText="Choose a member..." />
+            <TableView fx:id="tagsTable" layoutX="346.0" layoutY="172.0" prefHeight="100.0" prefWidth="320.0">
+              <columns>
+                <TableColumn fx:id="tag" prefWidth="106.79998779296875" text="Tags" />
+                <TableColumn fx:id="date2" prefWidth="198.79998779296875" text="Date" />
+              </columns>
+            </TableView>
+            <WebView fx:id="ReadMe" layoutX="11.0" layoutY="14.0" prefHeight="145.0" prefWidth="652.0" />
+         </children></Pane>
       <TabPane fx:id="TabPane1" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #4d79ff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
             <Tab text="Review">
@@ -245,8 +267,8 @@
                               <TableColumn fx:id="rCost" prefWidth="148.0" text="COST" />
                           </columns>
                         </TableView>
-                        <PieChart fx:id="PieReview1_2" labelsVisible="false" layoutX="40.0" layoutY="92.0" legendSide="LEFT" prefHeight="190.0" prefWidth="409.0" title=" " />
-                        <PieChart fx:id="PieReview1_1" labelsVisible="false" layoutX="497.0" layoutY="92.0" prefHeight="166.0" prefWidth="192.0" />
+                        <PieChart fx:id="PieReview1_2" labelsVisible="false" layoutX="87.0" layoutY="63.0" legendSide="LEFT" prefHeight="200.0" prefWidth="417.0" title=" " />
+                        <PieChart fx:id="PieReview1_1" labelsVisible="false" layoutX="474.0" layoutY="84.0" prefHeight="171.0" prefWidth="206.0" />
                         <WebView fx:id="Sprint1Date" layoutX="42.0" layoutY="14.0" prefHeight="59.0" prefWidth="200.0" />
                         <Label layoutX="519.0" layoutY="62.0" text="Estimated Hours" textFill="WHITE">
                            <font>
@@ -299,6 +321,77 @@
                 </content>
             </Tab>
         </tabs>
+      </TabPane>
+      <TabPane fx:id="TabPane2" layoutX="206.0" prefHeight="574.0" prefWidth="776.0" style="-fx-background-color: #4d79ff;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.39999999999997726" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Review">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="reviewTable2" layoutX="42.0" layoutY="274.0" prefHeight="160.0" prefWidth="636.0">
+                           <columns>
+                              <TableColumn fx:id="rMember2" prefWidth="125.39996337890625" text="ID" />
+                              <TableColumn fx:id="rEstimated2" prefWidth="196.800048828125" text="ESTIMATED HOURS" />
+                              <TableColumn fx:id="rHours2" prefWidth="171.19989013671875" text="HOURS WORKED" />
+                              <TableColumn fx:id="rCost2" prefWidth="148.0" text="COST" />
+                           </columns>
+                        </TableView>
+                        <PieChart fx:id="PieReview2_2" labelsVisible="false" layoutX="87.0" layoutY="63.0" legendSide="LEFT" prefHeight="200.0" prefWidth="417.0" title=" " />
+                        <PieChart fx:id="PieReview2_1" labelsVisible="false" layoutX="474.0" layoutY="84.0" prefHeight="171.0" prefWidth="206.0" />
+                        <WebView fx:id="Sprint1Date2" layoutX="42.0" layoutY="14.0" prefHeight="59.0" prefWidth="200.0" />
+                        <Label layoutX="519.0" layoutY="62.0" text="Estimated Hours" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="308.0" layoutY="62.0" text="Hours Worked" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="TabMeetings2" onSelectionChanged="#tables1_2" text="Meetings">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="meetingsTable2" layoutX="16.0" layoutY="227.0" prefHeight="145.0" prefWidth="500.0">
+                           <columns>
+                              <TableColumn fx:id="mMember2" prefWidth="112.80000305175781" text="ID" />
+                              <TableColumn fx:id="mActivities2" prefWidth="202.4000244140625" text="Nº ACTIVITIES (NOT COMMITTED)" />
+                              <TableColumn fx:id="mHours2" minWidth="0.0" prefWidth="71.199951171875" text="HOURS" />
+                              <TableColumn fx:id="mCost2" prefWidth="98.4000244140625" text="COST" />
+                           </columns>
+                        </TableView>
+                        <WebView fx:id="MeetingsText2" layoutX="16.0" layoutY="58.0" prefHeight="158.0" prefWidth="500.0" />
+                        <ComboBox fx:id="McomboBox" layoutX="16.0" layoutY="21.0" onAction="#setComboBox_2" prefHeight="26.0" prefWidth="185.0" promptText="Choose a meeting..." />
+                        <PieChart fx:id="PieMeetings2" layoutX="489.0" layoutY="98.0" prefHeight="258.0" prefWidth="247.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="TabDone2" onSelectionChanged="#tables2_2" text="Done">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="doneTable2" layoutX="14.0" layoutY="188.0" prefHeight="167.0" prefWidth="500.0">
+                           <columns>
+                              <TableColumn fx:id="dMember2" prefWidth="131.2000274658203" text="ID" />
+                              <TableColumn fx:id="dActivities2" prefWidth="184.0" text="Nº ACTIVITIES (COMMITTED)" />
+                              <TableColumn fx:id="dHours2" minWidth="3.20001220703125" prefWidth="73.5999755859375" text="HOURS" />
+                              <TableColumn fx:id="dCost2" prefWidth="85.5999755859375" text="COST" />
+                           </columns>
+                        </TableView>
+                        <WebView fx:id="DoneText2" layoutX="14.0" layoutY="58.0" prefHeight="116.0" prefWidth="500.0" />
+                        <ComboBox fx:id="DcomboBox" layoutX="14.0" layoutY="22.0" onAction="#setComboBox2_2" prefHeight="26.0" prefWidth="185.0" promptText="Choose a card..." />
+                        <PieChart fx:id="PieDone2" layoutX="486.0" layoutY="79.0" prefHeight="258.0" prefWidth="247.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
       </TabPane>
     </children>
 </AnchorPane>
