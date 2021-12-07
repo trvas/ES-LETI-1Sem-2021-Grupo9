@@ -13,82 +13,108 @@ import javafx.scene.web.WebView;
 import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Objects;
 
 public class HelloController{
     @FXML
-    TextField Input1,Input2,Input3,Input4,Input5,Input6;
+    TextField TrelloKeyInput, TrelloTokenInput, TrelloBoardInput, GitKeyInput, GitNameInput, GitRepoInput;
     @FXML
     Button id1,id2,id3,id4,idHome,Search,Export;
     @FXML
-    Pane Pane,PaneHome;
+    Pane Pane, GithubPane;
     @FXML
-    TabPane TabPane1,TabPane2,TabPane3;
+    TabPane Sprint1Pane, Sprint2Pane, Sprint3Pane;
 
-    ///=======//
-
-    @FXML//done I guess
-    WebView MeetingsText,DoneText,ReadMe,Sprint1Date,ProjectIds,
-            MeetingsText2,DoneText2,Sprint1Date2;
     @FXML
-    ComboBox<String> comboBox,comboBox2,comboBox3, McomboBox,DcomboBox;
+    WebView ReadMe, ProjectIds,
+            MeetingsText1,DoneText1,SprintDate1,
+            MeetingsText2,DoneText2,SprintDate2,
+            MeetingsText3,DoneText3,SprintDate3;
 
-    @FXML//done
-    TableView<Object> meetingsTable, doneTable, reviewTable, commitsTable, tagsTable,
-                      meetingsTable2, doneTable2, reviewTable2;
+    @FXML
+    ComboBox<String> CommitsComboBox,
+                     MComboBox1, DComboBox1,
+                     MComboBox2, DComboBox2,
+                     MComboBox3, DComboBox3;
+
+    @FXML
+    TableView<Object> commitsTable, tagsTable,
+                      meetingsTable1, doneTable1, reviewTable1,
+                      meetingsTable2, doneTable2, reviewTable2,
+                      meetingsTable3, doneTable3, reviewTable3;
     @FXML
     TableColumn<Object, Object> mMember, mActivities, mHours, mCost,
                                 dMember, dActivities, dHours, dCost,
                                 rMember, rEstimated, rHours, rCost;
-    @FXML//done
+    @FXML
     TableColumn<Object, Object> mMember2, mActivities2, mHours2, mCost2,
                                 dMember2, dActivities2, dHours2, dCost2,
                                 rMember2, rEstimated2, rHours2, rCost2;
     @FXML
-    TableColumn<Object, Object> branch, description, date;
-    @FXML
-    TableColumn<Object, Object> tag, date2;
+    TableColumn<Object, Object> mMember3, mActivities3, mHours3, mCost3,
+                                dMember3, dActivities3, dHours3, dCost3,
+                                rMember3, rEstimated3, rHours3, rCost3;
 
-    @FXML//done
+    @FXML
+    TableColumn<Object, Object> Branch, Description, Date;
+    @FXML
+    TableColumn<Object, Object> Tag, TagDate;
+
+    @FXML
     Tab TabMeetings1, TabDone1,
-        TabMeetings2, TabDone2;
-    @FXML//done
+        TabMeetings2, TabDone2,
+        TabMeetings3, TabDone3;
+
+    @FXML
     PieChart PieReview1_2, PieReview1_1, PieMeetings1, PieDone1,
-             PieReview2_1, PieReview2_2, PieMeetings2, PieDone2;
+             PieReview2_1, PieReview2_2, PieMeetings2, PieDone2,
+             PieReview3_1, PieReview3_2, PieMeetings3, PieDone3;
     @FXML
     Slider SliderCost;
 
     TrelloManager trelloManager;
     GitManager gitManager;
-    int i = 0;
-    int j = 0;
-    int i2 = 0;
-    int j2 = 0;
-    int k = 0;
+    DecimalFormat df = new DecimalFormat("#.##");
+    int i, j, i2, j2, k = 0;
 
     /**
-     * Handler for when the button is clicked
-     * @param e Button click
+     * Handler for when one of the side buttons is clicked.
+     * Sends the Pane picked to the front.
+     * @param e Button click.
      */
     @FXML
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == this.id1){Pane.toFront();}
-        else if(e.getSource() == this.id2) TabPane1.toFront();
-        else if(e.getSource() == this.id3) TabPane2.toFront();
-        else if(e.getSource() == this.id4) TabPane3.toFront();
-        else if(e.getSource() == this.idHome) PaneHome.toFront();
+        else if(e.getSource() == this.id2) Sprint1Pane.toFront();
+        else if(e.getSource() == this.id3) Sprint2Pane.toFront();
+        else if(e.getSource() == this.id4) Sprint3Pane.toFront();
+        else if(e.getSource() == this.idHome) GithubPane.toFront();
     }
 
+    /**
+     * Handler for when Search button is clicked.
+     * This connects to Trello and Github and gets all the information needed to create all the pages and tabs.
+     * @param e Button click.
+     * @throws Exception see {@link es.grupo9.GitManager#GitManager(String, String, String)}.
+     */
     @FXML
-    public void searching(ActionEvent e) throws Exception {
+    public void searchAction(ActionEvent e) throws Exception {
+
         if(e.getSource() == this.Search){
-            String API_KEY = this.Input1.getText();
-            String TOKEN = this.Input2.getText();
-            String BOARD_ID = this.Input3.getText();
-            String GIT_KEY = this.Input4.getText();
-            String GIT_NAME = this.Input5.getText();
-            String REPO_NAME = this.Input6.getText();
+            String TRELLO_KEY = this.TrelloKeyInput.getText();
+            String TRELLO_TOKEN = this.TrelloTokenInput.getText();
+            String TRELLO_BOARD = this.TrelloBoardInput.getText();
+            String GIT_KEY = this.GitKeyInput.getText();
+            String GIT_NAME = this.GitNameInput.getText();
+            String GIT_REPO = this.GitRepoInput.getText();
+
+            // Creates new instances of TrelloManager and GitManager with the provided values
+            /*
+            trelloManager = new TrelloManager(TRELLO_KEY, TRELLO_TOKEN, TRELLO_BOARD);
+            gitManager = new GitManager(GIT_KEY, GIT_NAME, GIT_REPO);
+             */
 
             trelloManager = new TrelloManager(
                     "e3ee0d6a1686b4b43ba5d046bbce20af",
@@ -99,6 +125,11 @@ public class HelloController{
                     "henrique-deSousa",
                     "test_repo");
 
+            gitManager.connect();
+            gitManager.getCollaborators();
+            ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
+
+            // Gets the project ids (project name, members and start date)
             StringBuilder ids = new StringBuilder("<b>Projeto:</b> " + trelloManager.getProjectName() +
                     "\n\n<b>Elementos:</b> ");
 
@@ -109,25 +140,40 @@ public class HelloController{
             ids.append("\n\n<b>Data de início:</b> ").append(trelloManager.getBeginningDate());
             ProjectIds.getEngine().loadContent(new Markdown4jProcessor().process(ids.toString()));
 
-
+            // Sets the cost based on the value on the slider
             Utils.setPrice((int)SliderCost.getValue());
-            trelloManager.getMeetings(1).forEach(f-> comboBox.getItems().add(f.getName()));
-            trelloManager.getFinishedSprintBacklog(1).forEach(f-> comboBox2.getItems().add(f.getName()));
-            trelloManager.getMeetings(2).forEach(f-> McomboBox.getItems().add(f.getName()));
-            trelloManager.getFinishedSprintBacklog(2).forEach(f-> DcomboBox.getItems().add(f.getName()));
 
-            gitManager.getCollaborators().forEach(f->comboBox3.getItems().add(f));
-            Sprint1Date.getEngine().loadContent(new Markdown4jProcessor().process(trelloManager.getSprintDate(1)));
-            Sprint1Date2.getEngine().loadContent(new Markdown4jProcessor().process(trelloManager.getSprintDate(2)));
-            setReviewTable(1);
-            setReviewTable2(2);
+            // Gets all the information needed for the Trello tabs
+            // Sets the sprint tabs combo boxes with the card names (from the Meetings and Done lists)
+            trelloManager.getMeetings(1).forEach(f-> MComboBox1.getItems().add(f.getName()));
+            trelloManager.getFinishedSprintBacklog(1).forEach(f-> DComboBox1.getItems().add(f.getName()));
+            trelloManager.getMeetings(2).forEach(f-> MComboBox2.getItems().add(f.getName()));
+            trelloManager.getFinishedSprintBacklog(2).forEach(f-> DComboBox2.getItems().add(f.getName()));
+            trelloManager.getMeetings(3).forEach(f-> MComboBox3.getItems().add(f.getName()));
+            trelloManager.getFinishedSprintBacklog(3).forEach(f-> DComboBox3.getItems().add(f.getName()));
 
-            gitManager.connect();
-            gitManager.getCollaborators();
-            ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
+
+            // Adds all the sprint dates to each sprint page
+            SprintDate1.getEngine().loadContent(new Markdown4jProcessor().process(trelloManager.getSprintDate(1)));
+            SprintDate2.getEngine().loadContent(new Markdown4jProcessor().process(trelloManager.getSprintDate(2)));
+            SprintDate3.getEngine().loadContent(new Markdown4jProcessor().process(trelloManager.getSprintDate(3)));
+
+            // Sets the revivew table for each sprint page
+            setReviewTable(1, reviewTable1, new TableColumn[]{rMember, rHours, rEstimated, rCost}, PieReview1_1, PieReview1_2);
+            setReviewTable(2, reviewTable2, new TableColumn[]{rMember2, rHours2, rEstimated2, rCost2}, PieReview2_1, PieReview2_2);
+            setReviewTable(3, reviewTable2, new TableColumn[]{rMember3, rHours3, rEstimated3, rCost3}, PieReview3_1, PieReview3_2);
+
+            // Sets the git page combo box with the collaborator names
+            gitManager.getCollaborators().forEach(f->CommitsComboBox.getItems().add(f));
+
         }
     }
 
+    /**
+     * Exports the CSV file with all the information presented.
+     * @param e Button click.
+     * @throws Exception see {@link es.grupo9.Utils#exportCSV(TrelloManager, GitManager)}.
+     */
     @FXML
     public void export(ActionEvent e) throws Exception {
         if(e.getSource() == this.Export){
@@ -135,27 +181,7 @@ public class HelloController{
         }
     }
 
-
-    @FXML
-    public void tables1(Event t) throws IOException {
-        if(i == 0){
-            if(t.getSource() == this.TabMeetings1){
-                setMeetingsTable(1);
-                i = 1;
-            }
-        }
-    }
-
-    @FXML
-    public void tables2(Event t) throws IOException {
-        if(j == 0){
-            if(t.getSource() == this.TabDone1){
-                setDoneTable(1);
-                j = 1;
-            }
-        }
-    }
-
+    // adicionar javadoc
     @FXML
     public void home(Event e) throws Exception {
         if(k == 0){
@@ -166,34 +192,16 @@ public class HelloController{
         }
     }
 
-    @FXML
-    public void setComboBox() throws IOException {
-        trelloManager.getMeetings(1).forEach(f-> {
-            try {
-                if(Objects.equals(this.comboBox.getValue(), f.getName()))
-                    MeetingsText.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
-            } catch (StringIndexOutOfBoundsException | IOException ex) {
-                MeetingsText.getEngine().loadContent(f.getDesc());
-            }
-        });
-    }
+    /* -- github -- */
 
+    /**
+     * Sets the Commits Table values to the ones of the member picked in the Commits Combo Box.
+     * @throws IOException ...
+     */
     @FXML
-    public void setComboBox2() throws IOException {
-        trelloManager.getFinishedSprintBacklog(1).forEach(f-> {
-            try {
-                if(Objects.equals(this.comboBox2.getValue(), f.getName()))
-                    DoneText.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
-            } catch (StringIndexOutOfBoundsException | IOException ex) {
-                DoneText.getEngine().loadContent(f.getDesc());
-            }
-        });
-    }
-
-    @FXML
-    public void setComboBox3() throws IOException {
+    public void setCommitsComboBox() throws IOException {
         gitManager.getCollaborators().forEach(f-> {
-            if(Objects.equals(this.comboBox3.getValue(),f)){
+            if(Objects.equals(this.CommitsComboBox.getValue(),f)){
                 try {
                     setCommitsTable(f);
                 } catch (Exception e) {
@@ -203,6 +211,23 @@ public class HelloController{
         });
     }
 
+    /**
+     * Sets the Tags table values.
+     * @param data ObservableList<Object> Data to be added to the table.
+     * @param tableView TableView<Object> Table view to be set.
+     * @param tableColumns TableColumn<Object, Object>[] Table columns to be set.
+     */
+    private void setTableTags(ObservableList<Object> data, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns) {
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<>("tag"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<>("tagdate"));
+
+        tableView.setItems(data);
+    }
+
+    /**
+     * Gets all the information necessary to fill the Tags table from Github.
+     * @throws Exception See {@link GitManager#getBranchesInRepository()}.
+     */
     public void setTabsTable() throws Exception {
         ObservableList<Object> data = FXCollections.observableArrayList();
 
@@ -210,10 +235,28 @@ public class HelloController{
             data.add(new TableData(String.valueOf(gitManager.getTag().get(k)[0]),String.valueOf(gitManager.getTag().get(k)[1])));
         }
 
-        setTableTags(data, tagsTable, new TableColumn[]{tag, date2});
+        setTableTags(data, tagsTable, new TableColumn[]{Tag, TagDate});
     }
 
+    /**
+     * Sets the Commits table values.
+     * @param data ObservableList<Object> Data to be added to the table.
+     * @param tableView TableView<Object> Table view to be set.
+     * @param tableColumns TableColumn<Object, Object>[] Table columns to be set.
+     */
+    private void setTableCommits(ObservableList<Object> data, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns) {
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<>("branch"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<>("description"));
+        tableColumns[2].setCellValueFactory(new PropertyValueFactory<>("date"));
 
+        tableView.setItems(data);
+    }
+
+    /**
+     * Gets all the information necessary to fill the Commits table from Github.
+     * @param userName Collaborator username.
+     * @throws Exception See {@link GitManager#getBranchesInRepository()}.
+     */
     public void setCommitsTable(String userName) throws Exception {
         ObservableList<Object> data = FXCollections.observableArrayList();
 
@@ -224,11 +267,21 @@ public class HelloController{
             }
         }
         Collections.reverse(data);
-        setTableCommits(data, commitsTable, new TableColumn[]{branch, description, date});
+        setTableCommits(data, commitsTable, new TableColumn[]{Branch, Description, Date});
     }
 
+    /* -- general -- */
 
-    public void setReviewTable(int sprintNumber) throws IOException {
+    /**
+     * Constructor for each Review table.
+     * @param sprintNumber int Number of the sprint.
+     * @param reviewTable TableView<Object> Review table to be set.
+     * @param tableColumn TableColumn<Object,Object>[] Table Columns to be set.
+     * @param pieReview1 PieChart Pie chart for the hours worked.
+     * @param pieReview2 PieChart Pie chart for the estimated hours.
+     * @throws IOException see {@link es.grupo9.TrelloManager#getSprintHoursByMember(String, int)}.
+     */
+    public void setReviewTable(int sprintNumber, TableView<Object> reviewTable, TableColumn<Object,Object>[] tableColumn, PieChart pieReview1, PieChart pieReview2) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
         ObservableList<PieChart.Data> pieChart1 = FXCollections.observableArrayList();
         ObservableList<PieChart.Data> pieChart2 = FXCollections.observableArrayList();
@@ -236,178 +289,213 @@ public class HelloController{
 
         for(Member member : trelloManager.getMembers()) {
             Double[] stats = trelloManager.getSprintHoursByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), stats[0], stats[1], stats[2]));
-            String s1 = member.getFullName();
-            pieChart1.add(new PieChart.Data(s1, stats[0]));
+            setTableInfo(data, pieChart1, member, stats);
             String s2 = member.getFullName();
             pieChart2.add(new PieChart.Data(s2, stats[1]));
 
+            // Sums up all the member's values to return the global total
             globalStats[0] += stats[0];
             globalStats[1] += stats[1];
             globalStats[2] += stats[2];
 
         }
-        PieReview1_1.setData(pieChart1);
-        PieReview1_2.setData(pieChart2);
-        setTableItems(data, globalStats, reviewTable, new TableColumn[]{rMember, rEstimated, rHours, rCost});
+        pieReview1.setData(pieChart1);
+        pieReview2.setData(pieChart2);
+        setTableItems(data, globalStats, reviewTable, tableColumn);
     }
 
-    public void setMeetingsTable(int sprintNumber) throws IOException {
+    /**
+     * Constructor for each Meetings table.
+     * @param sprintNumber int Number of the sprint.
+     * @param meetingsTable TableView<Object> Review table to be set.
+     * @param tableColumn TableColumn<Object,Object>[] Table Columns to be set.
+     * @param pieMeetings PieChart Pie chart for the hours worked.
+     * @throws IOException see {@link es.grupo9.TrelloManager#getNotCommittedActivitiesByMember(String, int)}.
+     */
+    public void setMeetingsTable(int sprintNumber, TableView<Object> meetingsTable, TableColumn<Object,Object>[] tableColumn, PieChart pieMeetings) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
         ObservableList<PieChart.Data> pieChart = FXCollections.observableArrayList();
         Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
-            String a = member.getFullName();
-            pieChart.add(new PieChart.Data(a, activities[0]));
+            setTableInfo(data, pieChart, member, activities);
 
+            // Sums up all the member's values to return the global total
             globalActivities[0] += activities[0];
             globalActivities[1] += activities[1];
             globalActivities[2] += activities[2];
         }
-        PieMeetings1.setData(pieChart);
-        setTableItems(data, globalActivities, meetingsTable, new TableColumn[]{mMember, mActivities, mHours, mCost});
+        pieMeetings.setData(pieChart);
+        setTableItems(data, globalActivities, meetingsTable, tableColumn);
     }
 
 
-    public void setDoneTable(int sprintNumber) throws IOException {
+    /**
+     * Constructor for each Done table.
+     * @param sprintNumber int Number of the sprint.
+     * @param doneTable TableView<Object> Review table to be set.
+     * @param tableColumn TableColumn<Object,Object>[] Table Columns to be set.
+     * @param pieDone PieChart Pie chart for the hours worked.
+     * @throws IOException see {@link es.grupo9.TrelloManager#getCommittedActivitiesByMember(String, int)}.
+     */
+    public void setDoneTable(int sprintNumber, TableView<Object> doneTable, TableColumn<Object,Object>[] tableColumn, PieChart pieDone) throws IOException {
         ObservableList<Object> data = FXCollections.observableArrayList();
         ObservableList<PieChart.Data> pieChart = FXCollections.observableArrayList();
         Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
 
         for(Member member : trelloManager.getMembers()) {
             Double[] activities = trelloManager.getCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
-            String s = member.getFullName();
-            pieChart.add(new PieChart.Data(s, activities[0]));
+            setTableInfo(data, pieChart, member, activities);
 
+            // Sums up all the member's values to return the global total
             globalActivities[0] += activities[0];
             globalActivities[1] += activities[1];
             globalActivities[2] += activities[2];
         }
-        PieDone1.setData(pieChart);
-        setTableItems(data, globalActivities, doneTable, new TableColumn[]{dMember, dActivities, dHours, dCost});
+        pieDone.setData(pieChart);
+        setTableItems(data, globalActivities, doneTable, tableColumn);
     }
 
+    /**
+     * Sets each table's details (Trello related).
+     * @param data ObservableList<Object> Data to be added to the table.
+     * @param dataArray Double[] Array with hours worked, estimated and costs.
+     * @param tableView TableView<Object> Table view to be set.
+     * @param tableColumns TableColumn<Object, Object>[] Table columns to be set.
+     */
     private void setTableItems(ObservableList<Object> data, Double[] dataArray, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns){
-        data.add(new TableData("global", dataArray[0], dataArray[1], dataArray[2]));
-        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("member"));
-        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("activities"));
-        tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("hours"));
-        tableColumns[3].setCellValueFactory(new PropertyValueFactory<Object, Object>("cost"));
+        data.add(new TableData("global", Double.valueOf(df.format(dataArray[0])), Double.valueOf(df.format(dataArray[1])), Double.valueOf(df.format(dataArray[2]))));
+        tableColumns[0].setCellValueFactory(new PropertyValueFactory<>("member"));
+        tableColumns[1].setCellValueFactory(new PropertyValueFactory<>("activities"));
+        tableColumns[2].setCellValueFactory(new PropertyValueFactory<>("hours"));
+        tableColumns[3].setCellValueFactory(new PropertyValueFactory<>("cost"));
 
         tableView.setItems(data);
     }
 
-    private void setTableCommits(ObservableList<Object> data, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns) {
-        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("branch"));
-        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("description"));
-        tableColumns[2].setCellValueFactory(new PropertyValueFactory<Object, Object>("date"));
+    /**
+     * Adds the total global values to the table and creates the Pie Chart.
+     * @param data ObservableList<Object> Data to be added to the table.
+     * @param pieChart PieChart Pie chart with the hours worked.
+     * @param member String Name of the member.
+     * @param array Double[] Array with the total global values.
+     */
+    private void setTableInfo(ObservableList<Object> data, ObservableList<PieChart.Data> pieChart, Member member, Double[] array) {
+        data.add(new TableData(member.getFullName(),  Double.valueOf(df.format(array[0])),
+                Double.valueOf(df.format(array[1])), Double.valueOf(df.format(array[2]))));
 
-        tableView.setItems(data);
+        String s = member.getFullName();
+        pieChart.add(new PieChart.Data(s, array[0]));
     }
 
-    private void setTableTags(ObservableList<Object> data, TableView<Object> tableView, TableColumn<Object, Object>[] tableColumns) {
-        tableColumns[0].setCellValueFactory(new PropertyValueFactory<Object, Object>("tag"));
-        tableColumns[1].setCellValueFactory(new PropertyValueFactory<Object, Object>("date2"));
 
-        tableView.setItems(data);
-    }
+    /* -- sprint 1 --*/
 
-
-
-
-    //////////////------------------------SPRINT2----------------------------------------/////////////
-
-    public void setReviewTable2(int sprintNumber) throws IOException {
-        ObservableList<Object> data = FXCollections.observableArrayList();
-        ObservableList<PieChart.Data> pieChart1 = FXCollections.observableArrayList();
-        ObservableList<PieChart.Data> pieChart2 = FXCollections.observableArrayList();
-        Double[] globalStats = new Double[] {0.0, 0.0, 0.0};
-
-        for(Member member : trelloManager.getMembers()) {
-            Double[] stats = trelloManager.getSprintHoursByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), stats[0], stats[1], stats[2]));
-            String s1 = member.getFullName();
-            pieChart1.add(new PieChart.Data(s1, stats[0]));
-            String s2 = member.getFullName();
-            pieChart2.add(new PieChart.Data(s2, stats[1]));
-
-            globalStats[0] += stats[0];
-            globalStats[1] += stats[1];
-            globalStats[2] += stats[2];
-
-        }
-        PieReview2_2.setData(pieChart1);
-        PieReview2_1.setData(pieChart2);
-        setTableItems(data, globalStats, reviewTable2, new TableColumn[]{rMember2, rEstimated2, rHours2, rCost2});
-    }
-
-    public void setMeetingsTable2(int sprintNumber) throws IOException {
-        ObservableList<Object> data = FXCollections.observableArrayList();
-        ObservableList<PieChart.Data> pieChart = FXCollections.observableArrayList();
-        Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
-
-        for(Member member : trelloManager.getMembers()) {
-            Double[] activities = trelloManager.getNotCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
-            String a = member.getFullName();
-            pieChart.add(new PieChart.Data(a, activities[0]));
-
-            globalActivities[0] += activities[0];
-            globalActivities[1] += activities[1];
-            globalActivities[2] += activities[2];
-        }
-        PieMeetings2.setData(pieChart);
-        setTableItems(data, globalActivities, meetingsTable2, new TableColumn[]{mMember2, mActivities2, mHours2, mCost2});
-    }
-
-    public void setDoneTable2(int sprintNumber) throws IOException {
-        ObservableList<Object> data = FXCollections.observableArrayList();
-        ObservableList<PieChart.Data> pieChart = FXCollections.observableArrayList();
-        Double[] globalActivities = new Double[] {0.0, 0.0, 0.0};
-
-        for(Member member : trelloManager.getMembers()) {
-            Double[] activities = trelloManager.getCommittedActivitiesByMember(member.getFullName(), sprintNumber);
-            data.add(new TableData(member.getFullName(), activities[0], activities[1], activities[2]));
-            String s = member.getFullName();
-            pieChart.add(new PieChart.Data(s, activities[0]));
-
-            globalActivities[0] += activities[0];
-            globalActivities[1] += activities[1];
-            globalActivities[2] += activities[2];
-        }
-        PieDone2.setData(pieChart);
-        setTableItems(data, globalActivities, doneTable2, new TableColumn[]{dMember2, dActivities2, dHours2, dCost2});
-    }
-
+    /**
+     * Handler for when the Sprint 1 Meetings tab is clicked.
+     * @param t Event tab click.
+     * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)}.
+     */
     @FXML
-    public void tables1_2(Event t) throws IOException {
+    public void setTabMeetings1(Event t) throws IOException {
+        if(i == 0){
+            if(t.getSource() == this.TabMeetings1){
+                setMeetingsTable(1, meetingsTable1, new TableColumn[]{mMember, mActivities, mHours, mCost}, PieMeetings1);
+                i = 1;
+            }
+        }
+    }
+
+    /**
+     * Handler for when the Sprint 1 Done tab is clicked.
+     * @param t Event tab click.
+     * @throws IOException see {@link #setDoneTable(int, TableView, TableColumn[], PieChart)}.
+     */
+    @FXML
+    public void setTabDone1(Event t) throws IOException {
+        if(j == 0){
+            if(t.getSource() == this.TabDone1){
+                setDoneTable(1, doneTable1, new TableColumn[]{dMember, dActivities, dHours, dCost}, PieDone1);
+                j = 1;
+            }
+        }
+    }
+
+    /**
+     * Sets the Combo Box values to equal each card name and show their description when picked.
+     * @throws IOException ...
+     */
+    @FXML
+    public void setMComboBox1() throws IOException {
+        trelloManager.getMeetings(1).forEach(f-> {
+            try {
+                if(Objects.equals(this.MComboBox1.getValue(), f.getName()))
+                    MeetingsText1.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
+            } catch (StringIndexOutOfBoundsException | IOException ex) {
+                MeetingsText1.getEngine().loadContent(f.getDesc());
+            }
+        });
+    }
+
+    /**
+     * Sets the Combo Box values to equal each card name and show their description when picked.
+     * @throws IOException ...
+     */
+    @FXML
+    public void setDComboBox1() throws IOException {
+        trelloManager.getFinishedSprintBacklog(1).forEach(f-> {
+            try {
+                if(Objects.equals(this.DComboBox1.getValue(), f.getName()))
+                    DoneText1.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
+            } catch (StringIndexOutOfBoundsException | IOException ex) {
+                DoneText1.getEngine().loadContent(f.getDesc());
+            }
+        });
+    }
+
+    /* -- sprint 2 --*/
+
+
+    /**
+     * Handler for when the Sprint 2 Meetings tab is clicked.
+     * @param t Event tab click.
+     * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)}.
+     */
+    @FXML
+    public void setTabMeetings2(Event t) throws IOException {
         if(i2 == 0){
             if(t.getSource() == this.TabMeetings2){
-                setMeetingsTable2(2);
+                setMeetingsTable(2, meetingsTable2, new TableColumn[]{mMember2, mActivities2, mHours2, mCost2}, PieMeetings2);
                 i2 = 1;
             }
         }
     }
 
+    /**
+     * Handler for when the Sprint 2 Done tab is clicked.
+     * @param t Event tab click.
+     * @throws IOException see {@link #setDoneTable(int, TableView, TableColumn[], PieChart).
+     */
     @FXML
-    public void tables2_2(Event t) throws IOException {
+    public void setTabDone2(Event t) throws IOException {
         if(j2 == 0){
             if(t.getSource() == this.TabDone2){
-                setDoneTable2(2);
+                setDoneTable(2, doneTable2, new TableColumn[]{dMember2, dActivities2, dHours2, dCost2}, PieDone2);
                 j2 = 1;
             }
         }
     }
 
+    /**
+     * Sets the Combo Box values to equal each card name and show their description when picked.
+     * @throws IOException ...
+     */
     @FXML
-    public void setComboBox_2() throws IOException {
+    public void setMComboBox2() throws IOException {
         trelloManager.getMeetings(2).forEach(f-> {
             try {
-                if(Objects.equals(this.McomboBox.getValue(), f.getName()))
+                if(Objects.equals(this.MComboBox2.getValue(), f.getName()))
                     MeetingsText2.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
             } catch (StringIndexOutOfBoundsException | IOException ex) {
                 MeetingsText2.getEngine().loadContent(f.getDesc());
@@ -415,16 +503,88 @@ public class HelloController{
         });
     }
 
+    /**
+     * Sets the Combo Box values to equal each card name and show their description when picked.
+     * @throws IOException ...
+     */
     @FXML
-    public void setComboBox2_2() throws IOException {
+    public void setDComboBox2() throws IOException {
         trelloManager.getFinishedSprintBacklog(2).forEach(f-> {
             try {
-                if(Objects.equals(this.DcomboBox.getValue(), f.getName()))
+                if(Objects.equals(this.DComboBox2.getValue(), f.getName()))
                     DoneText2.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
             } catch (StringIndexOutOfBoundsException | IOException ex) {
                 DoneText2.getEngine().loadContent(f.getDesc());
             }
         });
     }
+
+    /* --- sprint 3 --- */
+
+    /**
+     * Handler for when the Sprint 3 Meetings tab is clicked.
+     * @param t Event tab click.
+     * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)}.
+     */
+
+    @FXML
+    public void setTabMeetings3(Event t) throws IOException {
+        if(i2 == 0){
+            if(t.getSource() == this.TabMeetings3){
+                setMeetingsTable(3, meetingsTable3, new TableColumn[]{mMember3, mActivities3, mHours3, mCost3}, PieMeetings3);
+                i2 = 1;
+            }
+        }
+    }
+
+    /**
+     * Handler for when the Sprint 3 Done tab is clicked.
+     * @param t Event tab click.
+     * @throws IOException see {@link #setDoneTable(int, TableView, TableColumn[], PieChart)}.
+     */
+
+    @FXML
+    public void setTabDone3(Event t) throws IOException {
+        if(j2 == 0){
+            if(t.getSource() == this.TabDone3){
+                setDoneTable(3, doneTable3, new TableColumn[]{dMember3, dActivities3, dHours3, dCost3}, PieDone3);
+                j2 = 1;
+            }
+        }
+    }
+
+    /**
+     * Sets the Combo Box values to equal each card name and show their description when picked.
+     * @throws IOException ...
+     */
+    @FXML
+    public void setMComboBox3() throws IOException {
+        trelloManager.getMeetings(3).forEach(f-> {
+            try {
+                if(Objects.equals(this.MComboBox3.getValue(), f.getName()))
+                    MeetingsText3.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
+            } catch (StringIndexOutOfBoundsException | IOException ex) {
+                MeetingsText3.getEngine().loadContent(f.getDesc());
+            }
+        });
+    }
+
+    /**
+     * Sets the Combo Box values to equal each card name and show their description when picked.
+     * @throws IOException ...
+     */
+    @FXML
+    public void setDComboBox3() throws IOException {
+        trelloManager.getFinishedSprintBacklog(3).forEach(f-> {
+            try {
+                if(Objects.equals(this.DComboBox3.getValue(), f.getName()))
+                    DoneText3.getEngine().loadContent(new Markdown4jProcessor().process(f.getDesc()));
+            } catch (StringIndexOutOfBoundsException | IOException ex) {
+                DoneText3.getEngine().loadContent(f.getDesc());
+            }
+        });
+    }
+
+
 
 }

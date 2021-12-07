@@ -49,7 +49,7 @@ public class TrelloManager{
         comments.removeIf(action -> action.getData().getText() == null); // removing null comments
 
         // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
+        // DecimalFormat df = new DecimalFormat("#.##");
 
         Double[] real = new Double[comments.size()];
         Double[] estimate = new Double[comments.size()];

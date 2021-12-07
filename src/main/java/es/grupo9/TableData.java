@@ -12,7 +12,7 @@ public class TableData {
     SimpleStringProperty description;
     SimpleStringProperty date;
     SimpleStringProperty tag;
-    SimpleStringProperty date2;
+    SimpleStringProperty tagdate;
 
     TableData(String branch, String description, String date){
         this.branch= new SimpleStringProperty(branch);
@@ -20,9 +20,9 @@ public class TableData {
         this.date= new SimpleStringProperty(date);
     }
 
-    TableData(String tag, String date2){
+    TableData(String tag, String tagdate){
         this.tag = new SimpleStringProperty(tag);
-        this.date2 = new SimpleStringProperty(date2);
+        this.tagdate = new SimpleStringProperty(tagdate);
     }
 
     TableData(String member, Double activities, Double hours, Double cost) {
@@ -92,10 +92,10 @@ public class TableData {
         tag.set(l);
     }
 
-    public String getDate2() { return date2.get();}
+    public String getTagdate() { return tagdate.get();}
 
-    public void setDate2(String p) {
-        date2.set(p);
+    public void setTagdate(String p) {
+        tagdate.set(p);
     }
 
 }
