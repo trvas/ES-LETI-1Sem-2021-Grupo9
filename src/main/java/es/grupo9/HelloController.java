@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Objects;
@@ -159,9 +160,9 @@ public class HelloController{
             SprintDate3.getEngine().loadContent(new Markdown4jProcessor().process(trelloManager.getSprintDate(3)));
 
             // Sets the revivew table for each sprint page
-            setReviewTable(1, reviewTable1, new TableColumn[]{rMember, rHours, rEstimated, rCost}, PieReview1_1, PieReview1_2);
-            setReviewTable(2, reviewTable2, new TableColumn[]{rMember2, rHours2, rEstimated2, rCost2}, PieReview2_1, PieReview2_2);
-            setReviewTable(3, reviewTable2, new TableColumn[]{rMember3, rHours3, rEstimated3, rCost3}, PieReview3_1, PieReview3_2);
+            setReviewTable(1, reviewTable1, createTableColumnArray(rMember, rHours, rEstimated, rCost), PieReview1_1, PieReview1_2);
+            setReviewTable(2, reviewTable2, createTableColumnArray(rMember2, rHours2, rEstimated2, rCost2), PieReview2_1, PieReview2_2);
+            setReviewTable(3, reviewTable2, createTableColumnArray(rMember3, rHours3, rEstimated3, rCost3), PieReview3_1, PieReview3_2);
 
             // Sets the git page combo box with the collaborator names
             gitManager.getCollaborators().forEach(f->CommitsComboBox.getItems().add(f));
@@ -271,6 +272,25 @@ public class HelloController{
     }
 
     /* -- general -- */
+
+    /**
+     * Generalized constructor to create an array of four Table Columns.
+     * @param col1 TableColumn <Object, Object> First table column to be added.
+     * @param col2 TableColumn <Object, Object> Second table column to be added.
+     * @param col3 TableColumn <Object, Object> Third table column to be added.
+     * @param col4 TableColumn <Object, Object> Fourth table column to be added.
+     * @return TableColumn<Object, Object>[] array of Table Columns.
+     */
+    public TableColumn<Object, Object>[] createTableColumnArray(TableColumn<Object, Object> col1, TableColumn<Object, Object> col2,
+                                                                TableColumn<Object, Object> col3, TableColumn<Object, Object> col4){
+        TableColumn<Object, Object>[] tableColumns = new TableColumn[4];
+        tableColumns[0] = col1;
+        tableColumns[1] = col2;
+        tableColumns[2] = col3;
+        tableColumns[3] = col4;
+
+        return tableColumns;
+    }
 
     /**
      * Constructor for each Review table.
@@ -401,7 +421,7 @@ public class HelloController{
     public void setTabMeetings1(Event t) throws IOException {
         if(i == 0){
             if(t.getSource() == this.TabMeetings1){
-                setMeetingsTable(1, meetingsTable1, new TableColumn[]{mMember, mActivities, mHours, mCost}, PieMeetings1);
+                setMeetingsTable(1, meetingsTable1, createTableColumnArray(mMember, mActivities, mHours, mCost), PieMeetings1);
                 i = 1;
             }
         }
@@ -416,7 +436,7 @@ public class HelloController{
     public void setTabDone1(Event t) throws IOException {
         if(j == 0){
             if(t.getSource() == this.TabDone1){
-                setDoneTable(1, doneTable1, new TableColumn[]{dMember, dActivities, dHours, dCost}, PieDone1);
+                setDoneTable(1, doneTable1, createTableColumnArray(dMember, dActivities, dHours, dCost), PieDone1);
                 j = 1;
             }
         }
@@ -466,7 +486,7 @@ public class HelloController{
     public void setTabMeetings2(Event t) throws IOException {
         if(i2 == 0){
             if(t.getSource() == this.TabMeetings2){
-                setMeetingsTable(2, meetingsTable2, new TableColumn[]{mMember2, mActivities2, mHours2, mCost2}, PieMeetings2);
+                setMeetingsTable(2, meetingsTable2, createTableColumnArray(mMember2, mActivities2, mHours2, mCost2), PieMeetings2);
                 i2 = 1;
             }
         }
@@ -481,7 +501,7 @@ public class HelloController{
     public void setTabDone2(Event t) throws IOException {
         if(j2 == 0){
             if(t.getSource() == this.TabDone2){
-                setDoneTable(2, doneTable2, new TableColumn[]{dMember2, dActivities2, dHours2, dCost2}, PieDone2);
+                setDoneTable(2, doneTable2, createTableColumnArray(dMember2, dActivities2, dHours2, dCost2), PieDone2);
                 j2 = 1;
             }
         }
@@ -531,7 +551,7 @@ public class HelloController{
     public void setTabMeetings3(Event t) throws IOException {
         if(i2 == 0){
             if(t.getSource() == this.TabMeetings3){
-                setMeetingsTable(3, meetingsTable3, new TableColumn[]{mMember3, mActivities3, mHours3, mCost3}, PieMeetings3);
+                setMeetingsTable(3, meetingsTable3, createTableColumnArray(mMember3, mActivities3, mHours3, mCost3), PieMeetings3);
                 i2 = 1;
             }
         }
@@ -547,7 +567,7 @@ public class HelloController{
     public void setTabDone3(Event t) throws IOException {
         if(j2 == 0){
             if(t.getSource() == this.TabDone3){
-                setDoneTable(3, doneTable3, new TableColumn[]{dMember3, dActivities3, dHours3, dCost3}, PieDone3);
+                setDoneTable(3, doneTable3, createTableColumnArray(dMember3, dActivities3, dHours3, dCost3), PieDone3);
                 j2 = 1;
             }
         }
