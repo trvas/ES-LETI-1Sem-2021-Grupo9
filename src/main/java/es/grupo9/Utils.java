@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class with all the "general" functions needed (that don't specifically use Trello or Github, or need to use both).
+ */
 public class Utils {
 
     // Price per hour worked

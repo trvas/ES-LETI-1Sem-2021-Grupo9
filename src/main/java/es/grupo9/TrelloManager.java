@@ -7,26 +7,31 @@ import org.trello4j.model.Card;
 import org.trello4j.model.Member;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TrelloManager class. Uses the Trello API ot get all the necessary information.
+ */
 public class TrelloManager{
 
     private static Trello trello;
-
     private static String boardId;
 
+    /**
+     * Constructor function, creates an instance of TrelloManager.
+     * @param API_KEY User's API Trello Key.
+     * @param TOKEN User's Trello TOKEN.
+     * @param BOARD_ID Trello Board ID.
+     */
     public TrelloManager(String API_KEY, String TOKEN, String BOARD_ID) {
         boardId = BOARD_ID;
         trello = new TrelloImpl(API_KEY, TOKEN);
     }
 
     /**
-     * Gets the ID of cards from the Backlog pertaining to a specific Sprint. Each Increment list has
-     * a #SPRINT(NUMBER) on its label. This method iterates over the board lists until it finds one
-     * related to the sprint wanted.
-     *
+     * Gets the ID of cards from the Backlog pertaining to a specific Sprint. This method gets the "Done"
+     * list of each sprint and returns a list of the cards on it.
      * @param sprintNumber Sprint the user wants the cards from.
      * @return List<Card> list of cards from the desired Sprint.
      * @throws IOException see {@link #getBoardListIdByName(String)};
@@ -47,10 +52,6 @@ public class TrelloManager{
     public Double[] getCardHours(String cardID){
         List<Action> comments = trello.getActionsByCard(cardID);
         comments.removeIf(action -> action.getData().getText() == null); // removing null comments
-
-        // Format to only have 2 decimal places
-        // DecimalFormat df = new DecimalFormat("#.##");
-
         Double[] real = new Double[comments.size()];
         Double[] estimate = new Double[comments.size()];
 
@@ -76,9 +77,7 @@ public class TrelloManager{
         }
 
         Double[] hours = new Double[2];
-        //hours[0] = Double.valueOf(df.format(Utils.getSum(real)));
         hours[0] = Utils.getSum(real);
-        //hours[1] = Double.valueOf(df.format(Utils.getSum(estimate)));
         hours[1] = Utils.getSum(estimate);
 
 
@@ -104,9 +103,6 @@ public class TrelloManager{
         Double real = 0.0;
         Double estimate = 0.0;
 
-        // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-
         // Sum up hours worked on each card
         for (Card card : memberSprintList) {
             Double[] aux = getCardHours(card.getId());
@@ -114,7 +110,6 @@ public class TrelloManager{
             estimate += aux[1];
         }
 
-        // return new Double[] {Double.valueOf(df.format(real)), Double.valueOf(df.format(estimate)), Double.valueOf(df.format(Utils.getCost(real)))};
         return new Double[] {real, estimate, real};
     }
 
@@ -130,9 +125,6 @@ public class TrelloManager{
     public Double[] getCommittedActivitiesByMember(String memberName, int sprintNumber) throws IOException {
         Double[] activities = new Double[3];
         double totalHours = 0.0;
-        // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-
         List<Card> memberSprintList = trello.getCardsByList(getSprintListByName(sprintNumber, "Done"));
 
         // Removing cards without the member
@@ -143,9 +135,7 @@ public class TrelloManager{
         totalHours += getSprintHoursByMember(memberName, sprintNumber)[0];
 
         activities[0] = (double) activitiesCount.size();
-        // activities[1] = Double.valueOf(df.format(totalHours));
         activities[1] = totalHours;
-        // activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
         activities[2] = Utils.getCost(totalHours);
 
         return activities;
@@ -163,9 +153,6 @@ public class TrelloManager{
     public Double[] getNotCommittedActivitiesByMember(String memberName, int sprintNumber) throws IOException {
         Double[] activities = new Double[3];
         double totalHours = 0.0;
-        // Format to only have 2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-
         List<Card> memberMeetingList = trello.getCardsByList(getSprintListByName(sprintNumber, "Meetings"));
 
         // Removing cards without the member
@@ -179,9 +166,7 @@ public class TrelloManager{
 
 
         activities[0] = (double) activitiesCount.size();
-        // activities[1] = Double.valueOf(df.format(totalHours));
         activities[1] = totalHours;
-        // activities[2] = Double.valueOf(df.format(Utils.getCost(totalHours)));
         activities[2] = Utils.getCost(totalHours);
 
         return activities;

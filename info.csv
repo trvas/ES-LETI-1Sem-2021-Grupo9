@@ -1,0 +1,1295 @@
+Hours worked, hours estimated and cost
+SprintNumber,Member,HoursWorked,HoursEstimated,Cost
+1,Gonçalo Rodrigues,5.0,7.0,5.0
+1,Henrique,30.0,23.0,30.0
+1,Paulo Jorge Palma,5.0,7.0,5.0
+1,Tatiana,10.0,12.0,10.0
+1,global,50.0,49.0,50.0
+2,Gonçalo Rodrigues,14.870000000000001,14.0,14.870000000000001
+2,Henrique,20.63,20.0,20.63
+2,Paulo Jorge Palma,12.0,16.0,12.0
+2,Tatiana,6.48,8.0,6.48
+2,global,53.98,58.0,53.98
+3,Gonçalo Rodrigues,0.0,0.0,0.0
+3,Henrique,30.0,45.900000000000006,30.0
+3,Paulo Jorge Palma,8.0,5.0,8.0
+3,Tatiana,10.69,17.0,10.69
+3,global,48.69,67.9,48.69
+
+Committed activities (Done)
+SprintNumber,Member,NumberOfActivities,HoursWorked,Cost
+1,Gonçalo Rodrigues,3.0,5.0,100.0
+1,Henrique,6.0,30.0,600.0
+1,Paulo Jorge Palma,3.0,5.0,100.0
+1,Tatiana,4.0,10.0,200.0
+1,global,16.0,50.0,1000.0
+2,Gonçalo Rodrigues,1.0,14.870000000000001,297.40000000000003
+2,Henrique,1.0,20.63,412.59999999999997
+2,Paulo Jorge Palma,2.0,12.0,240.0
+2,Tatiana,2.0,6.48,129.60000000000002
+2,global,6.0,53.98,1079.6
+3,Gonçalo Rodrigues,0.0,0.0,0.0
+3,Henrique,3.0,30.0,600.0
+3,Paulo Jorge Palma,1.0,8.0,160.0
+3,Tatiana,4.0,10.69,213.79999999999998
+3,global,8.0,48.69,973.8
+
+Activities that weren't committed (Meetings)
+SprintNumber,Member,NumberOfActivities,HoursWorked,Cost
+1,Gonçalo Rodrigues,4.0,7.0,140.0
+1,Henrique,4.0,7.0,140.0
+1,Paulo Jorge Palma,4.0,7.0,140.0
+1,Tatiana,3.0,5.0,100.0
+1,global,15.0,26.0,520.0
+2,Gonçalo Rodrigues,6.0,10.219999999999999,204.39999999999998
+2,Henrique,6.0,10.219999999999999,204.39999999999998
+2,Paulo Jorge Palma,6.0,10.219999999999999,204.39999999999998
+2,Tatiana,6.0,10.219999999999999,204.39999999999998
+2,global,24.0,40.88,817.6
+3,Gonçalo Rodrigues,2.0,1.21,24.2
+3,Henrique,2.0,1.21,24.2
+3,Paulo Jorge Palma,2.0,1.21,24.2
+3,Tatiana,3.0,1.21,24.2
+3,global,9.0,4.84,96.8
+
+Commits per member
+Member,Branch,Commit,Date
+glrss-iscte,ui-features-OLD,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,ui-features-OLD,reformato,2021-10-13
+glrss-iscte,ui-features-OLD,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,ui-features-OLD,Adding stuff,2021-10-18
+glrss-iscte,ui-features-OLD,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,ui-features-OLD,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,ui-features-OLD,JavaDocs and refactoring classes,2021-11-20
+pjspa-iscte,ui-features-OLD,envio calculo horas,2021-10-13
+Henrique-DeSousa,ui-features-OLD,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,ui-features-OLD,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,ui-features-OLD,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+trvas,ui-features-OLD,Initial commit,2021-10-08
+trvas,ui-features-OLD,Added authors to README,2021-10-08
+trvas,ui-features-OLD,intellij added files,2021-10-15
+trvas,ui-features-OLD,intelliJ build,2021-10-15
+trvas,ui-features-OLD,intelliJ build,2021-10-15
+trvas,ui-features-OLD,renaming,2021-10-15
+trvas,ui-features-OLD,added trello4j dependencies,2021-10-15
+trvas,ui-features-OLD,testing trello4j,2021-10-15
+trvas,ui-features-OLD,installed github api,2021-10-15
+trvas,ui-features-OLD,clearing main,2021-10-15
+trvas,ui-features-OLD,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,ui-features-OLD,same as prev,2021-10-15
+trvas,ui-features-OLD,readded javaDoc of extra function,2021-10-15
+glrss-iscte,ui-features,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,ui-features,reformato,2021-10-13
+glrss-iscte,ui-features,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,ui-features,Adding stuff,2021-10-18
+glrss-iscte,ui-features,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,ui-features,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,ui-features,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,ui-features,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+pjspa-iscte,ui-features,envio calculo horas,2021-10-13
+Henrique-DeSousa,ui-features,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,ui-features,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,ui-features,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,ui-features,Added Git constructor,2021-10-28
+Henrique-DeSousa,ui-features,Added Git constructor,2021-10-29
+Henrique-DeSousa,ui-features,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,ui-features,Added Git constructor,2021-10-28
+Henrique-DeSousa,ui-features,Added Git constructor,2021-10-29
+trvas,ui-features,Initial commit,2021-10-08
+trvas,ui-features,Added authors to README,2021-10-08
+trvas,ui-features,intellij added files,2021-10-15
+trvas,ui-features,intelliJ build,2021-10-15
+trvas,ui-features,intelliJ build,2021-10-15
+trvas,ui-features,renaming,2021-10-15
+trvas,ui-features,added trello4j dependencies,2021-10-15
+trvas,ui-features,testing trello4j,2021-10-15
+trvas,ui-features,installed github api,2021-10-15
+trvas,ui-features,clearing main,2021-10-15
+trvas,ui-features,backlog branch,2021-10-15
+trvas,ui-features,testing features,2021-10-15
+trvas,ui-features,getSprintBacklog v1,2021-10-15
+trvas,ui-features,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,ui-features,reorganizing classes,2021-10-15
+trvas,ui-features,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,ui-features,changed the board to get cards from,2021-10-15
+trvas,ui-features,same as prev,2021-10-15
+trvas,ui-features,--,2021-10-15
+trvas,ui-features,readded javaDoc of extra function,2021-10-15
+trvas,ui-features,cleaning classes,2021-10-18
+trvas,ui-features,adding test class and constructor to TrelloManager,2021-10-22
+trvas,ui-features,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,ui-features,merging with main, changing a few details,2021-10-24
+trvas,ui-features,changing syntax,2021-10-24
+trvas,ui-features,changing syntax, removing unnecessary imports,2021-10-24
+trvas,ui-features,cleaning up classes, implementing tests,2021-10-28
+trvas,ui-features,changing the method to match the new trello board changes,2021-11-12
+trvas,ui-features,clearing out the main method,2021-11-12
+trvas,ui-features,updating the getBoardListByName method and test,2021-11-12
+trvas,ui-features,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,ui-features,cleaning the test class,2021-11-12
+trvas,ui-features,Merge branch 'main' into backlog-items,2021-11-12
+trvas,ui-features,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,ui-features,clearing out TrelloManager,2021-11-14
+trvas,ui-features,adding the getSprintCount class + tests,2021-11-14
+trvas,ui-features,fixing warnings,2021-11-20
+trvas,ui-features,backlog branch,2021-10-15
+trvas,ui-features,testing features,2021-10-15
+trvas,ui-features,getSprintBacklog v1,2021-10-15
+trvas,ui-features,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,ui-features,reorganizing classes,2021-10-15
+trvas,ui-features,changed the board to get cards from,2021-10-15
+trvas,ui-features,--,2021-10-15
+trvas,ui-features,cleaning classes,2021-10-18
+trvas,ui-features,adding test class and constructor to TrelloManager,2021-10-22
+trvas,ui-features,merging with main, changing a few details,2021-10-24
+trvas,ui-features,cleaning up classes, implementing tests,2021-10-28
+trvas,ui-features,changing the method to match the new trello board changes,2021-11-12
+trvas,ui-features,clearing out the main method,2021-11-12
+trvas,ui-features,cleaning the test class,2021-11-12
+trvas,ui-features,changing syntax,2021-10-24
+trvas,ui-features,changing syntax, removing unnecessary imports,2021-10-24
+trvas,ui-features,updating the getBoardListByName method and test,2021-11-12
+trvas,ui-features,resolving imports, cleaning trelloManager class,2021-11-12
+glrss-iscte,sprint-cost-OLD,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,sprint-cost-OLD,reformato,2021-10-13
+pjspa-iscte,sprint-cost-OLD,envio calculo horas,2021-10-13
+Henrique-DeSousa,sprint-cost-OLD,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,sprint-cost-OLD,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,sprint-cost-OLD,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,sprint-cost-OLD,Added Git constructor,2021-10-28
+Henrique-DeSousa,sprint-cost-OLD,Added Git constructor,2021-10-29
+Henrique-DeSousa,sprint-cost-OLD,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+trvas,sprint-cost-OLD,Initial commit,2021-10-08
+trvas,sprint-cost-OLD,Added authors to README,2021-10-08
+trvas,sprint-cost-OLD,intellij added files,2021-10-15
+trvas,sprint-cost-OLD,intelliJ build,2021-10-15
+trvas,sprint-cost-OLD,intelliJ build,2021-10-15
+trvas,sprint-cost-OLD,renaming,2021-10-15
+trvas,sprint-cost-OLD,added trello4j dependencies,2021-10-15
+trvas,sprint-cost-OLD,testing trello4j,2021-10-15
+trvas,sprint-cost-OLD,installed github api,2021-10-15
+trvas,sprint-cost-OLD,clearing main,2021-10-15
+trvas,sprint-cost-OLD,backlog branch,2021-10-15
+trvas,sprint-cost-OLD,testing features,2021-10-15
+trvas,sprint-cost-OLD,getSprintBacklog v1,2021-10-15
+trvas,sprint-cost-OLD,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,sprint-cost-OLD,reorganizing classes,2021-10-15
+trvas,sprint-cost-OLD,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,sprint-cost-OLD,changed the board to get cards from,2021-10-15
+trvas,sprint-cost-OLD,same as prev,2021-10-15
+trvas,sprint-cost-OLD,--,2021-10-15
+trvas,sprint-cost-OLD,readded javaDoc of extra function,2021-10-15
+trvas,sprint-cost-OLD,cleaning classes,2021-10-18
+trvas,sprint-cost-OLD,adding test class and constructor to TrelloManager,2021-10-22
+trvas,sprint-cost-OLD,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,sprint-cost-OLD,merging with main, changing a few details,2021-10-24
+trvas,sprint-cost-OLD,changing syntax,2021-10-24
+trvas,sprint-cost-OLD,changing syntax, removing unnecessary imports,2021-10-24
+trvas,sprint-cost-OLD,cleaning up classes, implementing tests,2021-10-28
+trvas,sprint-cost-OLD,changing the method to match the new trello board changes,2021-11-12
+trvas,sprint-cost-OLD,clearing out the main method,2021-11-12
+trvas,sprint-cost-OLD,updating the getBoardListByName method and test,2021-11-12
+trvas,sprint-cost-OLD,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,sprint-cost-OLD,cleaning the test class,2021-11-12
+trvas,sprint-cost-OLD,Merge branch 'main' into backlog-items,2021-11-12
+trvas,sprint-cost-OLD,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,sprint-cost-OLD,clearing out TrelloManager,2021-11-14
+trvas,sprint-cost-OLD,adding the getSprintCount class + tests,2021-11-14
+trvas,sprint-cost-OLD,added methods (getCardHours + getSprintCost)
+missing - javadoc and tests, getting cost,2021-11-20
+trvas,sprint-cost-OLD,starting javaDocs,2021-11-21
+glrss-iscte,sprint-cost,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,sprint-cost,reformato,2021-10-13
+glrss-iscte,sprint-cost,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,sprint-cost,Adding stuff,2021-10-18
+glrss-iscte,sprint-cost,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,sprint-cost,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,sprint-cost,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,sprint-cost,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+glrss-iscte,sprint-cost,JavaDocs and refactoring classes,2021-11-21
+glrss-iscte,sprint-cost,Fixing UI images and some other classes,2021-11-22
+pjspa-iscte,sprint-cost,envio calculo horas,2021-10-13
+pjspa-iscte,sprint-cost,adding get cost,2021-11-21
+pjspa-iscte,sprint-cost,adding get cost,2021-11-21
+Henrique-DeSousa,sprint-cost,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,sprint-cost,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,sprint-cost,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,sprint-cost,Added Git constructor,2021-10-28
+Henrique-DeSousa,sprint-cost,Added Git constructor,2021-10-29
+Henrique-DeSousa,sprint-cost,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,sprint-cost,Added Git constructor,2021-10-28
+Henrique-DeSousa,sprint-cost,Added Git constructor,2021-10-29
+Henrique-DeSousa,sprint-cost,Updating GitManager,2021-11-21
+Henrique-DeSousa,sprint-cost,Added GitManagerTest,2021-11-21
+Henrique-DeSousa,sprint-cost,Deleted portion,2021-11-23
+trvas,sprint-cost,Initial commit,2021-10-08
+trvas,sprint-cost,Added authors to README,2021-10-08
+trvas,sprint-cost,intellij added files,2021-10-15
+trvas,sprint-cost,intelliJ build,2021-10-15
+trvas,sprint-cost,intelliJ build,2021-10-15
+trvas,sprint-cost,renaming,2021-10-15
+trvas,sprint-cost,added trello4j dependencies,2021-10-15
+trvas,sprint-cost,testing trello4j,2021-10-15
+trvas,sprint-cost,installed github api,2021-10-15
+trvas,sprint-cost,clearing main,2021-10-15
+trvas,sprint-cost,backlog branch,2021-10-15
+trvas,sprint-cost,testing features,2021-10-15
+trvas,sprint-cost,getSprintBacklog v1,2021-10-15
+trvas,sprint-cost,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,sprint-cost,reorganizing classes,2021-10-15
+trvas,sprint-cost,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,sprint-cost,changed the board to get cards from,2021-10-15
+trvas,sprint-cost,same as prev,2021-10-15
+trvas,sprint-cost,--,2021-10-15
+trvas,sprint-cost,readded javaDoc of extra function,2021-10-15
+trvas,sprint-cost,cleaning classes,2021-10-18
+trvas,sprint-cost,adding test class and constructor to TrelloManager,2021-10-22
+trvas,sprint-cost,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,sprint-cost,merging with main, changing a few details,2021-10-24
+trvas,sprint-cost,changing syntax,2021-10-24
+trvas,sprint-cost,changing syntax, removing unnecessary imports,2021-10-24
+trvas,sprint-cost,cleaning up classes, implementing tests,2021-10-28
+trvas,sprint-cost,changing the method to match the new trello board changes,2021-11-12
+trvas,sprint-cost,clearing out the main method,2021-11-12
+trvas,sprint-cost,updating the getBoardListByName method and test,2021-11-12
+trvas,sprint-cost,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,sprint-cost,cleaning the test class,2021-11-12
+trvas,sprint-cost,Merge branch 'main' into backlog-items,2021-11-12
+trvas,sprint-cost,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,sprint-cost,clearing out TrelloManager,2021-11-14
+trvas,sprint-cost,adding the getSprintCount class + tests,2021-11-14
+trvas,sprint-cost,fixing warnings,2021-11-20
+trvas,sprint-cost,backlog branch,2021-10-15
+trvas,sprint-cost,testing features,2021-10-15
+trvas,sprint-cost,getSprintBacklog v1,2021-10-15
+trvas,sprint-cost,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,sprint-cost,reorganizing classes,2021-10-15
+trvas,sprint-cost,changed the board to get cards from,2021-10-15
+trvas,sprint-cost,--,2021-10-15
+trvas,sprint-cost,cleaning classes,2021-10-18
+trvas,sprint-cost,adding test class and constructor to TrelloManager,2021-10-22
+trvas,sprint-cost,merging with main, changing a few details,2021-10-24
+trvas,sprint-cost,cleaning up classes, implementing tests,2021-10-28
+trvas,sprint-cost,changing the method to match the new trello board changes,2021-11-12
+trvas,sprint-cost,clearing out the main method,2021-11-12
+trvas,sprint-cost,cleaning the test class,2021-11-12
+trvas,sprint-cost,changing syntax,2021-10-24
+trvas,sprint-cost,changing syntax, removing unnecessary imports,2021-10-24
+trvas,sprint-cost,updating the getBoardListByName method and test,2021-11-12
+trvas,sprint-cost,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,sprint-cost,Merge pull request #7 from trvas/ui-features-2
+
+UI features,2021-11-21
+trvas,sprint-cost,re-adding trelloManager classes + tests.,2021-11-21
+trvas,sprint-cost,renaming packages,2021-11-21
+trvas,sprint-cost,fixing warnings,2021-11-21
+trvas,sprint-cost,adding javadoc, fixing warnings,2021-11-21
+trvas,sprint-cost,pasting methods onto new updated sprint cost branch,2021-11-21
+trvas,sprint-cost,small updates,2021-11-22
+trvas,sprint-cost,changing up classes, adding tests, fixing codesmells and other warnings,2021-11-23
+trvas,sprint-cost,adding getsprintcostbymember + tests,2021-11-23
+trvas,sprint-cost,Merge branch 'main' into sprint-cost,2021-11-23
+trvas,sprint-cost,adding classes to get sprint hours + estimated and same thing but by member, plus tests,2021-11-23
+trvas,sprint-cost,Merge remote-tracking branch 'origin/sprint-cost' into sprint-cost,2021-11-23
+glrss-iscte,meetings-text,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,meetings-text,reformato,2021-10-13
+glrss-iscte,meetings-text,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,meetings-text,Adding stuff,2021-10-18
+glrss-iscte,meetings-text,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,meetings-text,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,meetings-text,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,meetings-text,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+pjspa-iscte,meetings-text,envio calculo horas,2021-10-13
+Henrique-DeSousa,meetings-text,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,meetings-text,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,meetings-text,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,meetings-text,Added Git constructor,2021-10-28
+Henrique-DeSousa,meetings-text,Added Git constructor,2021-10-29
+Henrique-DeSousa,meetings-text,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,meetings-text,Added Git constructor,2021-10-28
+Henrique-DeSousa,meetings-text,Added Git constructor,2021-10-29
+trvas,meetings-text,Initial commit,2021-10-08
+trvas,meetings-text,Added authors to README,2021-10-08
+trvas,meetings-text,intellij added files,2021-10-15
+trvas,meetings-text,intelliJ build,2021-10-15
+trvas,meetings-text,intelliJ build,2021-10-15
+trvas,meetings-text,renaming,2021-10-15
+trvas,meetings-text,added trello4j dependencies,2021-10-15
+trvas,meetings-text,testing trello4j,2021-10-15
+trvas,meetings-text,installed github api,2021-10-15
+trvas,meetings-text,clearing main,2021-10-15
+trvas,meetings-text,backlog branch,2021-10-15
+trvas,meetings-text,testing features,2021-10-15
+trvas,meetings-text,getSprintBacklog v1,2021-10-15
+trvas,meetings-text,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,meetings-text,reorganizing classes,2021-10-15
+trvas,meetings-text,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,meetings-text,changed the board to get cards from,2021-10-15
+trvas,meetings-text,same as prev,2021-10-15
+trvas,meetings-text,--,2021-10-15
+trvas,meetings-text,readded javaDoc of extra function,2021-10-15
+trvas,meetings-text,cleaning classes,2021-10-18
+trvas,meetings-text,adding test class and constructor to TrelloManager,2021-10-22
+trvas,meetings-text,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,meetings-text,merging with main, changing a few details,2021-10-24
+trvas,meetings-text,changing syntax,2021-10-24
+trvas,meetings-text,changing syntax, removing unnecessary imports,2021-10-24
+trvas,meetings-text,cleaning up classes, implementing tests,2021-10-28
+trvas,meetings-text,changing the method to match the new trello board changes,2021-11-12
+trvas,meetings-text,clearing out the main method,2021-11-12
+trvas,meetings-text,updating the getBoardListByName method and test,2021-11-12
+trvas,meetings-text,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,meetings-text,cleaning the test class,2021-11-12
+trvas,meetings-text,Merge branch 'main' into backlog-items,2021-11-12
+trvas,meetings-text,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,meetings-text,creating branch,2021-11-14
+trvas,meetings-text,testing classes,2021-11-14
+trvas,meetings-text,clearing out TrelloManager,2021-11-14
+trvas,meetings-text,creating the getMeetings class,2021-11-14
+trvas,meetings-text,adding the getSprintCount class + tests,2021-11-14
+trvas,meetings-text,new tests,2021-11-14
+trvas,meetings-text,added tests,2021-11-19
+trvas,meetings-text,Merge branch 'main' into meetings-text,2021-11-19
+trvas,meetings-text,fixing warnings,2021-11-20
+trvas,meetings-text,backlog branch,2021-10-15
+trvas,meetings-text,testing features,2021-10-15
+trvas,meetings-text,getSprintBacklog v1,2021-10-15
+trvas,meetings-text,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,meetings-text,reorganizing classes,2021-10-15
+trvas,meetings-text,changed the board to get cards from,2021-10-15
+trvas,meetings-text,--,2021-10-15
+trvas,meetings-text,cleaning classes,2021-10-18
+trvas,meetings-text,adding test class and constructor to TrelloManager,2021-10-22
+trvas,meetings-text,merging with main, changing a few details,2021-10-24
+trvas,meetings-text,cleaning up classes, implementing tests,2021-10-28
+trvas,meetings-text,changing the method to match the new trello board changes,2021-11-12
+trvas,meetings-text,clearing out the main method,2021-11-12
+trvas,meetings-text,cleaning the test class,2021-11-12
+trvas,meetings-text,changing syntax,2021-10-24
+trvas,meetings-text,changing syntax, removing unnecessary imports,2021-10-24
+trvas,meetings-text,updating the getBoardListByName method and test,2021-11-12
+trvas,meetings-text,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,meetings-text,Merge pull request #6 
+
+Pushing the graphic interface to the master branch.,2021-11-21
+trvas,meetings-text,Merge branch 'main' into meetings-text,2021-11-21
+glrss-iscte,main,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,main,reformato,2021-10-13
+glrss-iscte,main,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,main,Adding stuff,2021-10-18
+glrss-iscte,main,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,main,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,main,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,main,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+glrss-iscte,main,JavaDocs and refactoring classes,2021-11-21
+glrss-iscte,main,Fixing UI images and some other classes,2021-11-22
+pjspa-iscte,main,envio calculo horas,2021-10-13
+pjspa-iscte,main,adding get cost,2021-11-21
+pjspa-iscte,main,adding get cost,2021-11-21
+Henrique-DeSousa,main,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,main,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,main,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,main,Added Git constructor,2021-10-28
+Henrique-DeSousa,main,Added Git constructor,2021-10-29
+Henrique-DeSousa,main,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,main,Added Git constructor,2021-10-28
+Henrique-DeSousa,main,Added Git constructor,2021-10-29
+Henrique-DeSousa,main,Updating GitManager,2021-11-21
+Henrique-DeSousa,main,Added GitManagerTest,2021-11-21
+Henrique-DeSousa,main,Deleted portion,2021-11-23
+Henrique-DeSousa,main,Merge pull request #10 from trvas/sprint-cost
+
+Cost + Hours of each SPRINT,2021-11-23
+Henrique-DeSousa,main,Merge pull request #11 from trvas/activities
+
+Commited + Not Commited Activities,2021-11-27
+Henrique-DeSousa,main,git literally more drunk than a male fruit fly,2021-12-04
+Henrique-DeSousa,main,double up on before,2021-12-04
+Henrique-DeSousa,main,at this point intellij is drunk,2021-12-04
+Henrique-DeSousa,main,Updated tests,2021-12-04
+Henrique-DeSousa,main,Updated GitManager,2021-12-04
+Henrique-DeSousa,main,removed token,2021-12-04
+Henrique-DeSousa,main,removed token,2021-12-04
+Henrique-DeSousa,main,wrong place to commit,2021-12-04
+Henrique-DeSousa,main,fixed dependencies,2021-12-04
+Henrique-DeSousa,main,updated,2021-12-04
+Henrique-DeSousa,main,Updated Code,2021-12-05
+trvas,main,Initial commit,2021-10-08
+trvas,main,Added authors to README,2021-10-08
+trvas,main,intellij added files,2021-10-15
+trvas,main,intelliJ build,2021-10-15
+trvas,main,intelliJ build,2021-10-15
+trvas,main,renaming,2021-10-15
+trvas,main,added trello4j dependencies,2021-10-15
+trvas,main,testing trello4j,2021-10-15
+trvas,main,installed github api,2021-10-15
+trvas,main,clearing main,2021-10-15
+trvas,main,backlog branch,2021-10-15
+trvas,main,testing features,2021-10-15
+trvas,main,getSprintBacklog v1,2021-10-15
+trvas,main,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,main,reorganizing classes,2021-10-15
+trvas,main,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,main,changed the board to get cards from,2021-10-15
+trvas,main,same as prev,2021-10-15
+trvas,main,--,2021-10-15
+trvas,main,readded javaDoc of extra function,2021-10-15
+trvas,main,cleaning classes,2021-10-18
+trvas,main,adding test class and constructor to TrelloManager,2021-10-22
+trvas,main,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,main,merging with main, changing a few details,2021-10-24
+trvas,main,changing syntax,2021-10-24
+trvas,main,changing syntax, removing unnecessary imports,2021-10-24
+trvas,main,cleaning up classes, implementing tests,2021-10-28
+trvas,main,changing the method to match the new trello board changes,2021-11-12
+trvas,main,clearing out the main method,2021-11-12
+trvas,main,updating the getBoardListByName method and test,2021-11-12
+trvas,main,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,main,cleaning the test class,2021-11-12
+trvas,main,Merge branch 'main' into backlog-items,2021-11-12
+trvas,main,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,main,clearing out TrelloManager,2021-11-14
+trvas,main,adding the getSprintCount class + tests,2021-11-14
+trvas,main,fixing warnings,2021-11-20
+trvas,main,backlog branch,2021-10-15
+trvas,main,testing features,2021-10-15
+trvas,main,getSprintBacklog v1,2021-10-15
+trvas,main,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,main,reorganizing classes,2021-10-15
+trvas,main,changed the board to get cards from,2021-10-15
+trvas,main,--,2021-10-15
+trvas,main,cleaning classes,2021-10-18
+trvas,main,adding test class and constructor to TrelloManager,2021-10-22
+trvas,main,merging with main, changing a few details,2021-10-24
+trvas,main,cleaning up classes, implementing tests,2021-10-28
+trvas,main,changing the method to match the new trello board changes,2021-11-12
+trvas,main,clearing out the main method,2021-11-12
+trvas,main,cleaning the test class,2021-11-12
+trvas,main,changing syntax,2021-10-24
+trvas,main,changing syntax, removing unnecessary imports,2021-10-24
+trvas,main,updating the getBoardListByName method and test,2021-11-12
+trvas,main,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,main,Merge pull request #7 from trvas/ui-features-2
+
+UI features,2021-11-21
+trvas,main,re-adding trelloManager classes + tests.,2021-11-21
+trvas,main,renaming packages,2021-11-21
+trvas,main,fixing warnings,2021-11-21
+trvas,main,adding javadoc, fixing warnings,2021-11-21
+trvas,main,pasting methods onto new updated sprint cost branch,2021-11-21
+trvas,main,small updates,2021-11-22
+trvas,main,changing up classes, adding tests, fixing codesmells and other warnings,2021-11-23
+trvas,main,adding getsprintcostbymember + tests,2021-11-23
+trvas,main,Merge branch 'main' into sprint-cost,2021-11-23
+trvas,main,adding classes to get sprint hours + estimated and same thing but by member, plus tests,2021-11-23
+trvas,main,Merge remote-tracking branch 'origin/sprint-cost' into sprint-cost,2021-11-23
+trvas,main,fixed tests,2021-11-26
+trvas,main,adding the two classes (for committed activities and for not committed activities), javadocs and tests. plus some changes.,2021-11-26
+trvas,main,fixing trellomanager,2021-11-27
+trvas,main,getting rid of static in methods,2021-11-27
+trvas,main,adding new gitmanager to main,2021-12-04
+trvas,main,small fixes,2021-12-04
+trvas,main,small fixes,2021-12-04
+trvas,main,small fixes,2021-12-04
+trvas,main,Merge remote-tracking branch 'origin/main'
+
+# Conflicts:
+#	src/main/java/es/grupo9/GitManager.java
+#	src/test/java/es/grupo9/GitManagerTest.java,2021-12-04
+trvas,main,Merge remote-tracking branch 'origin/main',2021-12-04
+trvas,main,Merge remote-tracking branch 'origin/main',2021-12-04
+trvas,main,small fixes (thanks nikolai!),2021-12-04
+trvas,main,added export CSV method.
+small changes to gitmanager.,2021-12-04
+trvas,main,small fixes. adding getDate,2021-12-05
+trvas,main,adding two new methods,2021-12-06
+glrss-iscte,backlog-items,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,backlog-items,reformato,2021-10-13
+pjspa-iscte,backlog-items,envio calculo horas,2021-10-13
+Henrique-DeSousa,backlog-items,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,backlog-items,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,backlog-items,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,backlog-items,Added Git constructor,2021-10-28
+Henrique-DeSousa,backlog-items,Added Git constructor,2021-10-29
+trvas,backlog-items,Initial commit,2021-10-08
+trvas,backlog-items,Added authors to README,2021-10-08
+trvas,backlog-items,intellij added files,2021-10-15
+trvas,backlog-items,intelliJ build,2021-10-15
+trvas,backlog-items,intelliJ build,2021-10-15
+trvas,backlog-items,renaming,2021-10-15
+trvas,backlog-items,added trello4j dependencies,2021-10-15
+trvas,backlog-items,testing trello4j,2021-10-15
+trvas,backlog-items,installed github api,2021-10-15
+trvas,backlog-items,clearing main,2021-10-15
+trvas,backlog-items,backlog branch,2021-10-15
+trvas,backlog-items,testing features,2021-10-15
+trvas,backlog-items,getSprintBacklog v1,2021-10-15
+trvas,backlog-items,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,backlog-items,reorganizing classes,2021-10-15
+trvas,backlog-items,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,backlog-items,changed the board to get cards from,2021-10-15
+trvas,backlog-items,same as prev,2021-10-15
+trvas,backlog-items,--,2021-10-15
+trvas,backlog-items,readded javaDoc of extra function,2021-10-15
+trvas,backlog-items,cleaning classes,2021-10-18
+trvas,backlog-items,adding test class and constructor to TrelloManager,2021-10-22
+trvas,backlog-items,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,backlog-items,merging with main, changing a few details,2021-10-24
+trvas,backlog-items,changing syntax,2021-10-24
+trvas,backlog-items,changing syntax, removing unnecessary imports,2021-10-24
+trvas,backlog-items,cleaning up classes, implementing tests,2021-10-28
+trvas,backlog-items,changing the method to match the new trello board changes,2021-11-12
+trvas,backlog-items,clearing out the main method,2021-11-12
+trvas,backlog-items,updating the getBoardListByName method and test,2021-11-12
+trvas,backlog-items,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,backlog-items,cleaning the test class,2021-11-12
+trvas,backlog-items,Merge branch 'main' into backlog-items,2021-11-12
+glrss-iscte,activities,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,activities,reformato,2021-10-13
+glrss-iscte,activities,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,activities,Adding stuff,2021-10-18
+glrss-iscte,activities,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,activities,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,activities,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,activities,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+glrss-iscte,activities,JavaDocs and refactoring classes,2021-11-21
+glrss-iscte,activities,Fixing UI images and some other classes,2021-11-22
+pjspa-iscte,activities,envio calculo horas,2021-10-13
+pjspa-iscte,activities,adding get cost,2021-11-21
+pjspa-iscte,activities,adding get cost,2021-11-21
+Henrique-DeSousa,activities,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,activities,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,activities,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,activities,Added Git constructor,2021-10-28
+Henrique-DeSousa,activities,Added Git constructor,2021-10-29
+Henrique-DeSousa,activities,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,activities,Added Git constructor,2021-10-28
+Henrique-DeSousa,activities,Added Git constructor,2021-10-29
+Henrique-DeSousa,activities,Updating GitManager,2021-11-21
+Henrique-DeSousa,activities,Added GitManagerTest,2021-11-21
+Henrique-DeSousa,activities,Deleted portion,2021-11-23
+Henrique-DeSousa,activities,Merge pull request #10 from trvas/sprint-cost
+
+Cost + Hours of each SPRINT,2021-11-23
+trvas,activities,Initial commit,2021-10-08
+trvas,activities,Added authors to README,2021-10-08
+trvas,activities,intellij added files,2021-10-15
+trvas,activities,intelliJ build,2021-10-15
+trvas,activities,intelliJ build,2021-10-15
+trvas,activities,renaming,2021-10-15
+trvas,activities,added trello4j dependencies,2021-10-15
+trvas,activities,testing trello4j,2021-10-15
+trvas,activities,installed github api,2021-10-15
+trvas,activities,clearing main,2021-10-15
+trvas,activities,backlog branch,2021-10-15
+trvas,activities,testing features,2021-10-15
+trvas,activities,getSprintBacklog v1,2021-10-15
+trvas,activities,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,activities,reorganizing classes,2021-10-15
+trvas,activities,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,activities,changed the board to get cards from,2021-10-15
+trvas,activities,same as prev,2021-10-15
+trvas,activities,--,2021-10-15
+trvas,activities,readded javaDoc of extra function,2021-10-15
+trvas,activities,cleaning classes,2021-10-18
+trvas,activities,adding test class and constructor to TrelloManager,2021-10-22
+trvas,activities,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,activities,merging with main, changing a few details,2021-10-24
+trvas,activities,changing syntax,2021-10-24
+trvas,activities,changing syntax, removing unnecessary imports,2021-10-24
+trvas,activities,cleaning up classes, implementing tests,2021-10-28
+trvas,activities,changing the method to match the new trello board changes,2021-11-12
+trvas,activities,clearing out the main method,2021-11-12
+trvas,activities,updating the getBoardListByName method and test,2021-11-12
+trvas,activities,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,activities,cleaning the test class,2021-11-12
+trvas,activities,Merge branch 'main' into backlog-items,2021-11-12
+trvas,activities,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,activities,clearing out TrelloManager,2021-11-14
+trvas,activities,adding the getSprintCount class + tests,2021-11-14
+trvas,activities,fixing warnings,2021-11-20
+trvas,activities,backlog branch,2021-10-15
+trvas,activities,testing features,2021-10-15
+trvas,activities,getSprintBacklog v1,2021-10-15
+trvas,activities,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,activities,reorganizing classes,2021-10-15
+trvas,activities,changed the board to get cards from,2021-10-15
+trvas,activities,--,2021-10-15
+trvas,activities,cleaning classes,2021-10-18
+trvas,activities,adding test class and constructor to TrelloManager,2021-10-22
+trvas,activities,merging with main, changing a few details,2021-10-24
+trvas,activities,cleaning up classes, implementing tests,2021-10-28
+trvas,activities,changing the method to match the new trello board changes,2021-11-12
+trvas,activities,clearing out the main method,2021-11-12
+trvas,activities,cleaning the test class,2021-11-12
+trvas,activities,changing syntax,2021-10-24
+trvas,activities,changing syntax, removing unnecessary imports,2021-10-24
+trvas,activities,updating the getBoardListByName method and test,2021-11-12
+trvas,activities,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,activities,Merge pull request #7 from trvas/ui-features-2
+
+UI features,2021-11-21
+trvas,activities,re-adding trelloManager classes + tests.,2021-11-21
+trvas,activities,renaming packages,2021-11-21
+trvas,activities,fixing warnings,2021-11-21
+trvas,activities,adding javadoc, fixing warnings,2021-11-21
+trvas,activities,pasting methods onto new updated sprint cost branch,2021-11-21
+trvas,activities,small updates,2021-11-22
+trvas,activities,changing up classes, adding tests, fixing codesmells and other warnings,2021-11-23
+trvas,activities,adding getsprintcostbymember + tests,2021-11-23
+trvas,activities,Merge branch 'main' into sprint-cost,2021-11-23
+trvas,activities,adding classes to get sprint hours + estimated and same thing but by member, plus tests,2021-11-23
+trvas,activities,Merge remote-tracking branch 'origin/sprint-cost' into sprint-cost,2021-11-23
+trvas,activities,fixed tests,2021-11-26
+trvas,activities,adding the two classes (for committed activities and for not committed activities), javadocs and tests. plus some changes.,2021-11-26
+trvas,activities,deleting main,2021-11-27
+glrss-iscte,UI-connecting,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,UI-connecting,reformato,2021-10-13
+glrss-iscte,UI-connecting,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,UI-connecting,Adding stuff,2021-10-18
+glrss-iscte,UI-connecting,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,UI-connecting,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,UI-connecting,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,UI-connecting,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+glrss-iscte,UI-connecting,JavaDocs and refactoring classes,2021-11-21
+glrss-iscte,UI-connecting,Fixing UI images and some other classes,2021-11-22
+glrss-iscte,UI-connecting,Testing Input,2021-11-27
+glrss-iscte,UI-connecting,Connecting UI to Trello,2021-12-01
+glrss-iscte,UI-connecting,Fixing Some stuff,2021-12-02
+glrss-iscte,UI-connecting,Added 2 new PieCharts,2021-12-03
+glrss-iscte,UI-connecting,Added 2 new PieCharts,2021-12-04
+glrss-iscte,UI-connecting,Reformat + SliderCost,2021-12-04
+glrss-iscte,UI-connecting,Reformat + SliderCost,2021-12-05
+glrss-iscte,UI-connecting,CommitsTable,2021-12-05
+glrss-iscte,UI-connecting,TagsTable and other minor stuff,2021-12-06
+glrss-iscte,UI-connecting,.CSV,2021-12-06
+glrss-iscte,UI-connecting,Sprint-2 Done,2021-12-06
+pjspa-iscte,UI-connecting,envio calculo horas,2021-10-13
+pjspa-iscte,UI-connecting,adding get cost,2021-11-21
+pjspa-iscte,UI-connecting,adding get cost,2021-11-21
+Henrique-DeSousa,UI-connecting,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,UI-connecting,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,UI-connecting,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,UI-connecting,Added Git constructor,2021-10-28
+Henrique-DeSousa,UI-connecting,Added Git constructor,2021-10-29
+Henrique-DeSousa,UI-connecting,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,UI-connecting,Added Git constructor,2021-10-28
+Henrique-DeSousa,UI-connecting,Added Git constructor,2021-10-29
+Henrique-DeSousa,UI-connecting,Updating GitManager,2021-11-21
+Henrique-DeSousa,UI-connecting,Added GitManagerTest,2021-11-21
+trvas,UI-connecting,Initial commit,2021-10-08
+trvas,UI-connecting,Added authors to README,2021-10-08
+trvas,UI-connecting,intellij added files,2021-10-15
+trvas,UI-connecting,intelliJ build,2021-10-15
+trvas,UI-connecting,intelliJ build,2021-10-15
+trvas,UI-connecting,renaming,2021-10-15
+trvas,UI-connecting,added trello4j dependencies,2021-10-15
+trvas,UI-connecting,testing trello4j,2021-10-15
+trvas,UI-connecting,installed github api,2021-10-15
+trvas,UI-connecting,clearing main,2021-10-15
+trvas,UI-connecting,backlog branch,2021-10-15
+trvas,UI-connecting,testing features,2021-10-15
+trvas,UI-connecting,getSprintBacklog v1,2021-10-15
+trvas,UI-connecting,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,UI-connecting,reorganizing classes,2021-10-15
+trvas,UI-connecting,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,UI-connecting,changed the board to get cards from,2021-10-15
+trvas,UI-connecting,same as prev,2021-10-15
+trvas,UI-connecting,--,2021-10-15
+trvas,UI-connecting,readded javaDoc of extra function,2021-10-15
+trvas,UI-connecting,cleaning classes,2021-10-18
+trvas,UI-connecting,adding test class and constructor to TrelloManager,2021-10-22
+trvas,UI-connecting,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,UI-connecting,merging with main, changing a few details,2021-10-24
+trvas,UI-connecting,changing syntax,2021-10-24
+trvas,UI-connecting,changing syntax, removing unnecessary imports,2021-10-24
+trvas,UI-connecting,cleaning up classes, implementing tests,2021-10-28
+trvas,UI-connecting,changing the method to match the new trello board changes,2021-11-12
+trvas,UI-connecting,clearing out the main method,2021-11-12
+trvas,UI-connecting,updating the getBoardListByName method and test,2021-11-12
+trvas,UI-connecting,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,UI-connecting,cleaning the test class,2021-11-12
+trvas,UI-connecting,Merge branch 'main' into backlog-items,2021-11-12
+trvas,UI-connecting,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,UI-connecting,clearing out TrelloManager,2021-11-14
+trvas,UI-connecting,adding the getSprintCount class + tests,2021-11-14
+trvas,UI-connecting,fixing warnings,2021-11-20
+trvas,UI-connecting,backlog branch,2021-10-15
+trvas,UI-connecting,testing features,2021-10-15
+trvas,UI-connecting,getSprintBacklog v1,2021-10-15
+trvas,UI-connecting,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,UI-connecting,reorganizing classes,2021-10-15
+trvas,UI-connecting,changed the board to get cards from,2021-10-15
+trvas,UI-connecting,--,2021-10-15
+trvas,UI-connecting,cleaning classes,2021-10-18
+trvas,UI-connecting,adding test class and constructor to TrelloManager,2021-10-22
+trvas,UI-connecting,merging with main, changing a few details,2021-10-24
+trvas,UI-connecting,cleaning up classes, implementing tests,2021-10-28
+trvas,UI-connecting,changing the method to match the new trello board changes,2021-11-12
+trvas,UI-connecting,clearing out the main method,2021-11-12
+trvas,UI-connecting,cleaning the test class,2021-11-12
+trvas,UI-connecting,changing syntax,2021-10-24
+trvas,UI-connecting,changing syntax, removing unnecessary imports,2021-10-24
+trvas,UI-connecting,updating the getBoardListByName method and test,2021-11-12
+trvas,UI-connecting,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,UI-connecting,Merge pull request #7 from trvas/ui-features-2
+
+UI features,2021-11-21
+trvas,UI-connecting,re-adding trelloManager classes + tests.,2021-11-21
+trvas,UI-connecting,renaming packages,2021-11-21
+trvas,UI-connecting,fixing warnings,2021-11-21
+trvas,UI-connecting,adding javadoc, fixing warnings,2021-11-21
+trvas,UI-connecting,testing tables,2021-12-02
+trvas,UI-connecting,adding sprint 1 tables,2021-12-02
+trvas,UI-connecting,creating a setTableItems method,2021-12-02
+trvas,UI-connecting,small fixes,2021-12-02
+trvas,UI-connecting,small fixes,2021-12-02
+trvas,UI-connecting,small fixes,2021-12-02
+trvas,UI-connecting,small fixes to TrelloManager,2021-12-02
+trvas,UI-connecting,adding hours sum for global stats. deleting global functions in trello manager. adding setprice.,2021-12-03
+trvas,UI-connecting,small fixes, updating gitmanager class,2021-12-04
+trvas,UI-connecting,adding ids and sprint dates,2021-12-06
+trvas,UI-connecting,adding ids,2021-12-06
+trvas,UI-connecting,test,2021-12-06
+trvas,UI-connecting,changing layouts,2021-12-06
+trvas,UI-connecting,adding sprint 3 and javadoc.,2021-12-07
+trvas,UI-connecting,small fixes,2021-12-07
+glrss-iscte,Sprint_date,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,Sprint_date,reformato,2021-10-13
+glrss-iscte,Sprint_date,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,Sprint_date,Adding stuff,2021-10-18
+glrss-iscte,Sprint_date,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,Sprint_date,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,Sprint_date,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,Sprint_date,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+glrss-iscte,Sprint_date,JavaDocs and refactoring classes,2021-11-21
+glrss-iscte,Sprint_date,Fixing UI images and some other classes,2021-11-22
+pjspa-iscte,Sprint_date,envio calculo horas,2021-10-13
+pjspa-iscte,Sprint_date,adding get cost,2021-11-21
+pjspa-iscte,Sprint_date,adding get cost,2021-11-21
+Henrique-DeSousa,Sprint_date,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,Sprint_date,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,Sprint_date,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,Sprint_date,Added Git constructor,2021-10-28
+Henrique-DeSousa,Sprint_date,Added Git constructor,2021-10-29
+Henrique-DeSousa,Sprint_date,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,Sprint_date,Added Git constructor,2021-10-28
+Henrique-DeSousa,Sprint_date,Added Git constructor,2021-10-29
+Henrique-DeSousa,Sprint_date,Updating GitManager,2021-11-21
+Henrique-DeSousa,Sprint_date,Added GitManagerTest,2021-11-21
+trvas,Sprint_date,Initial commit,2021-10-08
+trvas,Sprint_date,Added authors to README,2021-10-08
+trvas,Sprint_date,intellij added files,2021-10-15
+trvas,Sprint_date,intelliJ build,2021-10-15
+trvas,Sprint_date,intelliJ build,2021-10-15
+trvas,Sprint_date,renaming,2021-10-15
+trvas,Sprint_date,added trello4j dependencies,2021-10-15
+trvas,Sprint_date,testing trello4j,2021-10-15
+trvas,Sprint_date,installed github api,2021-10-15
+trvas,Sprint_date,clearing main,2021-10-15
+trvas,Sprint_date,backlog branch,2021-10-15
+trvas,Sprint_date,testing features,2021-10-15
+trvas,Sprint_date,getSprintBacklog v1,2021-10-15
+trvas,Sprint_date,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,Sprint_date,reorganizing classes,2021-10-15
+trvas,Sprint_date,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,Sprint_date,changed the board to get cards from,2021-10-15
+trvas,Sprint_date,same as prev,2021-10-15
+trvas,Sprint_date,--,2021-10-15
+trvas,Sprint_date,readded javaDoc of extra function,2021-10-15
+trvas,Sprint_date,cleaning classes,2021-10-18
+trvas,Sprint_date,adding test class and constructor to TrelloManager,2021-10-22
+trvas,Sprint_date,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,Sprint_date,merging with main, changing a few details,2021-10-24
+trvas,Sprint_date,changing syntax,2021-10-24
+trvas,Sprint_date,changing syntax, removing unnecessary imports,2021-10-24
+trvas,Sprint_date,cleaning up classes, implementing tests,2021-10-28
+trvas,Sprint_date,changing the method to match the new trello board changes,2021-11-12
+trvas,Sprint_date,clearing out the main method,2021-11-12
+trvas,Sprint_date,updating the getBoardListByName method and test,2021-11-12
+trvas,Sprint_date,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,Sprint_date,cleaning the test class,2021-11-12
+trvas,Sprint_date,Merge branch 'main' into backlog-items,2021-11-12
+trvas,Sprint_date,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,Sprint_date,clearing out TrelloManager,2021-11-14
+trvas,Sprint_date,adding the getSprintCount class + tests,2021-11-14
+trvas,Sprint_date,fixing warnings,2021-11-20
+trvas,Sprint_date,backlog branch,2021-10-15
+trvas,Sprint_date,testing features,2021-10-15
+trvas,Sprint_date,getSprintBacklog v1,2021-10-15
+trvas,Sprint_date,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,Sprint_date,reorganizing classes,2021-10-15
+trvas,Sprint_date,changed the board to get cards from,2021-10-15
+trvas,Sprint_date,--,2021-10-15
+trvas,Sprint_date,cleaning classes,2021-10-18
+trvas,Sprint_date,adding test class and constructor to TrelloManager,2021-10-22
+trvas,Sprint_date,merging with main, changing a few details,2021-10-24
+trvas,Sprint_date,cleaning up classes, implementing tests,2021-10-28
+trvas,Sprint_date,changing the method to match the new trello board changes,2021-11-12
+trvas,Sprint_date,clearing out the main method,2021-11-12
+trvas,Sprint_date,cleaning the test class,2021-11-12
+trvas,Sprint_date,changing syntax,2021-10-24
+trvas,Sprint_date,changing syntax, removing unnecessary imports,2021-10-24
+trvas,Sprint_date,updating the getBoardListByName method and test,2021-11-12
+trvas,Sprint_date,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,Sprint_date,Merge pull request #7 from trvas/ui-features-2
+
+UI features,2021-11-21
+trvas,Sprint_date,re-adding trelloManager classes + tests.,2021-11-21
+trvas,Sprint_date,renaming packages,2021-11-21
+trvas,Sprint_date,fixing warnings,2021-11-21
+trvas,Sprint_date,adding javadoc, fixing warnings,2021-11-21
+glrss-iscte,Java_Doc,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,Java_Doc,reformato,2021-10-13
+glrss-iscte,Java_Doc,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,Java_Doc,Adding stuff,2021-10-18
+glrss-iscte,Java_Doc,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,Java_Doc,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,Java_Doc,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,Java_Doc,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+glrss-iscte,Java_Doc,JavaDocs and refactoring classes,2021-11-21
+glrss-iscte,Java_Doc,Fixing UI images and some other classes,2021-11-22
+pjspa-iscte,Java_Doc,envio calculo horas,2021-10-13
+pjspa-iscte,Java_Doc,adding get cost,2021-11-21
+pjspa-iscte,Java_Doc,adding get cost,2021-11-21
+pjspa-iscte,Java_Doc,class,2021-11-26
+pjspa-iscte,Java_Doc,class,2021-11-29
+pjspa-iscte,Java_Doc,class,2021-11-30
+pjspa-iscte,Java_Doc,class,2021-12-03
+pjspa-iscte,Java_Doc,class,2021-12-03
+Henrique-DeSousa,Java_Doc,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,Java_Doc,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,Java_Doc,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,Java_Doc,Added Git constructor,2021-10-28
+Henrique-DeSousa,Java_Doc,Added Git constructor,2021-10-29
+Henrique-DeSousa,Java_Doc,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,Java_Doc,Added Git constructor,2021-10-28
+Henrique-DeSousa,Java_Doc,Added Git constructor,2021-10-29
+Henrique-DeSousa,Java_Doc,Updating GitManager,2021-11-21
+Henrique-DeSousa,Java_Doc,Added GitManagerTest,2021-11-21
+trvas,Java_Doc,Initial commit,2021-10-08
+trvas,Java_Doc,Added authors to README,2021-10-08
+trvas,Java_Doc,intellij added files,2021-10-15
+trvas,Java_Doc,intelliJ build,2021-10-15
+trvas,Java_Doc,intelliJ build,2021-10-15
+trvas,Java_Doc,renaming,2021-10-15
+trvas,Java_Doc,added trello4j dependencies,2021-10-15
+trvas,Java_Doc,testing trello4j,2021-10-15
+trvas,Java_Doc,installed github api,2021-10-15
+trvas,Java_Doc,clearing main,2021-10-15
+trvas,Java_Doc,backlog branch,2021-10-15
+trvas,Java_Doc,testing features,2021-10-15
+trvas,Java_Doc,getSprintBacklog v1,2021-10-15
+trvas,Java_Doc,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,Java_Doc,reorganizing classes,2021-10-15
+trvas,Java_Doc,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,Java_Doc,changed the board to get cards from,2021-10-15
+trvas,Java_Doc,same as prev,2021-10-15
+trvas,Java_Doc,--,2021-10-15
+trvas,Java_Doc,readded javaDoc of extra function,2021-10-15
+trvas,Java_Doc,cleaning classes,2021-10-18
+trvas,Java_Doc,adding test class and constructor to TrelloManager,2021-10-22
+trvas,Java_Doc,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,Java_Doc,merging with main, changing a few details,2021-10-24
+trvas,Java_Doc,changing syntax,2021-10-24
+trvas,Java_Doc,changing syntax, removing unnecessary imports,2021-10-24
+trvas,Java_Doc,cleaning up classes, implementing tests,2021-10-28
+trvas,Java_Doc,changing the method to match the new trello board changes,2021-11-12
+trvas,Java_Doc,clearing out the main method,2021-11-12
+trvas,Java_Doc,updating the getBoardListByName method and test,2021-11-12
+trvas,Java_Doc,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,Java_Doc,cleaning the test class,2021-11-12
+trvas,Java_Doc,Merge branch 'main' into backlog-items,2021-11-12
+trvas,Java_Doc,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,Java_Doc,clearing out TrelloManager,2021-11-14
+trvas,Java_Doc,adding the getSprintCount class + tests,2021-11-14
+trvas,Java_Doc,fixing warnings,2021-11-20
+trvas,Java_Doc,backlog branch,2021-10-15
+trvas,Java_Doc,testing features,2021-10-15
+trvas,Java_Doc,getSprintBacklog v1,2021-10-15
+trvas,Java_Doc,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,Java_Doc,reorganizing classes,2021-10-15
+trvas,Java_Doc,changed the board to get cards from,2021-10-15
+trvas,Java_Doc,--,2021-10-15
+trvas,Java_Doc,cleaning classes,2021-10-18
+trvas,Java_Doc,adding test class and constructor to TrelloManager,2021-10-22
+trvas,Java_Doc,merging with main, changing a few details,2021-10-24
+trvas,Java_Doc,cleaning up classes, implementing tests,2021-10-28
+trvas,Java_Doc,changing the method to match the new trello board changes,2021-11-12
+trvas,Java_Doc,clearing out the main method,2021-11-12
+trvas,Java_Doc,cleaning the test class,2021-11-12
+trvas,Java_Doc,changing syntax,2021-10-24
+trvas,Java_Doc,changing syntax, removing unnecessary imports,2021-10-24
+trvas,Java_Doc,updating the getBoardListByName method and test,2021-11-12
+trvas,Java_Doc,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,Java_Doc,Merge pull request #7 from trvas/ui-features-2
+
+UI features,2021-11-21
+trvas,Java_Doc,re-adding trelloManager classes + tests.,2021-11-21
+trvas,Java_Doc,renaming packages,2021-11-21
+trvas,Java_Doc,fixing warnings,2021-11-21
+trvas,Java_Doc,adding javadoc, fixing warnings,2021-11-21
+glrss-iscte,GitMan,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,GitMan,reformato,2021-10-13
+pjspa-iscte,GitMan,envio calculo horas,2021-10-13
+Henrique-DeSousa,GitMan,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,GitMan,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,GitMan,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,GitMan,created branch and testing git API,2021-10-18
+Henrique-DeSousa,GitMan,Created several classes related to info,2021-10-19
+Henrique-DeSousa,GitMan,added new functionality, cleaned up some of the code, tested new functionalities,2021-10-20
+Henrique-DeSousa,GitMan,added the ability to ask the user for data to test some functionalities,2021-10-21
+Henrique-DeSousa,GitMan,Made it simpelton proof, cleaned code and added extra functions,2021-10-24
+Henrique-DeSousa,GitMan,Merge branch 'main' into GitMan
+
+# Conflicts:
+#	pom.xml
+#	src/main/java/TrelloManager.java,2021-10-24
+Henrique-DeSousa,GitMan,changed class path for testGitManager,2021-10-24
+Henrique-DeSousa,GitMan,clean up,2021-10-28
+Henrique-DeSousa,GitMan,revoked tokens and,2021-10-29
+Henrique-DeSousa,GitMan,Get commit's Date, Comments and committer name,2021-11-11
+Henrique-DeSousa,GitMan,Cleaned code, debugged, reworked functions and added JavaDoc,2021-11-21
+Henrique-DeSousa,GitMan,Testes passed, 9/9,2021-11-21
+Henrique-DeSousa,GitMan,Added missing javadocs.,2021-11-22
+Henrique-DeSousa,GitMan,split functions. added more uses,2021-11-25
+Henrique-DeSousa,GitMan,Cleaned functions.
+Able to get all collaborators' data from a repository.
+Added Javadocs.
+Missing Commits from branches.
+Missing Tag fetch.,2021-11-26
+Henrique-DeSousa,GitMan,Added Tag fetch.
+Added Javadocs.
+Missing Commits from branches.,2021-11-26
+Henrique-DeSousa,GitMan,Added ability to get the Names of the Files and Branches from a repository.
+Added Javadocs.
+Missing Commits from branches.,2021-11-26
+Henrique-DeSousa,GitMan,Added ability to get the Commits from branches.,2021-12-01
+Henrique-DeSousa,GitMan,Added more javaDocs,2021-12-02
+Henrique-DeSousa,GitMan,Cleaned code and renamed functions,2021-12-02
+Henrique-DeSousa,GitMan,Added tests.,2021-12-03
+Henrique-DeSousa,GitMan,Finished testes.
+Passed All tests
+17/17,2021-12-03
+Henrique-DeSousa,GitMan,Updated
+
+Removed variables,2021-12-03
+Henrique-DeSousa,GitMan,Removed Hardcoded variables.,2021-12-03
+Henrique-DeSousa,GitMan,Merge remote-tracking branch 'origin/GitMan' into GitMan,2021-12-03
+Henrique-DeSousa,GitMan,Removed Hardcoded variables.,2021-12-03
+Henrique-DeSousa,GitMan,git was drunk,2021-12-04
+Henrique-DeSousa,GitMan,debugging some hardcore bugs,2021-12-04
+Henrique-DeSousa,GitMan,removed function in duplicate,2021-12-04
+Henrique-DeSousa,GitMan,Passed new Tests,2021-12-04
+Henrique-DeSousa,GitMan,fixed dependencies.
+added function to reverse list.,2021-12-04
+Henrique-DeSousa,GitMan,removed token again,2021-12-04
+Henrique-DeSousa,GitMan,removed private,2021-12-04
+Henrique-DeSousa,GitMan,spruced code up,2021-12-04
+Henrique-DeSousa,GitMan,Cleaned code.
+Added missing info.,2021-12-05
+Henrique-DeSousa,GitMan,Cleaned code.
+Added missing info.,2021-12-05
+Henrique-DeSousa,GitMan,Cleaned code.
+Added missing info.,2021-12-05
+Henrique-DeSousa,GitMan,reworked a function.
+props to Snooz,2021-12-05
+Henrique-DeSousa,GitMan,git,2021-12-06
+trvas,GitMan,Initial commit,2021-10-08
+trvas,GitMan,Added authors to README,2021-10-08
+trvas,GitMan,intellij added files,2021-10-15
+trvas,GitMan,intelliJ build,2021-10-15
+trvas,GitMan,intelliJ build,2021-10-15
+trvas,GitMan,renaming,2021-10-15
+trvas,GitMan,added trello4j dependencies,2021-10-15
+trvas,GitMan,testing trello4j,2021-10-15
+trvas,GitMan,installed github api,2021-10-15
+trvas,GitMan,clearing main,2021-10-15
+trvas,GitMan,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,GitMan,same as prev,2021-10-15
+trvas,GitMan,readded javaDoc of extra function,2021-10-15
+trvas,GitMan,adding test class and constructor to TrelloManager,2021-10-22
+trvas,GitMan,changing syntax,2021-10-24
+trvas,GitMan,changing syntax, removing unnecessary imports,2021-10-24
+glrss-iscte,Date_Card,Merge pull request #1 from Henrique-DeSousa/patch-1
+
+README v1.0.1,2021-10-11
+glrss-iscte,Date_Card,reformato,2021-10-13
+glrss-iscte,Date_Card,Simple UI features / Reformat classes,2021-10-18
+glrss-iscte,Date_Card,Adding stuff,2021-10-18
+glrss-iscte,Date_Card,Simple UI features / Reformat classes,2021-11-19
+glrss-iscte,Date_Card,Handlers Working / Ready to implement Trello and Git,2021-11-19
+glrss-iscte,Date_Card,JavaDocs and refactoring classes,2021-11-20
+glrss-iscte,Date_Card,Merge remote-tracking branch 'origin/main-t' into main-t
+
+# Conflicts:
+#	src/main/java/GitManager.java
+#	src/main/java/TrelloManager.java
+#	src/test/java/TrelloManagerTest.java,2021-11-21
+glrss-iscte,Date_Card,JavaDocs and refactoring classes,2021-11-21
+glrss-iscte,Date_Card,Fixing UI images and some other classes,2021-11-22
+pjspa-iscte,Date_Card,envio calculo horas,2021-10-13
+pjspa-iscte,Date_Card,adding get cost,2021-11-21
+pjspa-iscte,Date_Card,adding get cost,2021-11-21
+pjspa-iscte,Date_Card,class,2021-11-26
+pjspa-iscte,Date_Card,class,2021-11-29
+pjspa-iscte,Date_Card,class,2021-11-30
+pjspa-iscte,Date_Card,class,2021-12-03
+pjspa-iscte,Date_Card,class,2021-12-03
+pjspa-iscte,Date_Card,class,2021-12-06
+Henrique-DeSousa,Date_Card,README v1.0.1
+
+Added a backstory to the file.
+Added some of the requisites.
+Added a, still in progress, short description of the project.
+Added English to our project.,2021-10-08
+Henrique-DeSousa,Date_Card,Created API's, Interface, Main and Utility classes,2021-10-13
+Henrique-DeSousa,Date_Card,Merge branch 'main' of https://github.com/trvas/ES-LETI-1Sem-2021-Grupo9,2021-10-13
+Henrique-DeSousa,Date_Card,Added Git constructor,2021-10-28
+Henrique-DeSousa,Date_Card,Added Git constructor,2021-10-29
+Henrique-DeSousa,Date_Card,Merge pull request #3 from trvas/backlog-items
+
+Backlog items Backlog Items Developed in each SPRINT,2021-11-12
+Henrique-DeSousa,Date_Card,Added Git constructor,2021-10-28
+Henrique-DeSousa,Date_Card,Added Git constructor,2021-10-29
+Henrique-DeSousa,Date_Card,Updating GitManager,2021-11-21
+Henrique-DeSousa,Date_Card,Added GitManagerTest,2021-11-21
+trvas,Date_Card,Initial commit,2021-10-08
+trvas,Date_Card,Added authors to README,2021-10-08
+trvas,Date_Card,intellij added files,2021-10-15
+trvas,Date_Card,intelliJ build,2021-10-15
+trvas,Date_Card,intelliJ build,2021-10-15
+trvas,Date_Card,renaming,2021-10-15
+trvas,Date_Card,added trello4j dependencies,2021-10-15
+trvas,Date_Card,testing trello4j,2021-10-15
+trvas,Date_Card,installed github api,2021-10-15
+trvas,Date_Card,clearing main,2021-10-15
+trvas,Date_Card,backlog branch,2021-10-15
+trvas,Date_Card,testing features,2021-10-15
+trvas,Date_Card,getSprintBacklog v1,2021-10-15
+trvas,Date_Card,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,Date_Card,reorganizing classes,2021-10-15
+trvas,Date_Card,added getBoardListIdByName + extras that might be helpful,2021-10-15
+trvas,Date_Card,changed the board to get cards from,2021-10-15
+trvas,Date_Card,same as prev,2021-10-15
+trvas,Date_Card,--,2021-10-15
+trvas,Date_Card,readded javaDoc of extra function,2021-10-15
+trvas,Date_Card,cleaning classes,2021-10-18
+trvas,Date_Card,adding test class and constructor to TrelloManager,2021-10-22
+trvas,Date_Card,Merge branch 'main' into backlog-items
+
+# Conflicts:
+#	src/main/java/TrelloManager.java,2021-10-24
+trvas,Date_Card,merging with main, changing a few details,2021-10-24
+trvas,Date_Card,changing syntax,2021-10-24
+trvas,Date_Card,changing syntax, removing unnecessary imports,2021-10-24
+trvas,Date_Card,cleaning up classes, implementing tests,2021-10-28
+trvas,Date_Card,changing the method to match the new trello board changes,2021-11-12
+trvas,Date_Card,clearing out the main method,2021-11-12
+trvas,Date_Card,updating the getBoardListByName method and test,2021-11-12
+trvas,Date_Card,Merge remote-tracking branch 'origin/main',2021-11-12
+trvas,Date_Card,cleaning the test class,2021-11-12
+trvas,Date_Card,Merge branch 'main' into backlog-items,2021-11-12
+trvas,Date_Card,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,Date_Card,clearing out TrelloManager,2021-11-14
+trvas,Date_Card,adding the getSprintCount class + tests,2021-11-14
+trvas,Date_Card,fixing warnings,2021-11-20
+trvas,Date_Card,backlog branch,2021-10-15
+trvas,Date_Card,testing features,2021-10-15
+trvas,Date_Card,getSprintBacklog v1,2021-10-15
+trvas,Date_Card,getSprintBacklog v1 (reorganizing),2021-10-15
+trvas,Date_Card,reorganizing classes,2021-10-15
+trvas,Date_Card,changed the board to get cards from,2021-10-15
+trvas,Date_Card,--,2021-10-15
+trvas,Date_Card,cleaning classes,2021-10-18
+trvas,Date_Card,adding test class and constructor to TrelloManager,2021-10-22
+trvas,Date_Card,merging with main, changing a few details,2021-10-24
+trvas,Date_Card,cleaning up classes, implementing tests,2021-10-28
+trvas,Date_Card,changing the method to match the new trello board changes,2021-11-12
+trvas,Date_Card,clearing out the main method,2021-11-12
+trvas,Date_Card,cleaning the test class,2021-11-12
+trvas,Date_Card,changing syntax,2021-10-24
+trvas,Date_Card,changing syntax, removing unnecessary imports,2021-10-24
+trvas,Date_Card,updating the getBoardListByName method and test,2021-11-12
+trvas,Date_Card,resolving imports, cleaning trelloManager class,2021-11-12
+trvas,Date_Card,Merge pull request #7 from trvas/ui-features-2
+
+UI features,2021-11-21
+trvas,Date_Card,re-adding trelloManager classes + tests.,2021-11-21
+trvas,Date_Card,renaming packages,2021-11-21
+trvas,Date_Card,fixing warnings,2021-11-21
+trvas,Date_Card,adding javadoc, fixing warnings,2021-11-21
+pjspa-iscte,CalculoCusto,Custo,2021-10-26
+pjspa-iscte,CalculoCusto,Calculo_Teste,2021-11-17

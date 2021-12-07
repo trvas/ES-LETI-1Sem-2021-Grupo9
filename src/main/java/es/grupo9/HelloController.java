@@ -13,7 +13,6 @@ import javafx.scene.web.WebView;
 import org.markdown4j.Markdown4jProcessor;
 import org.trello4j.model.Member;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Objects;
@@ -78,7 +77,9 @@ public class HelloController{
     TrelloManager trelloManager;
     GitManager gitManager;
     DecimalFormat df = new DecimalFormat("#.##");
-    int i, j, i2, j2, k = 0;
+    int i, j, i2, j2, i3, j3, k = 0;
+
+
 
     /**
      * Handler for when one of the side buttons is clicked.
@@ -112,21 +113,10 @@ public class HelloController{
             String GIT_REPO = this.GitRepoInput.getText();
 
             // Creates new instances of TrelloManager and GitManager with the provided values
-            /*
             trelloManager = new TrelloManager(TRELLO_KEY, TRELLO_TOKEN, TRELLO_BOARD);
             gitManager = new GitManager(GIT_KEY, GIT_NAME, GIT_REPO);
-             */
 
-            trelloManager = new TrelloManager(
-                    "e3ee0d6a1686b4b43ba5d046bbce20af",
-                    "80644fefce741495acc2f1ebf7174b536ae31a6c5c425622fbf5477f82463b84",
-                    "614de300aa6df33863299b6c");
-            gitManager = new GitManager(
-                    "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",
-                    "henrique-deSousa",
-                    "test_repo");
-
-            gitManager.connect();
+            // Gets Github collaborators and ReadMe content.
             gitManager.getCollaborators();
             ReadMe.getEngine().loadContent(new Markdown4jProcessor().process(gitManager.getReadMe()));
 
@@ -162,7 +152,7 @@ public class HelloController{
             // Sets the revivew table for each sprint page
             setReviewTable(1, reviewTable1, createTableColumnArray(rMember, rHours, rEstimated, rCost), PieReview1_1, PieReview1_2);
             setReviewTable(2, reviewTable2, createTableColumnArray(rMember2, rHours2, rEstimated2, rCost2), PieReview2_1, PieReview2_2);
-            setReviewTable(3, reviewTable2, createTableColumnArray(rMember3, rHours3, rEstimated3, rCost3), PieReview3_1, PieReview3_2);
+            setReviewTable(3, reviewTable3, createTableColumnArray(rMember3, rHours3, rEstimated3, rCost3), PieReview3_1, PieReview3_2);
 
             // Sets the git page combo box with the collaborator names
             gitManager.getCollaborators().forEach(f->CommitsComboBox.getItems().add(f));
@@ -197,7 +187,7 @@ public class HelloController{
 
     /**
      * Sets the Commits Table values to the ones of the member picked in the Commits Combo Box.
-     * @throws IOException ...
+     * @throws IOException See {@link GitManager#getCollaborators()} .
      */
     @FXML
     public void setCommitsComboBox() throws IOException {
@@ -262,7 +252,7 @@ public class HelloController{
         ObservableList<Object> data = FXCollections.observableArrayList();
 
         for(String branches : gitManager.getBranchesInRepository()) {
-            var a = gitManager.getCommits(userName,branches);
+            var a = gitManager.getCommits(userName, branches);
             for (GitManager.CommitHttpRequest commit : a.commits){
                 data.add(new TableData(branches, commit.commitMessage, commit.commitDate));
             }
@@ -413,27 +403,18 @@ public class HelloController{
     /* -- sprint 1 --*/
 
     /**
-     * Handler for when the Sprint 1 Meetings tab is clicked.
+     * Handler for when the Sprint 1 tab is clicked.
      * @param t Event tab click.
      * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)}.
      */
     @FXML
-    public void setTabMeetings1(Event t) throws IOException {
+    public void setTabs1(Event t) throws IOException {
         if(i == 0){
             if(t.getSource() == this.TabMeetings1){
                 setMeetingsTable(1, meetingsTable1, createTableColumnArray(mMember, mActivities, mHours, mCost), PieMeetings1);
                 i = 1;
             }
         }
-    }
-
-    /**
-     * Handler for when the Sprint 1 Done tab is clicked.
-     * @param t Event tab click.
-     * @throws IOException see {@link #setDoneTable(int, TableView, TableColumn[], PieChart)}.
-     */
-    @FXML
-    public void setTabDone1(Event t) throws IOException {
         if(j == 0){
             if(t.getSource() == this.TabDone1){
                 setDoneTable(1, doneTable1, createTableColumnArray(dMember, dActivities, dHours, dCost), PieDone1);
@@ -444,7 +425,7 @@ public class HelloController{
 
     /**
      * Sets the Combo Box values to equal each card name and show their description when picked.
-     * @throws IOException ...
+     * @throws IOException see {@link es.grupo9.TrelloManager#getMeetings(int)}.
      */
     @FXML
     public void setMComboBox1() throws IOException {
@@ -460,7 +441,7 @@ public class HelloController{
 
     /**
      * Sets the Combo Box values to equal each card name and show their description when picked.
-     * @throws IOException ...
+     * @throws IOException see {@link es.grupo9.TrelloManager#getFinishedSprintBacklog(int)}.
      */
     @FXML
     public void setDComboBox1() throws IOException {
@@ -478,29 +459,20 @@ public class HelloController{
 
 
     /**
-     * Handler for when the Sprint 2 Meetings tab is clicked.
-     * @param t Event tab click.
-     * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)}.
+     * Handler for when a Sprint 2 tab is clicked.
+     * @param t Event Tab click.
+     * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)} and {@link #setDoneTable(int, TableView, TableColumn[], PieChart)}.
      */
     @FXML
-    public void setTabMeetings2(Event t) throws IOException {
-        if(i2 == 0){
+    public void setTabs2(Event t) throws IOException {
+         if(i2 == 0){
             if(t.getSource() == this.TabMeetings2){
                 setMeetingsTable(2, meetingsTable2, createTableColumnArray(mMember2, mActivities2, mHours2, mCost2), PieMeetings2);
                 i2 = 1;
             }
         }
-    }
-
-    /**
-     * Handler for when the Sprint 2 Done tab is clicked.
-     * @param t Event tab click.
-     * @throws IOException see {@link #setDoneTable(int, TableView, TableColumn[], PieChart).
-     */
-    @FXML
-    public void setTabDone2(Event t) throws IOException {
-        if(j2 == 0){
-            if(t.getSource() == this.TabDone2){
+        if(j2 == 0) {
+            if (t.getSource() == this.TabDone2) {
                 setDoneTable(2, doneTable2, createTableColumnArray(dMember2, dActivities2, dHours2, dCost2), PieDone2);
                 j2 = 1;
             }
@@ -509,7 +481,7 @@ public class HelloController{
 
     /**
      * Sets the Combo Box values to equal each card name and show their description when picked.
-     * @throws IOException ...
+     * @throws IOException see {@link es.grupo9.TrelloManager#getMeetings(int)}.
      */
     @FXML
     public void setMComboBox2() throws IOException {
@@ -525,7 +497,7 @@ public class HelloController{
 
     /**
      * Sets the Combo Box values to equal each card name and show their description when picked.
-     * @throws IOException ...
+     * @throws IOException see {@link es.grupo9.TrelloManager#getFinishedSprintBacklog(int)}.
      */
     @FXML
     public void setDComboBox2() throws IOException {
@@ -542,33 +514,22 @@ public class HelloController{
     /* --- sprint 3 --- */
 
     /**
-     * Handler for when the Sprint 3 Meetings tab is clicked.
-     * @param t Event tab click.
-     * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)}.
+     * Handler for when a Sprint 3 tab is clicked.
+     * @param t Event Tab click.
+     * @throws IOException see {@link #setMeetingsTable(int, TableView, TableColumn[], PieChart)} and {@link #setDoneTable(int, TableView, TableColumn[], PieChart)}.
      */
-
     @FXML
-    public void setTabMeetings3(Event t) throws IOException {
-        if(i2 == 0){
+    public void setTabs3(Event t) throws IOException {
+        if(i3 == 0){
             if(t.getSource() == this.TabMeetings3){
                 setMeetingsTable(3, meetingsTable3, createTableColumnArray(mMember3, mActivities3, mHours3, mCost3), PieMeetings3);
-                i2 = 1;
+                i3 = 1;
             }
         }
-    }
-
-    /**
-     * Handler for when the Sprint 3 Done tab is clicked.
-     * @param t Event tab click.
-     * @throws IOException see {@link #setDoneTable(int, TableView, TableColumn[], PieChart)}.
-     */
-
-    @FXML
-    public void setTabDone3(Event t) throws IOException {
-        if(j2 == 0){
+        if(j3 == 0){
             if(t.getSource() == this.TabDone3){
                 setDoneTable(3, doneTable3, createTableColumnArray(dMember3, dActivities3, dHours3, dCost3), PieDone3);
-                j2 = 1;
+                j3 = 1;
             }
         }
     }

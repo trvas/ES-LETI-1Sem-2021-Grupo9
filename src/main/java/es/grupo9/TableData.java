@@ -3,6 +3,9 @@ package es.grupo9;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * Creates the property types for the TableData.
+ */
 public class TableData {
     SimpleStringProperty member;
     SimpleDoubleProperty activities;
@@ -31,6 +34,8 @@ public class TableData {
         this.hours = new SimpleDoubleProperty(hours);
         this.cost = new SimpleDoubleProperty(cost);
     }
+
+    // Getters and setters needed because they're implicitly called.
 
     public String getMember() {
         return member.get();
