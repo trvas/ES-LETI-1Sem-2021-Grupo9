@@ -17,6 +17,10 @@ import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Objects;
 
+
+/**
+ * HelloController class. Connects the GitHub API and the Trello API all together with the UI.
+ */
 public class HelloController{
     @FXML
     TextField TrelloKeyInput, TrelloTokenInput, TrelloBoardInput, GitKeyInput, GitNameInput, GitRepoInput;
@@ -265,11 +269,11 @@ public class HelloController{
 
     /**
      * Generalized constructor to create an array of four Table Columns.
-     * @param col1 TableColumn <Object, Object> First table column to be added.
-     * @param col2 TableColumn <Object, Object> Second table column to be added.
-     * @param col3 TableColumn <Object, Object> Third table column to be added.
-     * @param col4 TableColumn <Object, Object> Fourth table column to be added.
-     * @return TableColumn<Object, Object>[] array of Table Columns.
+     * @param col1 TableColumn - First table column to be added.
+     * @param col2 TableColumn - Second table column to be added.
+     * @param col3 TableColumn - Third table column to be added.
+     * @param col4 TableColumn - Fourth table column to be added.
+     * @return A TableColumn of array of Table Columns.
      */
     public TableColumn<Object, Object>[] createTableColumnArray(TableColumn<Object, Object> col1, TableColumn<Object, Object> col2,
                                                                 TableColumn<Object, Object> col3, TableColumn<Object, Object> col4){
@@ -285,8 +289,8 @@ public class HelloController{
     /**
      * Constructor for each Review table.
      * @param sprintNumber int Number of the sprint.
-     * @param reviewTable TableView<Object> Review table to be set.
-     * @param tableColumn TableColumn<Object,Object>[] Table Columns to be set.
+     * @param reviewTable A TableView of Review table to be set.
+     * @param tableColumn A TableColumn of Table Columns to be set.
      * @param pieReview1 PieChart Pie chart for the hours worked.
      * @param pieReview2 PieChart Pie chart for the estimated hours.
      * @throws IOException see {@link es.grupo9.TrelloManager#getSprintHoursByMember(String, int)}.
@@ -317,8 +321,8 @@ public class HelloController{
     /**
      * Constructor for each Meetings table.
      * @param sprintNumber int Number of the sprint.
-     * @param meetingsTable TableView<Object> Review table to be set.
-     * @param tableColumn TableColumn<Object,Object>[] Table Columns to be set.
+     * @param meetingsTable A TableView of Review table to be set.
+     * @param tableColumn A TableColumn of Table Columns to be set.
      * @param pieMeetings PieChart Pie chart for the hours worked.
      * @throws IOException see {@link es.grupo9.TrelloManager#getNotCommittedActivitiesByMember(String, int)}.
      */
@@ -344,8 +348,8 @@ public class HelloController{
     /**
      * Constructor for each Done table.
      * @param sprintNumber int Number of the sprint.
-     * @param doneTable TableView<Object> Review table to be set.
-     * @param tableColumn TableColumn<Object,Object>[] Table Columns to be set.
+     * @param doneTable A TableView of Review table to be set.
+     * @param tableColumn A TableColumn of Table Columns to be set.
      * @param pieDone PieChart Pie chart for the hours worked.
      * @throws IOException see {@link es.grupo9.TrelloManager#getCommittedActivitiesByMember(String, int)}.
      */
@@ -468,13 +472,13 @@ public class HelloController{
          if(i2 == 0){
             if(t.getSource() == this.TabMeetings2){
                 setMeetingsTable(2, meetingsTable2, createTableColumnArray(mMember2, mActivities2, mHours2, mCost2), PieMeetings2);
-                i2 = 1;
+                i3 = 1;
             }
         }
         if(j2 == 0) {
             if (t.getSource() == this.TabDone2) {
                 setDoneTable(2, doneTable2, createTableColumnArray(dMember2, dActivities2, dHours2, dCost2), PieDone2);
-                j2 = 1;
+                j3= 1;
             }
         }
     }
@@ -565,7 +569,4 @@ public class HelloController{
             }
         });
     }
-
-
-
 }

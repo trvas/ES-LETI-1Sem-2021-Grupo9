@@ -7,6 +7,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+/**
+ * HelloApplication class. The main class that initializes the application.
+ */
 public class HelloApplication extends Application {
 
     /**

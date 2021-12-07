@@ -33,7 +33,7 @@ public class TrelloManager{
      * Gets the ID of cards from the Backlog pertaining to a specific Sprint. This method gets the "Done"
      * list of each sprint and returns a list of the cards on it.
      * @param sprintNumber Sprint the user wants the cards from.
-     * @return List<Card> list of cards from the desired Sprint.
+     * @return A list of cards from the desired Sprint.
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
     public List<Card> getFinishedSprintBacklog(int sprintNumber) throws IOException {
@@ -175,7 +175,7 @@ public class TrelloManager{
     /**
      * Returns a list with all the Meetings of a given SPRINT.
      * @param sprintNumber number of the SPRINT.
-     * @return List<Card> list of cards (meetings) of the SPRINT requested.
+     * @return A list of cards (meetings) of the SPRINT requested.
      * @throws IOException see {@link #getBoardListIdByName(String)};
      */
     public List<Card> getMeetings(int sprintNumber) throws IOException {

@@ -138,7 +138,7 @@ public class GitManager {
 
     /**
      * Gathers all the users' information from a repository.
-     * @return List<String> All the information from the Collaborators from the repository in question.
+     * @return A List of All the information from the Collaborators from the repository in question.
      * @throws IOException thrown when the GHuser is null.
      */
     public @NotNull List<String> userInfo() throws IOException {
@@ -239,7 +239,7 @@ public class GitManager {
 
     /**
      * Returns all the branches in the repository.
-     * @return List<String> Names of the branches.
+     * @return A list of Names of the branches.
      * @throws Exception thrown when the GHuser is null.
      */
     public @NotNull List<String> getBranchesInRepository() throws Exception {
@@ -265,7 +265,7 @@ public class GitManager {
 
     /**
      * Gets Branches and their Files from a repository.
-     * @return Map<String, List<String>> Name of the Branch and the Files inside it.
+     * @return A map of Name of the Branch and the Files inside it.
      * @throws IOException thrown due to the GitHub.
      */
     public @NotNull Map<String, List<String>> getFiles() throws Exception {
@@ -307,9 +307,9 @@ public class GitManager {
 
     /**
      * DEPRECATED.
-     * @return List<CommitsDataGit> Initial and final commit from the main branch in the repository.
+     * @return A list of Initial and final commit from the main branch in the repository.
      * @throws IOException throws when GitHub is null.
-     * @Deprecated use getCommits
+     * @deprecated use getCommits
      */
     @Deprecated
     public @NotNull List<CommitsDataGit> getCommitDataFromRoot() throws IOException {
@@ -365,7 +365,7 @@ public class GitManager {
      * @param userLogin name of the user to retrieve the commits.
      * @return returns a String which contains the initial and final commit from the repository main branch
      * @throws IOException throws when GitHub is null.
-     * @Deprecated use getCommits
+     * @deprecated use getCommits
      */
     @Deprecated
     public @NotNull String commitsInRoot(String userLogin) throws IOException {
