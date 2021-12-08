@@ -203,7 +203,7 @@
                         </Label>
                   </AnchorPane>
             </Tab>
-            <Tab fx:id="TabMeetings1" onSelectionChanged="#setTabMeetings1" text="Meetings">
+            <Tab fx:id="TabMeetings1" onSelectionChanged="#setTabs1" text="Meetings">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <TableView fx:id="meetingsTable1" layoutX="16.0" layoutY="247.0" prefHeight="145.0" prefWidth="500.0">
                           <columns>
@@ -218,7 +218,7 @@
                         <PieChart fx:id="PieMeetings1" layoutX="489.0" layoutY="98.0" prefHeight="258.0" prefWidth="247.0" />
                      </AnchorPane>
             </Tab>
-            <Tab fx:id="TabDone1" onSelectionChanged="#setTabDone1" text="Done">
+            <Tab fx:id="TabDone1" onSelectionChanged="#setTabs1" text="Done">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <TableView fx:id="doneTable1" layoutX="14.0" layoutY="209.0" prefHeight="167.0" prefWidth="500.0">
                           <columns>
@@ -260,7 +260,7 @@
                         </Label>
                   </AnchorPane>
             </Tab>
-            <Tab fx:id="TabMeetings2" onSelectionChanged="#setTabMeetings2" text="Meetings">
+            <Tab fx:id="TabMeetings2" onSelectionChanged="#setTabs2" text="Meetings">
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <TableView fx:id="meetingsTable2" layoutX="16.0" layoutY="247.0" prefHeight="145.0" prefWidth="500.0">
                            <columns>
@@ -275,7 +275,7 @@
                         <PieChart fx:id="PieMeetings2" layoutX="489.0" layoutY="98.0" prefHeight="258.0" prefWidth="247.0" />
                   </AnchorPane>
             </Tab>
-            <Tab fx:id="TabDone2" onSelectionChanged="#setTabDone2" text="Done">
+            <Tab fx:id="TabDone2" onSelectionChanged="#setTabs2" text="Done">
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <TableView fx:id="doneTable2" layoutX="14.0" layoutY="208.0" prefHeight="167.0" prefWidth="500.0">
                            <columns>
@@ -317,7 +317,7 @@
                         </Label>
                   </AnchorPane>
             </Tab>
-            <Tab fx:id="TabMeetings3" onSelectionChanged="#setTabMeetings3" text="Meetings">
+            <Tab fx:id="TabMeetings3" onSelectionChanged="#setTabs3" text="Meetings">
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <TableView fx:id="meetingsTable3" layoutX="16.0" layoutY="247.0" prefHeight="160.0" prefWidth="500.0">
                            <columns>
@@ -332,7 +332,7 @@
                         <PieChart fx:id="PieMeetings3" layoutX="489.0" layoutY="98.0" prefHeight="258.0" prefWidth="247.0" />
                   </AnchorPane>
             </Tab>
-            <Tab fx:id="TabDone3" onSelectionChanged="#setTabDone3" text="Done">
+            <Tab fx:id="TabDone3" onSelectionChanged="#setTabs3" text="Done">
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                         <TableView fx:id="doneTable3" layoutX="14.0" layoutY="208.0" prefHeight="167.0" prefWidth="500.0">
                            <columns>

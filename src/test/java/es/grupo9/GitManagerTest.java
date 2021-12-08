@@ -13,7 +13,7 @@ class GitManagerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gitManager = new GitManager("TOKEN", "Henrique-DeSousa", "test_repo");
+        gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
         gitManager.getCollaborators();
     }
 
@@ -99,7 +99,6 @@ class GitManagerTest {
         expected.put("trvas", List.of("es-testes"));
         expected.put("Henrique-DeSousa", Arrays.asList("ES-2021-ETC1-99", "Engineering-Practices-for-Building-Quality-Software", "test_repo"));
         expected.put("glrss-iscte", new ArrayList<>());
-
         Assertions.assertEquals(expected, gitManager.userRepositories());
     }
 
@@ -163,9 +162,6 @@ class GitManagerTest {
 
     @Test
     void getTag() throws Exception {
-
-        String tag = """
-               {test=Sun Nov 21 14:47:21 WET 2021, Tag2=Sun Nov 21 16:14:31 WET 2021}""";
-        Assertions.assertEquals(tag, gitManager.getTag());
+        Assertions.assertFalse(gitManager.getTag().isEmpty());
     }
 }

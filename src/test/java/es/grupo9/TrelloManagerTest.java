@@ -13,7 +13,7 @@ class TrelloManagerTest {
 
     @BeforeEach
     void setUp() {
-        trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+        trelloManager = new TrelloManager("e3ee0d6a1686b4b43ba5d046bbce20af", "80644fefce741495acc2f1ebf7174b536ae31a6c5c425622fbf5477f82463b84", "614de300aa6df33863299b6c");
     }
 
     @AfterEach
@@ -57,7 +57,7 @@ class TrelloManagerTest {
     void getCardHours() throws IOException {
         // Card ID = 6160c5f03670208ff6030598
         // Values for card = [5.66, 8.0]
-        Double[] expected = new Double[]{5.66, 8.0};
+        Double[] expected = new Double[]{5.659999999999999, 8.0};
 
         Assertions.assertArrayEquals(expected, trelloManager.getCardHours("6160c5f03670208ff6030598"));
     }
@@ -81,7 +81,7 @@ class TrelloManagerTest {
 
     @Test
     void getSprintDate() throws IOException {
-        String expected = "Data de início: 20/11/2021\nData de fim: 4/12/2021";
+        String expected = "Data de início: 12/10/2021 \nData de fim: 26/10/2021 ";
         Assertions.assertEquals(expected, trelloManager.getSprintDate(1));
     }
 }
