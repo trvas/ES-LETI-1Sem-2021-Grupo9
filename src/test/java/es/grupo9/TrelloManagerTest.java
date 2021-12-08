@@ -13,7 +13,7 @@ class TrelloManagerTest {
 
     @BeforeEach
     void setUp() {
-        trelloManager = new TrelloManager("e3ee0d6a1686b4b43ba5d046bbce20af", "80644fefce741495acc2f1ebf7174b536ae31a6c5c425622fbf5477f82463b84", "614de300aa6df33863299b6c");
+        trelloManager = new TrelloManager("APIKEY", "TOKEN", "BOARD");
     }
 
     @AfterEach
@@ -83,5 +83,15 @@ class TrelloManagerTest {
     void getSprintDate() throws IOException {
         String expected = "Data de início: 12/10/2021 \nData de fim: 26/10/2021 ";
         Assertions.assertEquals(expected, trelloManager.getSprintDate(1));
+    }
+
+    @Test
+    void getProjectName() {
+        Assertions.assertEquals("ES-LETI-1Sem-2021-Grupo9", trelloManager.getProjectName());
+    }
+
+    @Test
+    void getBeginningDate() throws IOException {
+        Assertions.assertEquals(" 12/10/2021 ", trelloManager.getBeginningDate());
     }
 }

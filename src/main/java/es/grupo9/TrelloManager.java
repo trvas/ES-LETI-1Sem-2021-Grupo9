@@ -254,11 +254,19 @@ public class TrelloManager {
         return cards.size();
     }
 
+    /**
+     * Returns the number of members on the board.
+     * @return int Number of members on the board.
+     */
     public int getMemberCount() {
         List<Member> memberList = trello.getMembersByBoard(boardId);
         return memberList.size();
     }
 
+    /**
+     * Returns the members on the board.
+     * @return List of members on the board.
+     */
     public List<Member> getMembers() {
         return trello.getMembersByBoard(boardId);
     }

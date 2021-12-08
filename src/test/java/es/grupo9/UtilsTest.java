@@ -4,10 +4,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+
 public class UtilsTest {
 
+    GitManager gitManager;
+    TrelloManager trelloManager;
+
     @BeforeEach
-    public void SetUp() {
+    public void SetUp() throws IOException {
+        gitManager = new GitManager("AUTH", "USERNAME", "REPO");
+        trelloManager = new TrelloManager("APIKEY", "TOKEN", "BOARD");
     }
 
     @Test
@@ -26,6 +34,12 @@ public class UtilsTest {
     void getSum() {
         Double[] array = new Double[]{0.1,2.0,0.1};
         Assertions.assertEquals(2.2,Utils.getSum(array));
+    }
+
+    @Test
+    void exportCSV() throws Exception {
+        Utils.exportCSV(trelloManager, gitManager);
+        Assertions.assertTrue(new File("info.csv").exists());
     }
 }
 

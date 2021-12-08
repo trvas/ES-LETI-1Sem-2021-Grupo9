@@ -1,16 +1,21 @@
-# ES-LETI-1Sem-2021-Grupo9
+<h2>ES-LETI-1Sem-2021-Grupo9</h2>
 
-This project is based on a API. The purpose of it, is to enbale a person to view the amount of time the people working on a project have taken to complet the tasks.
-For that, we will require the use of 2 API's, Githubs & Trello, Code of our own writting and proper management for the contents on each task.
+<b>Projeto realizado por:</b>
+<ul>
+<li>Tatiana Velosa, <b>92556</b></li>
+<li>Henrique de Sousa, <b>93540</b></li>
+<li>Gonçalo Rodrigues, <b>92600</b></li>
+<li>Paulo Palma, <b>69234</b></li>
+</ul>
 
-About the authors; We are a group of Friends that have met by chance during our time in University at ISCTE in Portugal. We have been together for some time and we, plus our client, have decided to come together and create this project. With this, we are looking forward to testing our skill set to the max while also taking into account the client's wishes!
+Todas as funcionalidades foram implementadas, embora a performance possa ser melhorada.
 
-> Trabalho realizado por:
->
-> Henrique de Sousa - 93540
->
-> Tatiana Velosa - 92556
->
-> Gonçalo Rodrigues - 92600
->
-> Paulo Palma - 69234
+<b>Erros ou warnings (codesmells):</b>
+<ul>
+<li><i>Long Method</i> no método <code>getNotCommittedActivitiesByMember</code> do TrelloManager:</li>
+<code>for (Card card : memberMeetingList) { totalHours += getCardHours(card.getId())[0]; }</code>
+<p>Foi escolhido deixar esta linha de código no método apesar do Long Method warning, visto que se trata da soma das 
+horas totais e não teria qualquer utilidade para outros métodos na classe.</p>
+<li>Não foram efetuados testes para as classes <code>HelloApplication</code>, <code>HelloController</code> e 
+<code>TableData</code> por serem classes relacionadas com a interface gráfica.</li>
+</ul>

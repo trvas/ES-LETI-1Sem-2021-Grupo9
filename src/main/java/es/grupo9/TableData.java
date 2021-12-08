@@ -38,16 +38,16 @@ public class TableData {
     // Getters and setters needed because they're implicitly called.
 
     /**
-     * Gets the name of a member.
-     * @return String member name.
+     * Gets the member name.
+     * @return String Member name.
      */
     public String getMember() {
         return member.get();
     }
 
     /**
-     * @param m the name of a member.
-     * Gets the name of a member.
+     * Sets the member name to a new value.
+     * @param m New member name.
      */
     public void setMember(String m) {
         member.set(m);
@@ -55,15 +55,15 @@ public class TableData {
 
     /**
      * Gets the activities.
-     * @return Double activities.
+     * @return Double Activities.
      */
     public Double getActivities() {
         return activities.get();
     }
 
     /**
-     * @param e the activities.
-     * Get the activities.
+     * Sets the activities to a new value.
+     * @param e New activities value.
      */
     public void setActivities(Double e) {
         activities.set(e);
@@ -72,15 +72,15 @@ public class TableData {
 
     /**
      * Gets the hours.
-     * @return Double hours.
+     * @return Double Hours.
      */
     public Double getHours() {
         return hours.get();
     }
 
     /**
-     * @param h the hours.
-     * Set the hours.
+     * Sets the hours to a new value.
+     * @param h New hours values.
      */
     public void setHours(Double h) {
         hours.set(h);
@@ -88,15 +88,15 @@ public class TableData {
 
     /**
      * Gets the cost.
-     * @return Double cost.
+     * @return Double Cost.
      */
     public Double getCost() {
         return cost.get();
     }
 
     /**
-     * @param c the cost.
-     * Sets the cost.
+     * Sets the cost to a new value.
+     * @param c New cost value.
      */
     public void setCost(Double c) {
         cost.set(c);
@@ -104,29 +104,29 @@ public class TableData {
 
     /**
      * Gets the date of a commit.
-     * @return String commit date.
+     * @return String Commit date.
      */
     public String getDate() { return date.get();}
 
     /**
-     * @param p the date.
-     * Sets the date of a commit.
+     * Sets the commit date to a new value.
+     * @param p New date value.
      */
     public void setDate(String p) {
         date.set(p);
     }
 
     /**
-     * Gets the name of a branch.
-     * @return String branch name.
+     * Gets the branch name.
+     * @return String Branch name.
      */
     public String getBranch() {
         return branch.get();
     }
 
     /**
-     * @param b the branch name.
-     * Sets the branch name.
+     * Sets the branch name to a new value.
+     * @param b New branch name.
      */
     public void setBranch(String b) {
         branch.set(b);
@@ -134,15 +134,15 @@ public class TableData {
 
     /**
      * Gets the description of a tag.
-     * @return String description of a tag.
+     * @return String Tag description.
      */
     public String getDescription() {
         return description.get();
     }
 
     /**
-     * @param d the description.
-     * Sets the description of a tag.
+     * Sets the tag description to a new value.
+     * @param d New tag description.
      */
     public void setDescription(String d) {
         description.set(d);
@@ -150,13 +150,13 @@ public class TableData {
 
     /**
      * Gets the name of a tag.
-     * @return String tag name.
+     * @return String Tag name.
      */
     public String getTag() { return tag.get(); }
 
     /**
-     * @param l the name of a tag.
-     * Sets name of a tag.
+     * Sets the tag name to a new value.
+     * @param l New tag name.
      */
     public void setTag(String l) {
         tag.set(l);
@@ -164,13 +164,13 @@ public class TableData {
 
     /**
      * Gets the date of a tag.
-     * @return String tag date.
+     * @return String Tag date.
      */
     public String getTagdate() { return tagdate.get();}
 
     /**
-     * @param p the date of a tag.
-     * Sets the date of a tag.
+     * Sets the tag date to a new value.
+     * @param p New tag date.
      */
     public void setTagdate(String p) {
         tagdate.set(p);

@@ -1,5 +1,3 @@
-
-
 module es.grupo9 {
     requires javafx.controls;
     requires javafx.fxml;

@@ -26,7 +26,7 @@ public class HelloController {
     @FXML
     TextField TrelloKeyInput, TrelloTokenInput, TrelloBoardInput, GitKeyInput, GitNameInput, GitRepoInput;
     @FXML
-    Button id1, id2, id3, id4, idHome, Search, Export;
+    Button userButton, sprint1Button, sprint2Button, sprint3Button, gitButton, Search, Export;
     @FXML
     Pane Pane, GithubPane;
     @FXML
@@ -93,12 +93,12 @@ public class HelloController {
      */
     @FXML
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.id1) {
+        if (e.getSource() == this.userButton) {
             Pane.toFront();
-        } else if (e.getSource() == this.id2) Sprint1Pane.toFront();
-        else if (e.getSource() == this.id3) Sprint2Pane.toFront();
-        else if (e.getSource() == this.id4) Sprint3Pane.toFront();
-        else if (e.getSource() == this.idHome) GithubPane.toFront();
+        } else if (e.getSource() == this.sprint1Button) Sprint1Pane.toFront();
+        else if (e.getSource() == this.sprint2Button) Sprint2Pane.toFront();
+        else if (e.getSource() == this.sprint3Button) Sprint3Pane.toFront();
+        else if (e.getSource() == this.gitButton) GithubPane.toFront();
     }
 
     /**
@@ -140,7 +140,6 @@ public class HelloController {
 
             // Sets the cost based on the value on the slider
             Utils.setPrice((int) SliderCost.getValue());
-            System.out.println((int) SliderCost.getValue());
 
             // Gets all the information needed for the Trello tabs
             // Sets the sprint tabs combo boxes with the card names (from the Meetings and Done lists)
@@ -181,12 +180,16 @@ public class HelloController {
         }
     }
 
-    // adicionar javadoc
+    /**
+     * Handler for the Github button is clicked.
+     * @param e Event Button click.
+     * @throws Exception See {@link #setTagsTable()}.
+     */
     @FXML
-    public void home(Event e) throws Exception {
+    public void gitClick(Event e) throws Exception {
         if (k == 0) {
-            if (e.getSource() == this.idHome) {
-                setTabsTable();
+            if (e.getSource() == this.gitButton) {
+                setTagsTable();
                 k = 1;
             }
         }
@@ -231,7 +234,7 @@ public class HelloController {
      *
      * @throws Exception See {@link GitManager#getBranchesInRepository()}.
      */
-    public void setTabsTable() throws Exception {
+    public void setTagsTable() throws Exception {
         ObservableList<Object> data = FXCollections.observableArrayList();
 
         for (int k = 0; k < gitManager.getTag().size(); k++) {
@@ -491,13 +494,13 @@ public class HelloController {
         if (i2 == 0) {
             if (t.getSource() == this.TabMeetings2) {
                 setMeetingsTable(2, meetingsTable2, createTableColumnArray(mMember2, mActivities2, mHours2, mCost2), PieMeetings2);
-                i3 = 1;
+                i2 = 1;
             }
         }
         if (j2 == 0) {
             if (t.getSource() == this.TabDone2) {
                 setDoneTable(2, doneTable2, createTableColumnArray(dMember2, dActivities2, dHours2, dCost2), PieDone2);
-                j3 = 1;
+                j2 = 1;
             }
         }
     }
@@ -559,6 +562,7 @@ public class HelloController {
             }
         }
     }
+
 
     /**
      * Sets the Combo Box values to equal each card name and show their description when picked.

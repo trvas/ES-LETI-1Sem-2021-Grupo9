@@ -338,31 +338,6 @@ public class GitManager {
     /*--------------------COMMIT RELATED--------------------*/
 
     /**
-     * DEPRECATED.
-     *
-     * @return A list of Initial and final commit from the main branch in the repository.
-     * @throws IOException throws when GitHub is null.
-     * @deprecated use getCommits
-     */
-    @Deprecated
-    public @NotNull List<CommitsDataGit> getCommitDataFromRoot() throws IOException {
-        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME);
-
-        List<GHCommit> commits = getRepo.listCommits().toList();
-        if (commitsDataRoot.isEmpty()) {
-            commits.forEach((s) -> {
-                try {
-                    CommitsDataGit commitData = new CommitsDataGit(s.getCommitShortInfo(), s.getCommitDate(), s.getAuthor());
-                    commitsDataRoot.add(commitData);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-        return commitsDataRoot;
-    }
-
-    /**
      * Function to get Commits from the Branches, since the API does not allow for that.
      *
      * @param user       User's login to look for their commits in the project.
@@ -392,32 +367,6 @@ public class GitManager {
             }
         }
         return new CommitUnpack(user, commits);
-    }
-
-    /**
-     * DEPRECATED.
-     *
-     * @param userLogin name of the user to retrieve the commits.
-     * @return returns a String which contains the initial and final commit from the repository main branch
-     * @throws IOException throws when GitHub is null.
-     * @deprecated use getCommits
-     */
-    @Deprecated
-    public @NotNull String commitsInRoot(String userLogin) throws IOException {
-        GHUser temp = gitHub.getUser(userLogin);
-        getCommitDataFromRoot();
-        List<String> info = new ArrayList<>();
-
-        for (CommitsDataGit commitsData : commitsDataRoot) {
-            if (commitsData.getUserName().equals(temp.getLogin())) {
-                info.add(commitsData.getDescription());
-            }
-        }
-        String latest = ("\nLatest commit: " + commitsDataRoot.get(0).getDescription() + "\nDate: " + commitsDataRoot.get(0).getDate() +
-                "\nUser: " + commitsDataRoot.get(0).getUserName() + "\n");
-        String initial = ("\nInitial commit: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDescription() + "\nDate: " + commitsDataRoot.get(commitsDataRoot.size() - 1).getDate() +
-                "\nUser: " + commitsDataRoot.get(getCommitDataFromRoot().size() - 1).getUserName() + "\n");
-        return "The user: " + temp.getLogin() + "\nHas these commits: " + info + " in the Root: " + gitHub.getRepository(userOfLogin.getLogin() + "/" + GITHUB_REPO_NAME).getDefaultBranch() + "\nWith a total of: " + info.size() + "\n" + initial + latest;
     }
 
     /*--------------------TAGS RELATED--------------------*/
