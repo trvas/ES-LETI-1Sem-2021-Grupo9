@@ -1,0 +1,587 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GitManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">es.grupo9</a>
+</div>
+
+<h1>Coverage Summary for Class: GitManager (es.grupo9)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GitManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.5%
+  </span>
+  <span class="absValue">
+    (23/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.5%
+  </span>
+  <span class="absValue">
+    (133/200)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GitManager$CommitHttpRequest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GitManager$CommitUnpack</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    89.7%
+  </span>
+  <span class="absValue">
+    (26/29)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    69%
+  </span>
+  <span class="absValue">
+    (149/216)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package es.grupo9;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.fasterxml.jackson.annotation.JsonAutoDetect;
+<i class="no-highlight">4</i>&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+<i class="no-highlight">5</i>&nbsp;import com.fasterxml.jackson.databind.DeserializationFeature;
+<i class="no-highlight">6</i>&nbsp;import com.fasterxml.jackson.databind.ObjectMapper;
+<i class="no-highlight">7</i>&nbsp;import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+<i class="no-highlight">8</i>&nbsp;import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
+<i class="no-highlight">9</i>&nbsp;import okhttp3.OkHttpClient;
+<i class="no-highlight">10</i>&nbsp;import okhttp3.Request;
+<i class="no-highlight">11</i>&nbsp;import okhttp3.Response;
+<i class="no-highlight">12</i>&nbsp;import org.jetbrains.annotations.NotNull;
+<i class="no-highlight">13</i>&nbsp;import org.kohsuke.github.*;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;import java.io.IOException;
+<i class="no-highlight">16</i>&nbsp;import java.io.InputStream;
+<i class="no-highlight">17</i>&nbsp;import java.net.URL;
+<i class="no-highlight">18</i>&nbsp;import java.nio.charset.StandardCharsets;
+<i class="no-highlight">19</i>&nbsp;import java.util.*;
+<i class="no-highlight">20</i>&nbsp;import java.util.stream.Collectors;
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;/**
+<i class="no-highlight">23</i>&nbsp; * GitManager class. Uses the Github API to search for information.
+<i class="no-highlight">24</i>&nbsp; */
+<i class="no-highlight">25</i>&nbsp;public class GitManager {
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;    private static String GITHUB_OAUTH; // gitHub&#39;s token
+<i class="no-highlight">28</i>&nbsp;    private static String GITHUB_LOGIN; // User&#39;s login
+<i class="no-highlight">29</i>&nbsp;    private static String GITHUB_REPO_NAME; //Name of the repository
+<i class="no-highlight">30</i>&nbsp;    private static String GITHUB_BRANCH_NAME; //Name of the branch
+<i class="no-highlight">31</i>&nbsp;    private static String COMMIT_REFERENCE; // Reference to get the file from.
+<i class="no-highlight">32</i>&nbsp;    private static String GITHUB_FILE_NAME; // Name of the file to look
+<i class="no-highlight">33</i>&nbsp;    private final GHUser userOfLogin;
+<i class="no-highlight">34</i>&nbsp;    private final GitHub gitHub;
+<b class="fc"><i class="no-highlight">35</i>&nbsp;    private boolean valid = false; // if the flag is set to true, then it moves</b>
+<i class="no-highlight">36</i>&nbsp;    private static final boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
+<b class="fc"><i class="no-highlight">37</i>&nbsp;    private List&lt;String&gt; collaboratorsNames = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;    private final List&lt;String&gt; branchesName = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;    private final OkHttpClient client = new OkHttpClient();</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;    private final String url;</b>
+<i class="no-highlight">41</i>&nbsp;    private final ObjectMapper mapper;
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;    /**
+<i class="no-highlight">44</i>&nbsp;     * Constructor function, creates an instance of GitManager.
+<i class="no-highlight">45</i>&nbsp;     *
+<i class="no-highlight">46</i>&nbsp;     * @param auth     User&#39;s Github TOKEN.
+<i class="no-highlight">47</i>&nbsp;     * @param userName User&#39;s Github LOGIN username.
+<i class="no-highlight">48</i>&nbsp;     * @param repoName Github repository name.
+<i class="no-highlight">49</i>&nbsp;     * @throws IOException throws exception when GitHub is null or GHUser is null.
+<i class="no-highlight">50</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">51</i>&nbsp;    public GitManager(String auth, String userName, String repoName) throws IOException {</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;        GITHUB_LOGIN = userName;</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        GITHUB_OAUTH = auth;</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        GITHUB_REPO_NAME = repoName;</b>
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        gitHub = new GitHubBuilder().withOAuthToken(GITHUB_OAUTH, GITHUB_LOGIN).build();</b>
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        userOfLogin = gitHub.getUser(GITHUB_LOGIN);</b>
+<b class="fc"><i class="no-highlight">57</i>&nbsp;        this.url = &quot;https://api.github.com/repos/&quot; + GITHUB_LOGIN + &quot;/&quot; + GITHUB_REPO_NAME;</b>
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        this.mapper = new ObjectMapper();</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        connect();</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;    }</b>
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    /**
+<i class="no-highlight">65</i>&nbsp;     * This complements the previous function by verifying that the information provided is correct
+<i class="no-highlight">66</i>&nbsp;     *
+<i class="no-highlight">67</i>&nbsp;     * @throws IOException throws when GitHub or GHuser is null.
+<i class="no-highlight">68</i>&nbsp;     */
+<i class="no-highlight">69</i>&nbsp;    public void connect() throws IOException {
+<b class="fc"><i class="no-highlight">70</i>&nbsp;        if (gitHub.isCredentialValid()) {</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;            valid = true;</b>
+<b class="fc"><i class="no-highlight">72</i>&nbsp;            GitHub.connect(GITHUB_LOGIN, GITHUB_OAUTH);</b>
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        }</b>
+<i class="no-highlight">74</i>&nbsp;    }
+<i class="no-highlight">75</i>&nbsp;
+<i class="no-highlight">76</i>&nbsp;    /**
+<i class="no-highlight">77</i>&nbsp;     * Gets the Github branch name.
+<i class="no-highlight">78</i>&nbsp;     *
+<i class="no-highlight">79</i>&nbsp;     * @return String Github branch name.
+<i class="no-highlight">80</i>&nbsp;     */
+<i class="no-highlight">81</i>&nbsp;    public String getGithubBranchName() {
+<b class="fc"><i class="no-highlight">82</i>&nbsp;        return GITHUB_BRANCH_NAME;</b>
+<b class="nc"><i class="no-highlight">83</i>&nbsp;    }</b>
+<i class="no-highlight">84</i>&nbsp;
+<i class="no-highlight">85</i>&nbsp;    /**
+<i class="no-highlight">86</i>&nbsp;     * Gets the Commit Reference.
+<i class="no-highlight">87</i>&nbsp;     *
+<i class="no-highlight">88</i>&nbsp;     * @return String Commit Reference.
+<i class="no-highlight">89</i>&nbsp;     */
+<i class="no-highlight">90</i>&nbsp;    public String getCommitReference() {
+<b class="fc"><i class="no-highlight">91</i>&nbsp;        return COMMIT_REFERENCE;</b>
+<b class="nc"><i class="no-highlight">92</i>&nbsp;    }</b>
+<i class="no-highlight">93</i>&nbsp;
+<i class="no-highlight">94</i>&nbsp;    /**
+<i class="no-highlight">95</i>&nbsp;     * Gets the Github File Name.
+<i class="no-highlight">96</i>&nbsp;     *
+<i class="no-highlight">97</i>&nbsp;     * @return String Github File name.
+<i class="no-highlight">98</i>&nbsp;     */
+<i class="no-highlight">99</i>&nbsp;    public String getGithubFileName() {
+<b class="fc"><i class="no-highlight">100</i>&nbsp;        return GITHUB_FILE_NAME;</b>
+<b class="nc"><i class="no-highlight">101</i>&nbsp;    }</b>
+<i class="no-highlight">102</i>&nbsp;
+<i class="no-highlight">103</i>&nbsp;    /**
+<i class="no-highlight">104</i>&nbsp;     * Sets the Github branch name.
+<i class="no-highlight">105</i>&nbsp;     *
+<i class="no-highlight">106</i>&nbsp;     * @param githubBranchName String New branch name.
+<i class="no-highlight">107</i>&nbsp;     */
+<i class="no-highlight">108</i>&nbsp;    public void setGithubBranchName(String githubBranchName) {
+<b class="fc"><i class="no-highlight">109</i>&nbsp;        GITHUB_BRANCH_NAME = githubBranchName;</b>
+<b class="nc"><i class="no-highlight">110</i>&nbsp;    }</b>
+<i class="no-highlight">111</i>&nbsp;
+<i class="no-highlight">112</i>&nbsp;    /**
+<i class="no-highlight">113</i>&nbsp;     * Sets the Commit Reference.
+<i class="no-highlight">114</i>&nbsp;     *
+<i class="no-highlight">115</i>&nbsp;     * @param commitReference String New reference.
+<i class="no-highlight">116</i>&nbsp;     */
+<i class="no-highlight">117</i>&nbsp;    public void setCommitReference(String commitReference) {
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        COMMIT_REFERENCE = commitReference;</b>
+<b class="nc"><i class="no-highlight">119</i>&nbsp;    }</b>
+<i class="no-highlight">120</i>&nbsp;
+<i class="no-highlight">121</i>&nbsp;    /**
+<i class="no-highlight">122</i>&nbsp;     * Sets the Github File name.
+<i class="no-highlight">123</i>&nbsp;     *
+<i class="no-highlight">124</i>&nbsp;     * @param githubFileName String New file name.
+<i class="no-highlight">125</i>&nbsp;     */
+<i class="no-highlight">126</i>&nbsp;    public void setGithubFileName(String githubFileName) {
+<b class="fc"><i class="no-highlight">127</i>&nbsp;        GITHUB_FILE_NAME = githubFileName;</b>
+<b class="nc"><i class="no-highlight">128</i>&nbsp;    }</b>
+<i class="no-highlight">129</i>&nbsp;
+<i class="no-highlight">130</i>&nbsp;    /*--------------------COLLABORATORS RELATED--------------------*/
+<i class="no-highlight">131</i>&nbsp;
+<i class="no-highlight">132</i>&nbsp;    /**
+<i class="no-highlight">133</i>&nbsp;     * Gets the name of the collaborators of the repository.
+<i class="no-highlight">134</i>&nbsp;     *
+<i class="no-highlight">135</i>&nbsp;     * @return String Name of all the collaborators
+<i class="no-highlight">136</i>&nbsp;     * @throws IOException Thrown due to GHUser
+<i class="no-highlight">137</i>&nbsp;     */
+<i class="no-highlight">138</i>&nbsp;    @org.jetbrains.annotations.NotNull
+<i class="no-highlight">139</i>&nbsp;    public List&lt;String&gt; getCollaborators() throws IOException {
+<b class="fc"><i class="no-highlight">140</i>&nbsp;        Set&lt;String&gt; collaboratorNames = userOfLogin.getRepository(GITHUB_REPO_NAME).getCollaboratorNames();</b>
+<b class="fc"><i class="no-highlight">141</i>&nbsp;        this.collaboratorsNames = new ArrayList&lt;&gt;(collaboratorNames);</b>
+<b class="fc"><i class="no-highlight">142</i>&nbsp;        return collaboratorsNames;</b>
+<b class="fc"><i class="no-highlight">143</i>&nbsp;    }</b>
+<i class="no-highlight">144</i>&nbsp;
+<i class="no-highlight">145</i>&nbsp;    /*--------------------USER RELATED--------------------*/
+<i class="no-highlight">146</i>&nbsp;
+<i class="no-highlight">147</i>&nbsp;    /**
+<i class="no-highlight">148</i>&nbsp;     * Gathers all the users&#39; information from a repository.
+<i class="no-highlight">149</i>&nbsp;     *
+<i class="no-highlight">150</i>&nbsp;     * @return A List of All the information from the Collaborators from the repository in question.
+<i class="no-highlight">151</i>&nbsp;     * @throws IOException thrown when the GHuser is null.
+<i class="no-highlight">152</i>&nbsp;     */
+<i class="no-highlight">153</i>&nbsp;    public @NotNull List&lt;String&gt; userInfo() throws IOException {
+<i class="no-highlight">154</i>&nbsp;        GHUser user;
+<i class="no-highlight">155</i>&nbsp;        String info;
+<b class="fc"><i class="no-highlight">156</i>&nbsp;        List&lt;String&gt; collaboratorsInfo = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">157</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">158</i>&nbsp;        for (String collaboratorName : collaboratorsNames) {</b>
+<b class="fc"><i class="no-highlight">159</i>&nbsp;            info = getUserDataString(collaboratorName);</b>
+<b class="fc"><i class="no-highlight">160</i>&nbsp;            collaboratorsInfo.add(info);</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">162</i>&nbsp;        return collaboratorsInfo;</b>
+<b class="nc"><i class="no-highlight">163</i>&nbsp;    }</b>
+<i class="no-highlight">164</i>&nbsp;
+<i class="no-highlight">165</i>&nbsp;    /**
+<i class="no-highlight">166</i>&nbsp;     * Function to get User Data in a String format.
+<i class="no-highlight">167</i>&nbsp;     *
+<i class="no-highlight">168</i>&nbsp;     * @param collaboratorName Name of GHUser.
+<i class="no-highlight">169</i>&nbsp;     * @return String with all the user Data from their profile.
+<i class="no-highlight">170</i>&nbsp;     * @throws IOException due to GHUser potentially being null
+<i class="no-highlight">171</i>&nbsp;     */
+<i class="no-highlight">172</i>&nbsp;    @NotNull
+<i class="no-highlight">173</i>&nbsp;    private String getUserDataString(String collaboratorName) throws IOException {
+<i class="no-highlight">174</i>&nbsp;        GHUser user;
+<i class="no-highlight">175</i>&nbsp;        String info;
+<b class="fc"><i class="no-highlight">176</i>&nbsp;        user = gitHub.getUser(collaboratorName);</b>
+<b class="nc"><i class="no-highlight">177</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">178</i>&nbsp;        String name = user.getName();</b>
+<b class="fc"><i class="no-highlight">179</i>&nbsp;        URL url = user.getHtmlUrl();</b>
+<b class="nc"><i class="no-highlight">180</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">181</i>&nbsp;        String avatarUrl = user.getAvatarUrl();</b>
+<b class="fc"><i class="no-highlight">182</i>&nbsp;        String login = user.getLogin();</b>
+<b class="fc"><i class="no-highlight">183</i>&nbsp;        String email = getUserInformation(user.getEmail(), &quot;Email not public&quot;);</b>
+<b class="fc"><i class="no-highlight">184</i>&nbsp;        String bio = getUserInformation(user.getBio(), &quot;No bio available&quot;);</b>
+<b class="fc"><i class="no-highlight">185</i>&nbsp;        String location = getUserInformation(user.getLocation(), &quot;Unknown location&quot;);</b>
+<b class="fc"><i class="no-highlight">186</i>&nbsp;        String twtUser = getUserInformation(user.getTwitterUsername(), &quot;No Twitter available&quot;);</b>
+<b class="fc"><i class="no-highlight">187</i>&nbsp;        String company = getUserInformation(user.getCompany(), &quot;No company&quot;);</b>
+<b class="nc"><i class="no-highlight">188</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">189</i>&nbsp;        info = url + &quot;\n&quot; + avatarUrl + &quot;\n&quot; + name + &quot;;\n&quot; + login + &quot;;\n&quot; + email + &quot;;\n&quot; + bio + &quot;;\n&quot; + location + &quot;;\n&quot; + twtUser + &quot;;\n&quot; + company + &quot;.\n&quot;;</b>
+<b class="fc"><i class="no-highlight">190</i>&nbsp;        return info;</b>
+<b class="nc"><i class="no-highlight">191</i>&nbsp;    }</b>
+<i class="no-highlight">192</i>&nbsp;
+<i class="no-highlight">193</i>&nbsp;    /**
+<i class="no-highlight">194</i>&nbsp;     * This function is simply to ease the previous one in the aspect that if any information is missing, it&#39;s simply replaced.
+<i class="no-highlight">195</i>&nbsp;     *
+<i class="no-highlight">196</i>&nbsp;     * @param userInformation Gets the user information from Github.
+<i class="no-highlight">197</i>&nbsp;     * @param backup          Set so if the previous param is null it returns this String instead.
+<i class="no-highlight">198</i>&nbsp;     * @return String Information which corresponds to the query.
+<i class="no-highlight">199</i>&nbsp;     */
+<i class="no-highlight">200</i>&nbsp;    private String getUserInformation(String userInformation, String backup) {
+<b class="fc"><i class="no-highlight">201</i>&nbsp;        String information = userInformation;</b>
+<b class="fc"><i class="no-highlight">202</i>&nbsp;        if (information == null) information = backup;</b>
+<b class="fc"><i class="no-highlight">203</i>&nbsp;        return information;</b>
+<b class="nc"><i class="no-highlight">204</i>&nbsp;    }</b>
+<i class="no-highlight">205</i>&nbsp;
+<i class="no-highlight">206</i>&nbsp;    /*--------------------REPOSITORY RELATED--------------------*/
+<i class="no-highlight">207</i>&nbsp;
+<i class="no-highlight">208</i>&nbsp;    /**
+<i class="no-highlight">209</i>&nbsp;     * Gathers all the repositories that the user has or participated in, although only shows the public ones it does also count the privates.
+<i class="no-highlight">210</i>&nbsp;     *
+<i class="no-highlight">211</i>&nbsp;     * @return returns a String with the user&#39;s repositories.
+<i class="no-highlight">212</i>&nbsp;     * @throws IOException thrown when the GHuser is null
+<i class="no-highlight">213</i>&nbsp;     */
+<i class="no-highlight">214</i>&nbsp;    public Map&lt;String, List&lt;String&gt;&gt; userRepositories() throws IOException {
+<b class="fc"><i class="no-highlight">215</i>&nbsp;        Map&lt;String, List&lt;String&gt;&gt; repositoriesUserData = new HashMap&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">216</i>&nbsp;        GHUser user;</b>
+<i class="no-highlight">217</i>&nbsp;
+<b class="fc"><i class="no-highlight">218</i>&nbsp;        for (String collaboratorsName : collaboratorsNames) {</b>
+<b class="fc"><i class="no-highlight">219</i>&nbsp;            user = gitHub.getUser(collaboratorsName);</b>
+<b class="nc"><i class="no-highlight">220</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">221</i>&nbsp;            Map&lt;String, GHRepository&gt; temp = user.getRepositories();</b>
+<b class="fc"><i class="no-highlight">222</i>&nbsp;            repositoriesUserData.put(user.getLogin(), temp.values().stream().map(GHRepository::getName).collect(Collectors.toList()));</b>
+<b class="fc"><i class="no-highlight">223</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">224</i>&nbsp;        return repositoriesUserData;</b>
+<b class="nc"><i class="no-highlight">225</i>&nbsp;    }</b>
+<i class="no-highlight">226</i>&nbsp;
+<i class="no-highlight">227</i>&nbsp;    /**
+<i class="no-highlight">228</i>&nbsp;     * Gets the Total number of Public and Private (user&#39;s token only) repositories of each collaborator.
+<i class="no-highlight">229</i>&nbsp;     *
+<i class="no-highlight">230</i>&nbsp;     * @return String containing the information mentioned above
+<i class="no-highlight">231</i>&nbsp;     * @throws IOException thrown due to GHUser
+<i class="no-highlight">232</i>&nbsp;     */
+<i class="no-highlight">233</i>&nbsp;    public @NotNull List&lt;String&gt; numberOfRepositoriesOwned() throws IOException {
+<i class="no-highlight">234</i>&nbsp;        GHUser user;
+<i class="no-highlight">235</i>&nbsp;        String publicRepositories;
+<i class="no-highlight">236</i>&nbsp;        String privateRepositories;
+<b class="fc"><i class="no-highlight">237</i>&nbsp;        List&lt;String&gt; out = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">238</i>&nbsp;        int repoCount;</b>
+<i class="no-highlight">239</i>&nbsp;        int privateRepoCount;
+<i class="no-highlight">240</i>&nbsp;        Optional&lt;Integer&gt; privateRepositoryCount;
+<i class="no-highlight">241</i>&nbsp;
+<b class="fc"><i class="no-highlight">242</i>&nbsp;        for (String collaboratorsName : collaboratorsNames) {</b>
+<b class="fc"><i class="no-highlight">243</i>&nbsp;            user = gitHub.getUser(collaboratorsName);</b>
+<b class="nc"><i class="no-highlight">244</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">245</i>&nbsp;            publicRepositories = &quot;Number of Public Repositories: &quot;;</b>
+<b class="fc"><i class="no-highlight">246</i>&nbsp;            privateRepositories = &quot;Number of Private Repositories: &quot;;</b>
+<b class="nc"><i class="no-highlight">247</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">248</i>&nbsp;            repoCount = user.getPublicRepoCount();</b>
+<b class="fc"><i class="no-highlight">249</i>&nbsp;            if (user.getPublicRepoCount() == 0) {</b>
+<b class="fc"><i class="no-highlight">250</i>&nbsp;                publicRepositories = &quot;No Public Repositories. &quot;;</b>
+<b class="nc"><i class="no-highlight">251</i>&nbsp;            }</b>
+<i class="no-highlight">252</i>&nbsp;
+<b class="fc"><i class="no-highlight">253</i>&nbsp;            privateRepositoryCount = user.getTotalPrivateRepoCount();</b>
+<b class="fc"><i class="no-highlight">254</i>&nbsp;            if (privateRepositoryCount.isEmpty()) {</b>
+<b class="fc"><i class="no-highlight">255</i>&nbsp;                privateRepoCount = 0;</b>
+<b class="fc"><i class="no-highlight">256</i>&nbsp;                privateRepositories = &quot;No visible Private Repositories. &quot;;</b>
+<b class="nc"><i class="no-highlight">257</i>&nbsp;            } else {</b>
+<b class="fc"><i class="no-highlight">258</i>&nbsp;                privateRepoCount = privateRepositoryCount.get();</b>
+<b class="nc"><i class="no-highlight">259</i>&nbsp;            }</b>
+<b class="fc"><i class="no-highlight">260</i>&nbsp;            out.add(&quot;\n&quot; + user.getLogin() + &quot;\n&quot; + publicRepositories + repoCount + &quot;\n&quot; + privateRepositories + privateRepoCount);</b>
+<b class="fc"><i class="no-highlight">261</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">262</i>&nbsp;        return out;</b>
+<b class="nc"><i class="no-highlight">263</i>&nbsp;    }</b>
+<i class="no-highlight">264</i>&nbsp;
+<i class="no-highlight">265</i>&nbsp;    /*--------------------BRANCHES RELATED--------------------*/
+<i class="no-highlight">266</i>&nbsp;
+<i class="no-highlight">267</i>&nbsp;    /**
+<i class="no-highlight">268</i>&nbsp;     * Returns all the branches in the repository.
+<i class="no-highlight">269</i>&nbsp;     *
+<i class="no-highlight">270</i>&nbsp;     * @return A list of Names of the branches.
+<i class="no-highlight">271</i>&nbsp;     * @throws Exception thrown when the GHuser is null.
+<i class="no-highlight">272</i>&nbsp;     */
+<i class="no-highlight">273</i>&nbsp;    public @NotNull List&lt;String&gt; getBranchesInRepository() throws Exception {
+<b class="fc"><i class="no-highlight">274</i>&nbsp;        if (branchesName.isEmpty()) {</b>
+<b class="fc"><i class="no-highlight">275</i>&nbsp;            Map&lt;String, GHBranch&gt; getRepos = gitHub.getRepository(userOfLogin.getLogin() + &quot;/&quot; + GITHUB_REPO_NAME).getBranches();</b>
+<b class="fc"><i class="no-highlight">276</i>&nbsp;            getRepos.forEach((r, s) -&gt; this.branchesName.add(r));</b>
+<b class="fc"><i class="no-highlight">277</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">278</i>&nbsp;        return this.branchesName;</b>
+<b class="fc"><i class="no-highlight">279</i>&nbsp;    }</b>
+<i class="no-highlight">280</i>&nbsp;
+<i class="no-highlight">281</i>&nbsp;    /*--------------------FILE RELATED--------------------*/
+<i class="no-highlight">282</i>&nbsp;
+<i class="no-highlight">283</i>&nbsp;    /**
+<i class="no-highlight">284</i>&nbsp;     * Gets the README from the repository and reads the data in it.
+<i class="no-highlight">285</i>&nbsp;     *
+<i class="no-highlight">286</i>&nbsp;     * @return String Content of the README file
+<i class="no-highlight">287</i>&nbsp;     * @throws IOException thrown when the GHuser is null
+<i class="no-highlight">288</i>&nbsp;     */
+<i class="no-highlight">289</i>&nbsp;    public @NotNull String getReadMe() throws IOException {
+<b class="fc"><i class="no-highlight">290</i>&nbsp;        GHContent readMeContents = userOfLogin.getRepository(GITHUB_REPO_NAME).getReadme();</b>
+<b class="fc"><i class="no-highlight">291</i>&nbsp;        InputStream readMe = readMeContents.read();</b>
+<b class="fc"><i class="no-highlight">292</i>&nbsp;        return new String(readMe.readAllBytes(), StandardCharsets.UTF_8);</b>
+<b class="nc"><i class="no-highlight">293</i>&nbsp;    }</b>
+<i class="no-highlight">294</i>&nbsp;
+<i class="no-highlight">295</i>&nbsp;    /**
+<i class="no-highlight">296</i>&nbsp;     * Gets Branches and their Files from a repository.
+<i class="no-highlight">297</i>&nbsp;     *
+<i class="no-highlight">298</i>&nbsp;     * @return A map of Name of the Branch and the Files inside it.
+<i class="no-highlight">299</i>&nbsp;     * @throws IOException thrown due to the GitHub.
+<i class="no-highlight">300</i>&nbsp;     */
+<i class="no-highlight">301</i>&nbsp;    public @NotNull Map&lt;String, List&lt;String&gt;&gt; getFiles() throws Exception {
+<b class="fc"><i class="no-highlight">302</i>&nbsp;        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + &quot;/&quot; + GITHUB_REPO_NAME);</b>
+<b class="fc"><i class="no-highlight">303</i>&nbsp;        Map&lt;String, GHBranch&gt; getRepos = gitHub.getRepository(userOfLogin.getLogin() + &quot;/&quot; + GITHUB_REPO_NAME).getBranches();</b>
+<b class="fc"><i class="no-highlight">304</i>&nbsp;        List&lt;String&gt; branchesSha = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">305</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">306</i>&nbsp;        Map&lt;String, List&lt;String&gt;&gt; files = new HashMap&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">307</i>&nbsp;        List&lt;String&gt; filesInBranch = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">308</i>&nbsp;        GHTree tree;</b>
+<i class="no-highlight">309</i>&nbsp;
+<b class="fc"><i class="no-highlight">310</i>&nbsp;        getRepos.forEach((r, s) -&gt; branchesSha.add(s.getSHA1()));</b>
+<b class="nc"><i class="no-highlight">311</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">312</i>&nbsp;        for (int i = 0; i &lt; branchesName.size(); i++) {</b>
+<b class="fc"><i class="no-highlight">313</i>&nbsp;            tree = getRepo.getTree(branchesSha.get(i));</b>
+<b class="fc"><i class="no-highlight">314</i>&nbsp;            for (int j = 0; j &lt; tree.getTree().size(); j++) {</b>
+<b class="fc"><i class="no-highlight">315</i>&nbsp;                filesInBranch.add(tree.getTree().get(j).getPath());</b>
+<b class="nc"><i class="no-highlight">316</i>&nbsp;            }</b>
+<b class="fc"><i class="no-highlight">317</i>&nbsp;            files.put(branchesName.get(i), filesInBranch);</b>
+<b class="fc"><i class="no-highlight">318</i>&nbsp;            filesInBranch = new ArrayList&lt;&gt;(); // to clean the List before the new entries</b>
+<b class="nc"><i class="no-highlight">319</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">320</i>&nbsp;        return files;</b>
+<b class="nc"><i class="no-highlight">321</i>&nbsp;    }</b>
+<i class="no-highlight">322</i>&nbsp;
+<i class="no-highlight">323</i>&nbsp;
+<i class="no-highlight">324</i>&nbsp;    /**
+<i class="no-highlight">325</i>&nbsp;     * Retrieves and reads the content of the file in question
+<i class="no-highlight">326</i>&nbsp;     *
+<i class="no-highlight">327</i>&nbsp;     * @param fileName Name of the file
+<i class="no-highlight">328</i>&nbsp;     * @param ref      Commit reference of the file.
+<i class="no-highlight">329</i>&nbsp;     * @return String Contents of the file, be it in python, java, or any other language.
+<i class="no-highlight">330</i>&nbsp;     * @throws IOException thrown when the GHuser is null.
+<i class="no-highlight">331</i>&nbsp;     */
+<i class="no-highlight">332</i>&nbsp;    public @NotNull String readFileContent(String fileName, String ref) throws IOException {
+<b class="fc"><i class="no-highlight">333</i>&nbsp;        InputStream fileReading = userOfLogin.getRepository(GITHUB_REPO_NAME).getFileContent(fileName, ref).read();</b>
+<b class="fc"><i class="no-highlight">334</i>&nbsp;        return new String(fileReading.readAllBytes(), StandardCharsets.UTF_8);</b>
+<b class="nc"><i class="no-highlight">335</i>&nbsp;    }</b>
+<i class="no-highlight">336</i>&nbsp;
+<i class="no-highlight">337</i>&nbsp;    /*--------------------COMMIT RELATED--------------------*/
+<i class="no-highlight">338</i>&nbsp;
+<i class="no-highlight">339</i>&nbsp;    /**
+<i class="no-highlight">340</i>&nbsp;     * Function to get Commits from the Branches, since the API does not allow for that.
+<i class="no-highlight">341</i>&nbsp;     *
+<i class="no-highlight">342</i>&nbsp;     * @param user       User&#39;s login to look for their commits in the project.
+<i class="no-highlight">343</i>&nbsp;     * @param branchName Branch in which to look for, for the commits.
+<i class="no-highlight">344</i>&nbsp;     * @return returns a Map into a nested class for it to be able to be processed and used.
+<i class="no-highlight">345</i>&nbsp;     * @throws IOException throws Exception due to .execute and .string.
+<i class="no-highlight">346</i>&nbsp;     */
+<i class="no-highlight">347</i>&nbsp;    public CommitUnpack getCommits(String user, String branchName) throws IOException {
+<b class="fc"><i class="no-highlight">348</i>&nbsp;        List&lt;CommitHttpRequest&gt; commits = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">349</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">350</i>&nbsp;        int page = 1;</b>
+<b class="nc"><i class="no-highlight">351</i>&nbsp;        while (true) {</b>
+<b class="fc"><i class="no-highlight">352</i>&nbsp;            Request request = new Request.Builder()</b>
+<b class="fc"><i class="no-highlight">353</i>&nbsp;                    .addHeader(&quot;Authorization&quot;, &quot;Bearer &quot; + GITHUB_OAUTH)</b>
+<b class="fc"><i class="no-highlight">354</i>&nbsp;                    .url(String.format(this.url + &quot;/commits?&quot; + &quot;&amp;author=&quot; + user + &quot;&amp;sha=&quot; + branchName + &quot;&amp;page=%d&quot;, page++)).build();</b>
+<b class="fc"><i class="no-highlight">355</i>&nbsp;            try (Response response = client.newCall(request).execute()) {</b>
+<b class="nc"><i class="no-highlight">356</i>&nbsp;                try {</b>
+<b class="fc"><i class="no-highlight">357</i>&nbsp;                    var cm = this.mapper.readValue(Objects.requireNonNull(response.body()).string(), CommitHttpRequest[].class);</b>
+<b class="fc"><i class="no-highlight">358</i>&nbsp;                    if (cm.length == 0) {</b>
+<b class="nc"><i class="no-highlight">359</i>&nbsp;                        break;</b>
+<i class="no-highlight">360</i>&nbsp;                    }
+<i class="no-highlight">361</i>&nbsp;
+<b class="fc"><i class="no-highlight">362</i>&nbsp;                    commits.addAll(Arrays.asList(cm));</b>
+<b class="nc"><i class="no-highlight">363</i>&nbsp;                } catch (MismatchedInputException e) {</b>
+<i class="no-highlight">364</i>&nbsp;                    break;
+<b class="fc"><i class="no-highlight">365</i>&nbsp;                }</b>
+<b class="fc"><i class="no-highlight">366</i>&nbsp;            }</b>
+<b class="fc"><i class="no-highlight">367</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">368</i>&nbsp;        return new CommitUnpack(user, commits);</b>
+<i class="no-highlight">369</i>&nbsp;    }
+<i class="no-highlight">370</i>&nbsp;
+<i class="no-highlight">371</i>&nbsp;    /*--------------------TAGS RELATED--------------------*/
+<i class="no-highlight">372</i>&nbsp;
+<i class="no-highlight">373</i>&nbsp;    /**
+<b class="fc"><i class="no-highlight">374</i>&nbsp;     * Function to return the Tags that were made in a Repository.</b>
+<i class="no-highlight">375</i>&nbsp;     *
+<b class="fc"><i class="no-highlight">376</i>&nbsp;     * @return Returns a Map with the Name of the Tag, and it&#39;s Date of publish</b>
+<i class="no-highlight">377</i>&nbsp;     * @throws IOException Thrown due to GitHub
+<b class="fc"><i class="no-highlight">378</i>&nbsp;     */</b>
+<b class="fc"><i class="no-highlight">379</i>&nbsp;    public List&lt;Object[]&gt; getTag() throws IOException {</b>
+<b class="fc"><i class="no-highlight">380</i>&nbsp;        GHRepository getRepo = gitHub.getRepository(userOfLogin.getLogin() + &quot;/&quot; + GITHUB_REPO_NAME);</b>
+<b class="fc"><i class="no-highlight">381</i>&nbsp;        List&lt;GHTag&gt; tags = getRepo.listTags().toList();</b>
+<b class="fc"><i class="no-highlight">382</i>&nbsp;        List&lt;String&gt; tagNames = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">383</i>&nbsp;        List&lt;GHCommit&gt; tagCommits = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">384</i>&nbsp;        List&lt;Date&gt; tagDate = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">385</i>&nbsp;        List&lt;Object[]&gt; out = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">386</i>&nbsp;
+<b class="fc"><i class="no-highlight">387</i>&nbsp;        tags.forEach(s -&gt; {</b>
+<b class="fc"><i class="no-highlight">388</i>&nbsp;            tagNames.add(s.getName());</b>
+<b class="fc"><i class="no-highlight">389</i>&nbsp;            tagCommits.add(s.getCommit());</b>
+<i class="no-highlight">390</i>&nbsp;        });
+<b class="fc"><i class="no-highlight">391</i>&nbsp;</b>
+<b class="fc"><i class="no-highlight">392</i>&nbsp;        tagCommits.forEach((s) -&gt; {</b>
+<b class="fc"><i class="no-highlight">393</i>&nbsp;            try {</b>
+<b class="fc"><i class="no-highlight">394</i>&nbsp;                tagDate.add(s.getCommitDate());</b>
+<b class="nc"><i class="no-highlight">395</i>&nbsp;            } catch (IOException e) {</b>
+<b class="nc"><i class="no-highlight">396</i>&nbsp;                e.printStackTrace();</b>
+<b class="fc"><i class="no-highlight">397</i>&nbsp;            }</b>
+<i class="no-highlight">398</i>&nbsp;        });
+<b class="fc"><i class="no-highlight">399</i>&nbsp;        for (int i = 0; i &lt; tagNames.size(); i++) {</b>
+<b class="fc"><i class="no-highlight">400</i>&nbsp;            out.add(new Object[]{tagNames.get(i), tagDate.get(i)});</b>
+<i class="no-highlight">401</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">402</i>&nbsp;        return out;</b>
+<i class="no-highlight">403</i>&nbsp;    }
+<i class="no-highlight">404</i>&nbsp;
+<i class="no-highlight">405</i>&nbsp;    /*--------------------ADDITIONAL CLASSES--------------------*/
+<i class="no-highlight">406</i>&nbsp;
+<b class="nc"><i class="no-highlight">407</i>&nbsp;    /**</b>
+<b class="nc"><i class="no-highlight">408</i>&nbsp;     * Class to allow the HttpRequest data from the commits to be processed and analysed.</b>
+<b class="nc"><i class="no-highlight">409</i>&nbsp;     */</b>
+<b class="fc"><i class="no-highlight">410</i>&nbsp;    public static class CommitHttpRequest {</b>
+<b class="nc"><i class="no-highlight">411</i>&nbsp;        public String commitDate;</b>
+<b class="nc"><i class="no-highlight">412</i>&nbsp;        public String commitMessage;</b>
+<b class="nc"><i class="no-highlight">413</i>&nbsp;</b>
+<i class="no-highlight">414</i>&nbsp;        @SuppressWarnings(&quot;unchecked&quot;)
+<b class="nc"><i class="no-highlight">415</i>&nbsp;        @JsonProperty(&quot;commit&quot;)</b>
+<b class="nc"><i class="no-highlight">416</i>&nbsp;        public void unpack(Map&lt;String, Object&gt; commit) {</b>
+<b class="pc"><i class="no-highlight">417</i>&nbsp;            this.commitMessage = (String) commit.get(&quot;message&quot;);</b>
+<b class="pc"><i class="no-highlight">418</i>&nbsp;            Map&lt;String, String&gt; committer = (Map&lt;String, String&gt;) commit.get(&quot;author&quot;);</b>
+<b class="pc"><i class="no-highlight">419</i>&nbsp;            this.commitDate = committer.get(&quot;date&quot;);</b>
+<b class="pc"><i class="no-highlight">420</i>&nbsp;            commitDate = commitDate.substring(0, commitDate.indexOf(&quot;T&quot;));</b>
+<i class="no-highlight">421</i>&nbsp;        }
+<i class="no-highlight">422</i>&nbsp;    }
+<i class="no-highlight">423</i>&nbsp;
+<i class="no-highlight">424</i>&nbsp;    /**
+<i class="no-highlight">425</i>&nbsp;     * Nested class used in the function to get the commits from the branches, accepts a Map and breaks it down
+<i class="no-highlight">426</i>&nbsp;     * into the several components.
+<i class="no-highlight">427</i>&nbsp;     */
+<i class="no-highlight">428</i>&nbsp;    public static class CommitUnpack {
+<i class="no-highlight">429</i>&nbsp;        String name;
+<i class="no-highlight">430</i>&nbsp;        List&lt;CommitHttpRequest&gt; commits;
+<i class="no-highlight">431</i>&nbsp;
+<b class="pc"><i class="no-highlight">432</i>&nbsp;        public CommitUnpack(String personName, List&lt;CommitHttpRequest&gt; cms) {</b>
+<b class="pc"><i class="no-highlight">433</i>&nbsp;            this.name = personName;</b>
+<b class="pc"><i class="no-highlight">434</i>&nbsp;            this.commits = cms;</b>
+<b class="nc"><i class="no-highlight">435</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">436</i>&nbsp;    }</b>
+<b class="nc"><i class="no-highlight">437</i>&nbsp;}</b>
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-08 02:14</div>
+</div>
+</body>
+</html>

@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ES-LETI-1Sem-2021-Grupo9_2" options="--add-modules java.base" />
+      <module name="ES-LETI-1Sem-2021-Grupo9_2" options="" />
     </option>
   </component>
 </project>

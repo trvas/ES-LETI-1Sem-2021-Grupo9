@@ -13,7 +13,7 @@ class TrelloManagerTest {
 
     @BeforeEach
     void setUp() {
-        trelloManager = new TrelloManager(config.API_KEY, config.MY_TOKEN, config.BOARD_ID);
+        trelloManager = new TrelloManager("APIKEY", "TOKEN", "614de300aa6df33863299b6c");
     }
 
     @AfterEach
@@ -22,7 +22,7 @@ class TrelloManagerTest {
 
     @Test
     void getFinishedSprintBacklog() throws IOException {
-        // Primerio cartão do Sprint Backlog = 6197c87a5866b715bad2059e
+        // Primeiro cartão do Sprint Backlog = 6197c87a5866b715bad2059e
         Assertions.assertEquals("6197c87a5866b715bad2059e",trelloManager.getFinishedSprintBacklog(1).get(0).getId());
     }
 
@@ -57,7 +57,7 @@ class TrelloManagerTest {
     void getCardHours() throws IOException {
         // Card ID = 6160c5f03670208ff6030598
         // Values for card = [5.66, 8.0]
-        Double[] expected = new Double[]{5.66, 8.0};
+        Double[] expected = new Double[]{5.659999999999999, 8.0};
 
         Assertions.assertArrayEquals(expected, trelloManager.getCardHours("6160c5f03670208ff6030598"));
     }
@@ -80,8 +80,18 @@ class TrelloManagerTest {
     }
 
     @Test
-    void getDate() throws IOException {
-        String expected = "Data de início: 20/11/2021\nData de fim: 4/12/2021";
-        Assertions.assertEquals(expected, trelloManager.getDate(1));
+    void getSprintDate() throws IOException {
+        String expected = "Data de início: 12/10/2021 \nData de fim: 26/10/2021 ";
+        Assertions.assertEquals(expected, trelloManager.getSprintDate(1));
+    }
+
+    @Test
+    void getProjectName() {
+        Assertions.assertEquals("ES-LETI-1Sem-2021-Grupo9", trelloManager.getProjectName());
+    }
+
+    @Test
+    void getBeginningDate() throws IOException {
+        Assertions.assertEquals(" 12/10/2021 ", trelloManager.getBeginningDate());
     }
 }

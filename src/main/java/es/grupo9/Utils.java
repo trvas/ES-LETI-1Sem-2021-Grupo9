@@ -8,17 +8,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class with all the "general" functions needed (that don't specifically use Trello or Github, or need to use both).
+ */
 public class Utils {
 
     // Price per hour worked
-    private static int price = 20;
+    private static double price = 20;
 
     /**
      * Sets the price per hour to be used to calculate costs.
      *
      * @param newPrice new price value.
      */
-    public static void setPrice(int newPrice) {
+    public static void setPrice(double newPrice) {
         price = newPrice;
     }
 
@@ -28,12 +31,10 @@ public class Utils {
      * @param hours hours worked.
      * @return int cost of the hours worked.
      */
-    public static Double getCost(Double hours) {
+    public static double getCost(double hours) {
         DecimalFormat df = new DecimalFormat("#.##");
 
-        Double cost = hours * price;
-
-        return Double.valueOf(df.format(cost));
+        return Double.parseDouble(df.format(hours * price));
     }
 
     /**
@@ -42,7 +43,7 @@ public class Utils {
      * @param array array of doubles.
      * @return Double sum of all the hours.
      */
-    public static Double getSum(Double[] array) {
+    public static double getSum(Double[] array) {
         double sum = 0.0;
 
         for (Double dbl : array) if (dbl != null) sum += dbl;
