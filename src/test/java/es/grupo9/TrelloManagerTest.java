@@ -13,7 +13,7 @@ class TrelloManagerTest {
 
     @BeforeEach
     void setUp() {
-        trelloManager = new TrelloManager("APIKEY", "TOKEN", "BOARD");
+        trelloManager = new TrelloManager("APIKEY", "TOKEN", "614de300aa6df33863299b6c");
     }
 
     @AfterEach

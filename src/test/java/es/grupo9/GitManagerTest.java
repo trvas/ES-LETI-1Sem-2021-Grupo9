@@ -13,7 +13,7 @@ class GitManagerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gitManager = new GitManager("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", "Henrique-DeSousa", "test_repo");
+        gitManager = new GitManager("AUTH", "Henrique-DeSousa", "test_repo");
         gitManager.getCollaborators();
     }
 

@@ -14,8 +14,8 @@ public class UtilsTest {
 
     @BeforeEach
     public void SetUp() throws IOException {
-        gitManager = new GitManager("AUTH", "USERNAME", "REPO");
-        trelloManager = new TrelloManager("APIKEY", "TOKEN", "BOARD");
+        gitManager = new GitManager("AUTH", "Henrique-deSousa", "test_repo");
+        trelloManager = new TrelloManager("APIKEY", "TOKEN", "614de300aa6df33863299b6c");
     }
 
     @Test
@@ -42,10 +42,3 @@ public class UtilsTest {
         Assertions.assertTrue(new File("info.csv").exists());
     }
 }
-
-
-
-
-
-
-
