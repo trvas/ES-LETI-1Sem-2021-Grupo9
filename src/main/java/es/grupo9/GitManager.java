@@ -35,7 +35,6 @@ public class GitManager {
     private boolean valid = false; // if the flag is set to true, then it moves
     private static final boolean getUserInfo = true; //If box checked then retrieve the user information OPTIONAL TO BE USED AS BOOLEAN
     private List<String> collaboratorsNames = new ArrayList<>();
-    private final List<CommitsDataGit> commitsDataRoot = new ArrayList<>();
     private final List<String> branchesName = new ArrayList<>();
     private final OkHttpClient client = new OkHttpClient();
     private final String url;
@@ -404,57 +403,6 @@ public class GitManager {
     }
 
     /*--------------------ADDITIONAL CLASSES--------------------*/
-
-    /**
-     * Breakdown of Information received from the GitHub API related to commits.
-     * params used are Date, Username and Description.
-     */
-    public class CommitsDataGit {
-        private final GHCommit.ShortInfo description;
-        private final Date date;
-        private final String userName;
-
-        /**
-         * Constructor of the class.
-         *
-         * @param description receives the description of a commit
-         * @param date        receives the date of publishing of the commit
-         * @param userName    receives the name of the person who created the commit
-         * @throws IOException thrown due to the GHUser possibility of being null
-         */
-        CommitsDataGit(GHCommit.ShortInfo description, Date date, @NotNull GHUser userName) throws IOException {
-            this.date = date;
-            this.description = description;
-            this.userName = userName.getLogin();
-        }
-
-        /**
-         * Gets the date of the commit.
-         *
-         * @return Date Date of the commit.
-         */
-        public Date getDate() {
-            return date;
-        }
-
-        /**
-         * Gets the description of the commit.
-         *
-         * @return String Description of the commit.
-         */
-        public String getDescription() {
-            return description.getMessage();
-        }
-
-        /**
-         * Gets the commit creator's login username.
-         *
-         * @return String Commit creator's username.
-         */
-        public String getUserName() {
-            return userName;
-        }
-    }
 
     /**
      * Class to allow the HttpRequest data from the commits to be processed and analysed.
